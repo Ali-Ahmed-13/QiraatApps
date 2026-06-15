@@ -1,0 +1,142 @@
+[
+  {
+    "id": "quran-qiraat-app",
+    "name": "تطبيق المنشاوي",
+    "version": "الإصدار 1.0.0",
+    "size": "32 ميجابايت",
+    "category": "برامج القرآن الكريم",
+    "description": "تطبيق إسلامي متكامل تم تطويره خصيصاً لخدمة علوم القرآن والقراءات، يتيح للمستخدمين تصفح المصحف الشريف ومتابعة الأصول والفرشيات لكل قراءة بأسلوب تقني متطور ومبسط.",
+    "iconUrl": "https://cdn-icons-png.flaticon.com/512/3670/3670051.png",
+    "resourceUrl": "https://docs.google.com/uc?export=download&id=1222fsF8goaK9A47mx-GhGPGdzBzZO0KW"
+  },
+  {
+    "id": "quran-audio-tahqeeq",
+    "name": "مصحف الترتيل والتحقيق الصوتي",
+    "version": "1.8.5",
+    "size": "112 ميجابايت",
+    "category": "تعليم التجويد والحفظ",
+    "description": "برنامج متخصص في تحليل ومقارنة الأداء الصوتي لأشهر القراء بمراتب التلاوة المختلفة (التحقيق، التدوير، الحدر)، يوفر أدوات للمقارنة النبرية وضبط مخارج الحروف بدقة.",
+    "iconUrl": "/icons/tahqeeq.png",
+    "resourceUrl": "https://github.com/quranic-apps/audio-tahqeeq/releases/download/v1.8.5/tahqeeq.exe"
+  },
+  {
+    "id": "quran-mujam-qiraat",
+    "name": "تطبيق معجم القراءات القرآنية",
+    "version": "3.1.0",
+    "size": "48 ميجابايت",
+    "category": "معاجم وتفاسير القرآن",
+    "description": "أداة بحثية متطورة تتيح للمستخدم استكشاف وتتبع الكلمات الفرشية والخلافية عبر معجم متكامل يربط الكلمة بسورة القرآن ويشرح توجيه القراءة لغة ونحواً وأثراً.",
+    "iconUrl": "/icons/mujam.png",
+    "resourceUrl": "https://github.com/quranic-apps/mujam-qiraat/releases/download/v3.1.0/mujam.exe"
+  },
+  {
+    "id": "quran-tajweed-interactive",
+    "name": "جامع التجويد التفاعلي المصور",
+    "version": "2.0.1",
+    "size": "85 ميجابايت",
+    "category": "تعليم التجويد والحفظ",
+    "description": "منصة تعليمية متكاملة لعلوم التجويد، توفر شروحات مرئية متحركة لمخارج الحروف وصفاتها وأحكام التلاوة، بالإضافة إلى اختبارات تطبيقية لتقييم الحفظ والترتيل.",
+    "iconUrl": "/icons/tajweed.png",
+    "resourceUrl": "https://github.com/quranic-apps/tajweed/releases/download/v2.0.1/tajweed.exe"
+  },
+  {
+    "id": "quran-hifz-companion",
+    "name": "تطبيق مساعد حفظ القرآن الكريم",
+    "version": "4.2.0",
+    "size": "55 ميجابايت",
+    "category": "تعليم التجويد والحفظ",
+    "description": "برنامج مصمم لمساعدة الطلاب والراغبين في حفظ كتاب الله، يحتوي على خطط حفظ مخصصة وجداول مراجعة تكرارية مبنية على خوارزميات التكرار المتباعد لتثبيت الحفظ.",
+    "iconUrl": "/icons/hifz.png",
+    "resourceUrl": "https://github.com/quranic-apps/hifz/releases/download/v4.2.0/hifz.exe"
+  },
+  {
+    "id": "quran-tafsir-explorer",
+    "name": "مستكشف تفاسير القرآن ومقارنتها",
+    "version": "2.1.0",
+    "size": "70 ميجابايت",
+    "category": "معاجم وتفاسير القرآن",
+    "description": "برنامج يجمع أمهات كتب التفسير (كابن كثير، الطبري، القرطبي) في واجهة مقارنة واحدة، ويدعم البحث الموضوعي وتدوين الفوائد والملحوظات التدبرية للمتدبرين.",
+    "iconUrl": "/icons/tafsir.png",
+    "resourceUrl": "https://github.com/quranic-apps/tafsir/releases/download/v2.1.0/tafsir.exe"
+  },
+  {
+    "id": "quran-script-adjuster",
+    "name": "أداة ضبط الرسم العثماني والخط",
+    "version": "1.3.0",
+    "size": "32 ميجابايت",
+    "category": "أدوات ضبط المصحف والخط",
+    "description": "أداة مخصصة لخطاطي ومصححي المصاحف لعرض ومقارنة أنماط الرسم العثماني (رسم عثماني مغربي، رسم مصري، رسم الشام) وتدقيق مواضع الضبط والتلوين بدقة عالية.",
+    "iconUrl": "/icons/script.png",
+    "resourceUrl": "https://github.com/quranic-apps/script/releases/download/v1.3.0/script.exe"
+  },
+  {
+    "id": "quran-iqlab-checker",
+    "name": "تطبيق مرشد النطق الصوتي والأداء",
+    "version": "1.0.5",
+    "size": "78 ميجابايت",
+    "category": "تعليم التجويد والحفظ",
+    "description": "مستشار صوتي ذكي يستمع لقراءة المستخدم للقرآن ويحدد مواضع القلقلة، الإخفاء، الإدغام، والإظهار لمساعدة المبتدئين على تحسين تلاوتهم الفردية تلقائياً.",
+    "iconUrl": "/icons/checker.png",
+    "resourceUrl": "https://github.com/quranic-apps/checker/releases/download/v1.0.5/checker.exe"
+  },
+  {
+    "id": "quran-words-lexicon",
+    "name": "تطبيق غريب ومفردات القرآن",
+    "version": "2.2.0",
+    "size": "25 ميجابايت",
+    "category": "معاجم وتفاسير القرآن",
+    "description": "تطبيق سهل ومبسط لشرح الكلمات الغامضة والمفردات الدقيقة في القرآن الكريم بالاعتماد على أوثق المعاجم اللغوية المعتمدة لتسهيل الفهم العام للمسلم المعاصر.",
+    "iconUrl": "/icons/words.png",
+    "resourceUrl": "https://github.com/quranic-apps/words/releases/download/v2.2.0/words.exe"
+  },
+  {
+    "id": "quran-manuscripts-compare",
+    "name": "منصة مقارنة المخطوطات القرآنية",
+    "version": "1.0.0",
+    "size": "150 ميجابايت",
+    "category": "تطبيقات القراءات والتحقيق",
+    "description": "منصة مخصصة للباحثين والأكاديميين تمكنهم من مقارنة نصوص المصحف الشريف الحالية بنماذج عالية الدقة من المخطوطات القرآنية القديمة (كمخطوطات صنعاء والقاهرة).",
+    "iconUrl": "/icons/manuscripts.png",
+    "resourceUrl": "https://github.com/quranic-apps/manuscripts/releases/download/v1.0.0/manuscripts.exe"
+  },
+  {
+    "id": "quran-root-words",
+    "name": "تطبيق تحليل جذور الكلمات القرآنية",
+    "version": "2.5.1",
+    "size": "36 ميجابايت",
+    "category": "معاجم وتفاسير القرآن",
+    "description": "أداة لغوية تقوم بتحليل الكلمات القرآنية وإرجاعها إلى جذورها الثلاثية والرباعية، وتتبع تكرار كل جذر وصيغه الصرفية المختلفة وسياق وروده في السور والآيات.",
+    "iconUrl": "/icons/roots.png",
+    "resourceUrl": "https://github.com/quranic-apps/roots/releases/download/v2.5.1/roots.exe"
+  },
+  {
+    "id": "quran-kids-academy",
+    "name": "أكاديمية الصغار لتحفيظ القرآن",
+    "version": "3.0.0",
+    "size": "80 ميجابايت",
+    "category": "تعليم التجويد والحفظ",
+    "description": "تطبيق تفاعلي يهدف إلى مساعدة الأطفال على حفظ قصار السور من خلال الألعاب التربوية، والرسوم المتحركة التوضيحية، وتلوين الأحكام التجويدية المناسبة لسنهم.",
+    "iconUrl": "/icons/kids.png",
+    "resourceUrl": "https://github.com/quranic-apps/kids/releases/download/v3.0.0/kids.exe"
+  },
+  {
+    "id": "quran-audio-library",
+    "name": "المكتبة الصوتية الشاملة للقراءات",
+    "version": "1.5.0",
+    "size": "45 ميجابايت",
+    "category": "تطبيقات القراءات والتحقيق",
+    "description": "تطبيق يجمع آلاف التلاوات القرآنية الصوتية لمختلف روايات المصحف (حفص، ورش، قالون، الدوري) بجودة عالية مع دعم الاستماع دون اتصال والتشغيل الخلفي.",
+    "iconUrl": "/icons/audio.png",
+    "resourceUrl": "https://github.com/quranic-apps/audio/releases/download/v1.5.0/audio.exe"
+  },
+  {
+    "id": "quran-statistics-research",
+    "name": "أداة الإحصاء والبحوث الإعجازية",
+    "version": "2.0.0",
+    "size": "50 ميجابايت",
+    "category": "أدوات ضبط المصحف والخط",
+    "description": "برنامج بحثي متقدم يقوم بإحصاء الحروف والكلمات والآيات والبحث عن العلاقات الرقمية والترابط اللفظي في نص المصحف لدعم البحوث الأكاديمية اللغوية والإعجازية.",
+    "iconUrl": "/icons/statistics.png",
+    "resourceUrl": "https://github.com/quranic-apps/statistics/releases/download/v2.0.0/statistics.exe"
+  }
+]
