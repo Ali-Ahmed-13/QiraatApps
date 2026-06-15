@@ -2,12 +2,13 @@
 
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
-import { Sun, Moon, ShieldCheck } from 'lucide-react';
+import { Sun, Moon, ShieldCheck, Menu, X, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Header() {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -18,57 +19,123 @@ export default function Header() {
     setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
   };
 
+  const navLinks = [
+    { name: 'الرئيسية', href: '/' },
+    { name: 'مكتبة التطبيقات', href: '/#catalog' },
+    { name: 'عن المنصة', href: '/#about' },
+    { name: 'مدونة التقنية القرآنية', href: '/#blog' },
+    { name: 'اتصل بنا', href: '/contact' },
+  ];
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-[#0b0f19]/80 backdrop-blur-md transition-colors duration-300">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        {/* Logo and Identity */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 group-hover:scale-105 transition-transform duration-300">
-            <ShieldCheck className="w-6 h-6" />
+    <>
+      {/* Top Banner Notice / Islamic Ticker */}
+      <div className="w-full bg-emerald-600 dark:bg-emerald-950 text-white dark:text-emerald-300 text-xs py-2 overflow-hidden border-b border-emerald-500/20 select-none">
+        <div className="container mx-auto px-4 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-1.5 shrink-0 bg-emerald-700 dark:bg-emerald-900 px-2 py-0.5 rounded-md text-[10px] font-bold z-10">
+            <AlertCircle className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+            <span>تحديثات برمجية</span>
           </div>
-          <span className="font-bold text-lg sm:text-xl text-slate-800 dark:text-slate-500  tracking-tight">
-            دليل تطبيقات{' '}
-            <span className="text-emerald-600 dark:text-emerald-400">
-              علوم القرآن والقراءات
-            </span>
-          </span>
-        </Link>
-
-        {/* Main Navigation Links */}
-        <nav className="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600 dark:text-slate-300">
-          <Link
-            href="/"
-            className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-emerald-600 dark:after:bg-emerald-400 hover:after:w-full after:transition-all after:duration-300"
-          >
-            الرئيسية
-          </Link>
-          <Link
-            href="/#catalog"
-            className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-emerald-600 dark:after:bg-emerald-400 hover:after:w-full after:transition-all after:duration-300"
-          >
-            دليل البرامج
-          </Link>
-        </nav>
-
-        {/* Theme Toggle Button */}
-        <div className="flex items-center gap-4">
-          {mounted ? (
-            <button
-              onClick={toggleTheme}
-              className="relative p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 cursor-pointer"
-              aria-label="تبديل المظهر"
-            >
-              {resolvedTheme === 'dark' ? (
-                <Sun className="w-5 h-5 text-amber-500 animate-pulse" />
-              ) : (
-                <Moon className="w-5 h-5 text-slate-500" />
-              )}
-            </button>
-          ) : (
-            <div className="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-800/20 animate-pulse" />
-          )}
+          <div className="relative flex-grow overflow-hidden h-4 flex items-center">
+            <div className="animate-marquee flex gap-16 font-medium text-[11px] sm:text-xs">
+              <span>حديث شريف: قال رسول الله ﷺ: «اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه» (رواه مسلم)</span>
+              <span>•</span>
+              <span>تحديث: تم إطلاق إصدارات فلاتر (Flutter 3.24) المحدثة بالكامل لتطبيقات المصاحف المرتلة ومصحف القراءات العشر لتحسين الأداء والأمان</span>
+              <span>•</span>
+              <span>جديد: إضافة ميزة حفظ موضع الاستماع تلقائياً في معجم التجويد المبسط وتحديث ملفات الـ APK المباشرة</span>
+              <span>•</span>
+              {/* Duplicate contents for seamless looping */}
+              <span>حديث شريف: قال رسول الله ﷺ: «اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه» (رواه مسلم)</span>
+              <span>•</span>
+              <span>تحديث: تم إطلاق إصدارات فلاتر (Flutter 3.24) المحدثة بالكامل لتطبيقات المصاحف المرتلة ومصحف القراءات العشر لتحسين الأداء والأمان</span>
+              <span>•</span>
+              <span>جديد: إضافة ميزة حفظ موضع الاستماع تلقائياً في معجم التجويد المبسط وتحديث ملفات الـ APK المباشرة</span>
+            </div>
+          </div>
         </div>
       </div>
-    </header>
+
+      <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-[#0b0f19]/80 backdrop-blur-md transition-colors duration-300">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          
+          {/* Logo and Identity */}
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 group-hover:scale-105 transition-transform duration-300">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <span className="font-bold text-base sm:text-lg text-slate-850 dark:text-slate-200 tracking-tight">
+              دليل تطبيقات{' '}
+              <span className="text-emerald-600 dark:text-emerald-400">
+                علوم القرآن والقراءات
+              </span>
+            </span>
+          </Link>
+
+          {/* Main Navigation Links (Desktop) */}
+          <nav className="hidden md:flex items-center gap-6 text-xs lg:text-sm font-bold text-slate-650 dark:text-slate-355">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-emerald-600 dark:after:bg-emerald-400 hover:after:w-full after:transition-all after:duration-300"
+              >
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Controls: Theme and Mobile Menu Toggle */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Theme Toggle Button */}
+            {mounted ? (
+              <button
+                onClick={toggleTheme}
+                className="relative p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 cursor-pointer"
+                aria-label="تبديل المظهر"
+              >
+                {resolvedTheme === 'dark' ? (
+                  <Sun className="w-4.5 h-4.5 text-amber-500 animate-pulse" />
+                ) : (
+                  <Moon className="w-4.5 h-4.5 text-slate-500" />
+                )}
+              </button>
+            ) : (
+              <div className="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-800/20 animate-pulse" />
+            )}
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 cursor-pointer"
+              aria-label="القائمة الرئيسية"
+            >
+              {isMenuOpen ? (
+                <X className="w-4.5 h-4.5" />
+              ) : (
+                <Menu className="w-4.5 h-4.5" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Dropdown Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden border-t border-slate-100 dark:border-slate-850 bg-white dark:bg-[#0c101c] py-4 px-4 shadow-lg">
+            <nav className="flex flex-col gap-3">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        )}
+      </header>
+    </>
   );
 }

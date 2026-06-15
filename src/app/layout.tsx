@@ -3,6 +3,7 @@ import { Cairo } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "src/context/ThemeProvider";
 import Header from "src/components/layout/Header";
+import Footer from "src/components/layout/Footer";
 
 const cairo = Cairo({
   subsets: ["arabic"],
@@ -39,11 +40,7 @@ export default function RootLayout({
           <main className="flex-grow">
             {children}
           </main>
-          <footer className="border-t border-slate-200 dark:border-slate-800/80 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm py-6 text-center text-sm text-slate-500 dark:text-slate-400">
-            <div className="container mx-auto px-4">
-              <p>جميع الحقوق محفوظة © {new Date().getFullYear()} دليل تطبيقات علوم القرآن والقراءات</p>
-            </div>
-          </footer>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
