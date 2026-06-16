@@ -13,17 +13,40 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  title:
-    'دليل تطبيقات علوم القرآن والقراءات | منصة البرمجيات القرآنية المتكاملة',
+  title: 'تطبيقات القرآن والقراءات',
   description:
-    'منصة برمجية متكاملة توفر لك وصولاً مباشراً وموثوقاً لأحدث التطبيقات والأدوات الرقمية المتخصصة في علوم المصحف الشريف والقراءات العشر المطورة بلغة فلاتر.',
+    'منصة برمجية متكاملة توفر لك وصولاً مباشراً وموثوقاً لأحدث التطبيقات والأدوات الرقمية المتخصصة في علوم المصحف الشريف والقراءات العشر.',
   keywords: [
-    'تطبيقات القرآن',
-    'علوم القرآن',
+    'القرآن الكريم',
     'القراءات العشر',
-    'المصحف الشريف',
-    'تطبيقات فلاتر',
+    'علم القراءات',
+    'متن الشاطبية',
+    'الدرة المضية',
+    'طيبة النشر',
+    'الجزرية',
+    'ورش عن نافع',
+    'حفص عن عاصم',
+    'قالون عن نافع',
+    'مصحف القراءات',
+    'تعليم القراءات',
+    'متون القراءات',
+    'علوم القرآن',
+    'التجويد',
+    'quran qiraat',
+    'qiraat app',
+    'quran app',
+    'shatibiyyah',
+    'jazariyyah',
   ],
+  openGraph: {
+    title: 'تطبيقات القرآن والقراءات',
+    description:
+      'منصة متخصصة في تطبيقات القرآن الكريم والقراءات العشر ومتون القراءات.',
+    url: 'https://qiraat-apps.vercel.app',
+    siteName: 'تطبيقات القرآن والقراءات',
+    locale: 'ar_EG',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
@@ -39,7 +62,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* تعديل كود جوجل أدسنس باستخدام مكون Script التابع لـ Next.js */}
         <Script
           id="adsense-init"
           async
@@ -47,7 +69,10 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
-        <meta name="google-site-verification" content="6m4cvKjfzOIaoX_uomrPRcUBviSVY6ueK9IIz_hxQ6Y" />
+        <meta
+          name="google-site-verification"
+          content="6m4cvKjfzOIaoX_uomrPRcUBviSVY6ueK9IIz_hxQ6Y"
+        />
       </head>
       <body className="min-h-full flex flex-col theme-transition">
         <ThemeProvider
