@@ -17,7 +17,7 @@ export default function SoftwareCard({ software }: SoftwareCardProps) {
       case 'مشغلات الصوت والفيديو':
         return 'from-amber-500/10 to-orange-600/10 text-amber-600 dark:text-amber-400 border-amber-500/20';
       case 'برامج مكتبية':
-        return 'from-emerald-500/10 to-teal-600/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20';
+        return 'from-amber-500/10 to-amber-600/10 text-amber-800 dark:text-emerald-450 border-amber-500/20 dark:border-emerald-500/20';
       case 'تصميم وجرافيك':
         return 'from-pink-500/10 to-rose-600/10 text-pink-600 dark:text-pink-400 border-pink-500/20';
       case 'أدوات المطورين':
@@ -39,10 +39,10 @@ export default function SoftwareCard({ software }: SoftwareCardProps) {
   return (
     <Link
       href={`/software/${software.id}`}
-      className="group relative rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900/90 shadow-sm hover:shadow-md hover:border-emerald-500/30 dark:hover:border-emerald-500/30 transition-all duration-300 flex flex-col h-full overflow-hidden cursor-pointer"
+      className="group relative rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-card dark:bg-slate-900/90 shadow-sm hover:shadow-md hover:border-amber-500/30 dark:hover:border-emerald-500/30 transition-all duration-300 flex flex-col h-full overflow-hidden cursor-pointer"
     >
       {/* Visual Accent Top Bar */}
-      <div className="h-1.5 w-full bg-gradient-to-l from-emerald-600 to-sky-500 opacity-80 group-hover:opacity-100 transition-opacity" />
+      <div className="h-1.5 w-full bg-gradient-to-l from-amber-600 dark:from-emerald-600 to-amber-400 dark:to-sky-500 opacity-80 group-hover:opacity-100 transition-opacity" />
 
       <div className="p-5 flex-grow flex flex-col justify-between">
         <div>
@@ -56,7 +56,7 @@ export default function SoftwareCard({ software }: SoftwareCardProps) {
             </div>
 
             <div className="flex-grow min-w-0">
-              <h3 className="font-bold text-base text-slate-800 dark:text-slate-500  group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1">
+              <h3 className="font-bold text-base text-[#1E1E1E] dark:text-[#f4f0e6] group-hover:text-black dark:group-hover:text-emerald-400 transition-colors line-clamp-1">
                 {software.name}
               </h3>
 
@@ -91,7 +91,7 @@ export default function SoftwareCard({ software }: SoftwareCardProps) {
 
       {/* Action CTA */}
       <div className="px-5 pb-5 mt-auto">
-        <div className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 group-hover:text-white group-hover:bg-emerald-600 group-hover:border-emerald-600 dark:group-hover:bg-emerald-600 dark:group-hover:border-emerald-600 transition-all duration-200 group/btn">
+        <div className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 group-hover:text-white group-hover:bg-[#1E1E1E] group-hover:border-[#1E1E1E] dark:group-hover:bg-emerald-600 dark:group-hover:border-emerald-600 transition-all duration-200 group/btn">
           <span>عرض التفاصيل وآلية التنزيل</span>
           <ArrowLeft className="w-4 h-4 group-hover/btn:-translate-x-1 transition-transform" />
         </div>

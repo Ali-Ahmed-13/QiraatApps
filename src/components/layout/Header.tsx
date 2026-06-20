@@ -30,10 +30,10 @@ export default function Header() {
   return (
     <>
       {/* Top Banner Notice / Islamic Ticker */}
-      <div className="w-full bg-emerald-600 dark:bg-emerald-950 text-white dark:text-emerald-300 text-xs py-2 overflow-hidden border-b border-emerald-500/20 select-none">
+      <div className="w-full bg-[#F5EFE0] dark:bg-emerald-950 text-[#1E1E1E] dark:text-emerald-300 text-xs py-2 overflow-hidden border-b border-[#E7E0D2] dark:border-emerald-500/20 select-none">
         <div className="container mx-auto px-4 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-1.5 shrink-0 bg-emerald-700 dark:bg-emerald-900 px-2 py-0.5 rounded-md text-[10px] font-bold z-10">
-            <AlertCircle className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+          <div className="flex items-center gap-1.5 shrink-0 bg-amber-100 dark:bg-emerald-900 text-amber-950 dark:text-emerald-300 px-2 py-0.5 rounded-md text-[10px] font-bold z-10 border border-amber-200/60 dark:border-transparent">
+            <AlertCircle className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 animate-pulse" />
             <span>تحديثات برمجية</span>
           </div>
           <div className="relative flex-grow overflow-hidden h-4 flex items-center">
@@ -55,29 +55,29 @@ export default function Header() {
         </div>
       </div>
 
-      <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-[#0b0f19]/80 backdrop-blur-md transition-colors duration-300">
+      <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-card/80 dark:bg-[#0b0f19]/80 backdrop-blur-md transition-colors duration-300">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           
           {/* Logo and Identity */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 group-hover:scale-105 transition-transform duration-300">
+            <div className="p-2 rounded-xl bg-amber-100 dark:bg-emerald-950/40 text-amber-800 dark:text-emerald-400 group-hover:scale-105 transition-transform duration-300">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <span className="font-bold text-base sm:text-lg text-slate-850 dark:text-slate-200 tracking-tight">
-              دليل تطبيقات{' '}
-              <span className="text-emerald-600 dark:text-emerald-400">
-                علوم القرآن والقراءات
+              منصة{' '}
+              <span className="text-amber-800 dark:text-emerald-400 font-extrabold">
+                تِيجَان
               </span>
             </span>
           </Link>
 
           {/* Main Navigation Links (Desktop) */}
-          <nav className="hidden md:flex items-center gap-6 text-xs lg:text-sm font-bold text-slate-650 dark:text-slate-355">
+          <nav className="hidden md:flex items-center gap-6 text-xs lg:text-sm font-bold text-slate-700 dark:text-slate-300">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-emerald-600 dark:after:bg-emerald-400 hover:after:w-full after:transition-all after:duration-300"
+                className="hover:text-amber-800 dark:hover:text-emerald-400 transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-850 dark:after:bg-emerald-400 hover:after:w-full after:transition-all after:duration-300"
               >
                 {link.name}
               </Link>
@@ -120,14 +120,14 @@ export default function Header() {
 
         {/* Mobile Navigation Dropdown Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-slate-100 dark:border-slate-850 bg-white dark:bg-[#0c101c] py-4 px-4 shadow-lg">
+          <div className="md:hidden border-t border-slate-100 dark:border-slate-850 bg-card dark:bg-[#0c101c] py-4 px-4 shadow-lg">
             <nav className="flex flex-col gap-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"
+                  className="px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-amber-800 dark:hover:text-emerald-400 transition-all"
                 >
                   {link.name}
                 </Link>

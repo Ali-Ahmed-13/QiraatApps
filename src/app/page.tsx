@@ -37,17 +37,18 @@ export default function Home() {
 
         <div className="container mx-auto max-w-3xl relative z-10">
           {/* Trust Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-600 dark:text-emerald-400 text-xs font-bold mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/20 dark:border-emerald-500/20 bg-amber-500/5 dark:bg-emerald-500/5 text-amber-800 dark:text-emerald-400 text-xs font-bold mb-6">
             <ShieldCheck className="w-4 h-4 shrink-0" />
             <span>تتضمن تطبيقات رسمية مطورة بلغة فلاتر 100%</span>
           </div>
 
           {/* Heading */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-805 dark:text-slate-200 leading-tight">
-            دليل تطبيقات{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-l from-emerald-600 to-sky-500 dark:from-emerald-400 dark:to-sky-400">
-              علوم القرآن والقراءات
-            </span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200 leading-tight">
+            منصة{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-l from-amber-700 dark:from-emerald-400 to-amber-500 dark:to-sky-400 font-black">
+              تِيجَان
+            </span>{' '}
+            لتطبيقات علوم القرآن والقراءات
           </h1>
 
           {/* Subheading */}
@@ -59,11 +60,11 @@ export default function Home() {
           {/* Feature Highlights */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs font-bold text-slate-500 dark:text-slate-400">
             <div className="flex items-center gap-1.5">
-              <Zap className="w-4 h-4 text-emerald-500" />
+              <Zap className="w-4 h-4 text-amber-600 dark:text-emerald-500" />
               <span>تحميل مباشر وسريع</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-500" />
+              <ShieldCheck className="w-4 h-4 text-amber-600 dark:text-emerald-500" />
               <span>مطورة بالكامل بلغة Flutter</span>
             </div>
           </div>
@@ -86,8 +87,8 @@ export default function Home() {
         className="container mx-auto px-4 py-12 border-t border-slate-200/60 dark:border-slate-800/60 scroll-mt-20"
       >
         <div className="max-w-4xl mx-auto text-center mb-12">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-800 dark:text-slate-200">
-            لماذا منصة البرمجيات القرآنية؟
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E1E1E] dark:text-slate-200">
+            لماذا منصة تِيجَان الرقمية؟
           </h2>
           <p className="mt-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
             نهدف إلى تقديم حلول رقمية غير تجارية تدعم نشر وعلوم المصحف الشريف
@@ -97,8 +98,8 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {/* Card 1: Sound Processing */}
-          <div className="p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1422] hover:border-emerald-500/40 dark:hover:border-emerald-500/30 transition-all duration-300 shadow-sm flex flex-col gap-4 group">
-            <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 w-fit group-hover:scale-110 transition-transform duration-300">
+          <div className="p-6 rounded-3xl border border-border dark:border-slate-800 bg-card dark:bg-[#0f1422] hover:border-amber-500/40 dark:hover:border-emerald-500/30 transition-all duration-300 shadow-sm flex flex-col gap-4 group">
+            <div className="p-3.5 rounded-2xl bg-amber-100 dark:bg-emerald-950/40 text-amber-800 dark:text-emerald-400 w-fit group-hover:scale-110 transition-transform duration-300">
               <Volume2 className="w-6 h-6" />
             </div>
             <h3 className="font-bold text-base sm:text-lg text-slate-800 dark:text-slate-200">
@@ -116,15 +117,15 @@ export default function Home() {
           </div>
 
           {/* Card 2: Offline Capability */}
-          <div className="p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1422] hover:border-emerald-500/40 dark:hover:border-emerald-500/30 transition-all duration-300 shadow-sm flex flex-col gap-4 group">
+          <div className="p-6 rounded-3xl border border-border dark:border-slate-800 bg-card dark:bg-[#0f1422] hover:border-amber-500/40 dark:hover:border-emerald-500/30 transition-all duration-300 shadow-sm flex flex-col gap-4 group">
             <div className="p-3.5 rounded-2xl bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 w-fit group-hover:scale-110 transition-transform duration-300">
               <WifiOff className="w-6 h-6" />
             </div>
-            <h3 className="font-bold text-base sm:text-lg text-slate-800 dark:text-slate-200">
+            <h3 className="font-bold text-[#1E1E1E] dark:text-slate-200 text-base">
               التشغيل الذاتي الكامل دون إنترنت
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed text-justify">
-              ندرك في منصة البرمجيات القرآنية أن الوصول الدائم لكتاب الله أمر
+            <p className="text-xs sm:text-sm text-slate-650 dark:text-slate-400 leading-relaxed text-justify">
+              ندرك في منصة تِيجَان أن الوصول الدائم لكتاب الله أمر
               جوهري، لذلك صممنا تطبيقاتنا لتعمل بكفاءة كاملة دون الحاجة للاتصال
               بشبكة الإنترنت. يتم تحميل سور القرآن الكريم والأدوات المصاحبة
               محلياً على جهاز المستخدم بمجرد التثبيت الأول، مع إمكانية إدارة
@@ -135,7 +136,7 @@ export default function Home() {
           </div>
 
           {/* Card 3: Flutter Architecture */}
-          <div className="p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1422] hover:border-emerald-500/40 dark:hover:border-emerald-500/30 transition-all duration-300 shadow-sm flex flex-col gap-4 group">
+          <div className="p-6 rounded-3xl border border-border dark:border-slate-800 bg-card dark:bg-[#0f1422] hover:border-amber-500/40 dark:hover:border-emerald-500/30 transition-all duration-300 shadow-sm flex flex-col gap-4 group">
             <div className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 w-fit group-hover:scale-110 transition-transform duration-300">
               <Terminal className="w-6 h-6" />
             </div>
@@ -167,12 +168,12 @@ export default function Home() {
         id="blog"
         className="container mx-auto px-4 py-12 border-t border-slate-200/60 dark:border-slate-800/60 scroll-mt-20"
       >
-        <div className="max-w-5xl mx-auto rounded-3xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-slate-50 to-white dark:from-[#0d1222] dark:to-[#090d16] p-8 md:p-12 shadow-sm relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
+        <div className="max-w-5xl mx-auto rounded-3xl border border-border dark:border-slate-800 bg-gradient-to-br from-card to-background dark:from-[#0d1222] dark:to-[#090d16] p-8 md:p-12 shadow-sm relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-32 h-32 bg-amber-500/5 dark:bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
 
           <div className="relative z-10 flex flex-col lg:flex-row gap-8 items-center">
             <div className="flex-grow">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 text-xs font-bold mb-4">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-emerald-950/40 text-amber-800 dark:text-emerald-400 text-xs font-bold mb-4">
                 <BookOpen className="w-3.5 h-3.5" />
                 <span>التراث الصوتي القرآني</span>
               </div>
@@ -198,7 +199,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="w-full lg:w-72 shrink-0 p-6 rounded-2xl bg-white dark:bg-[#12192c] border border-slate-200 dark:border-slate-800 text-center flex flex-col items-center gap-3">
+            <div className="w-full lg:w-72 shrink-0 p-6 rounded-2xl bg-card dark:bg-[#12192c] border border-border dark:border-slate-800 text-center flex flex-col items-center gap-3">
               <div className="w-16 h-16 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center">
                 <Sparkles className="w-8 h-8" />
               </div>
@@ -235,12 +236,12 @@ export default function Home() {
 
         <div className="max-w-3xl mx-auto flex flex-col gap-4">
           {/* FAQ Item 1 */}
-          <details className="group border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1422] rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
+          <details className="group border border-border dark:border-slate-800 bg-card dark:bg-[#0f1422] rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
             <summary className="flex items-center justify-between cursor-pointer list-none">
-              <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-800 dark:text-slate-200">
+              <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-850 dark:text-slate-200">
                 كيف يمكنني تحميل التطبيقات وهل هي مجانية بالكامل؟
               </h3>
-              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400">
+              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-amber-100 dark:bg-emerald-950/30 text-amber-800 dark:text-emerald-400">
                 <ChevronDown className="w-4 h-4" />
               </span>
             </summary>
@@ -254,12 +255,12 @@ export default function Home() {
           </details>
 
           {/* FAQ Item 2 */}
-          <details className="group border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1422] rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
+          <details className="group border border-border dark:border-slate-800 bg-card dark:bg-[#0f1422] rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
             <summary className="flex items-center justify-between cursor-pointer list-none">
-              <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-800 dark:text-slate-200">
+              <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-850 dark:text-slate-200">
                 هل تدعم التطبيقات العمل على إصدارات أندرويد القديمة؟
               </h3>
-              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400">
+              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-amber-100 dark:bg-emerald-950/30 text-amber-800 dark:text-emerald-400">
                 <ChevronDown className="w-4 h-4" />
               </span>
             </summary>
@@ -273,12 +274,12 @@ export default function Home() {
           </details>
 
           {/* FAQ Item 3 */}
-          <details className="group border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1422] rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
+          <details className="group border border-border dark:border-slate-800 bg-card dark:bg-[#0f1422] rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
             <summary className="flex items-center justify-between cursor-pointer list-none">
-              <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-800 dark:text-slate-200">
+              <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-850 dark:text-slate-200">
                 ما هي المساحة التخزينية المطلوبة لتثبيت التطبيقات وتشغيلها؟
               </h3>
-              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400">
+              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-amber-100 dark:bg-emerald-950/30 text-amber-800 dark:text-emerald-400">
                 <ChevronDown className="w-4 h-4" />
               </span>
             </summary>
@@ -293,13 +294,13 @@ export default function Home() {
           </details>
 
           {/* FAQ Item 4 */}
-          <details className="group border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1422] rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
+          <details className="group border border-border dark:border-slate-800 bg-card dark:bg-[#0f1422] rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
             <summary className="flex items-center justify-between cursor-pointer list-none">
-              <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-800 dark:text-slate-200">
+              <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-850 dark:text-slate-200">
                 كيف يتم التأكد من صحة النصوص القرآنية وتطابقها مع الرسم
                 العثماني؟
               </h3>
-              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400">
+              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-amber-100 dark:bg-emerald-950/30 text-amber-800 dark:text-emerald-400">
                 <ChevronDown className="w-4 h-4" />
               </span>
             </summary>
@@ -314,12 +315,12 @@ export default function Home() {
           </details>
 
           {/* FAQ Item 5 */}
-          <details className="group border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1422] rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
+          <details className="group border border-border dark:border-slate-800 bg-card dark:bg-[#0f1422] rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
             <summary className="flex items-center justify-between cursor-pointer list-none">
-              <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-800 dark:text-slate-200">
+              <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-850 dark:text-slate-200">
                 هل تصل تحديثات دورية للتطبيقات وكيف أحصل عليها؟
               </h3>
-              <span className="shrink-0 transition duration-355 group-open:-rotate-180 p-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400">
+              <span className="shrink-0 transition duration-355 group-open:-rotate-180 p-1.5 rounded-lg bg-amber-100 dark:bg-emerald-950/30 text-amber-800 dark:text-emerald-400">
                 <ChevronDown className="w-4 h-4" />
               </span>
             </summary>
@@ -346,8 +347,8 @@ export default function Home() {
             <Mail className="w-8 h-8" />
           </div>
           <div className="max-w-xl">
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-slate-100">
-              تواصل مع فريق تطوير البرمجيات القرآنية
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-850 dark:text-slate-100">
+              تواصل مع فريق تطوير منصة تِيجَان
             </h2>
             <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
               يسعدنا دائماً تواصلكم معنا وتلقي آرائكم، مقترحاتكم، أو أي تقارير

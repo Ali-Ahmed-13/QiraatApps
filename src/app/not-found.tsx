@@ -8,7 +8,7 @@ export default function NotFound() {
         <ShieldAlert className="w-16 h-16 animate-pulse" />
       </div>
 
-      <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-800 dark:text-slate-500  mb-3">
+      <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1E1E1E] dark:text-[#f4f0e6] mb-3">
         عذراً، الصفحة غير موجودة
       </h1>
 
@@ -20,7 +20,7 @@ export default function NotFound() {
 
       <Link
         href="/"
-        className="inline-flex items-center gap-2 py-3 px-6 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/15 transition-all cursor-pointer"
+        className="inline-flex items-center gap-2 py-3 px-6 rounded-xl text-xs sm:text-sm font-bold bg-[#1E1E1E] hover:bg-black dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white shadow-lg shadow-amber-500/10 dark:shadow-emerald-500/15 transition-all cursor-pointer"
       >
         <Home className="w-4.5 h-4.5" />
         <span>العودة للرئيسية</span>

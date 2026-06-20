@@ -13,7 +13,7 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  title: 'تطبيقات القرآن والقراءات',
+  title: 'تِيجَان | تطبيقات القرآن والقراءات',
   description:
     'منصة برمجية متكاملة توفر لك وصولاً مباشراً وموثوقاً لأحدث التطبيقات والأدوات الرقمية المتخصصة في علوم المصحف الشريف والقراءات العشر.',
   keywords: [
@@ -39,11 +39,11 @@ export const metadata: Metadata = {
     'jazariyyah',
   ],
   openGraph: {
-    title: 'تطبيقات القرآن والقراءات',
+    title: 'تِيجَان | تطبيقات القرآن والقراءات',
     description:
       'منصة متخصصة في تطبيقات القرآن الكريم والقراءات العشر ومتون القراءات.',
     url: 'https://qiraat-apps.vercel.app',
-    siteName: 'تطبيقات القرآن والقراءات',
+    siteName: 'تِيجَان',
     locale: 'ar_EG',
     type: 'website',
   },

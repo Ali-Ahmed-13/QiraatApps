@@ -36,15 +36,15 @@ export async function generateMetadata({
 
   if (!software) {
     return {
-      title: 'التطبيق غير موجود | دليل تطبيقات علوم القرآن',
+      title: 'التطبيق غير موجود | تِيجَان',
     };
   }
 
   return {
-    title: `تحميل تطبيق ${software.name} بأحدث إصدار | دليل تطبيقات علوم القرآن`,
+    title: `تحميل تطبيق ${software.name} بأحدث إصدار | تِيجَان`,
     description: software.description.substring(0, 155),
     openGraph: {
-      title: `تحميل تطبيق ${software.name} بأحدث إصدار | دليل تطبيقات علوم القرآن`,
+      title: `تحميل تطبيق ${software.name} بأحدث إصدار | تِيجَان`,
       description: software.description.substring(0, 155),
       type: 'website',
     },
@@ -70,7 +70,7 @@ export default async function SoftwareDetailsPage({ params }: PageProps) {
       case 'مشغلات الصوت والفيديو':
         return 'from-amber-500/10 to-orange-600/10 text-amber-600 dark:text-amber-400 border-amber-500/20';
       case 'برامج مكتبية':
-        return 'from-emerald-500/10 to-teal-600/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20';
+        return 'from-amber-500/10 to-amber-600/10 text-amber-800 dark:text-emerald-450 border-amber-500/20 dark:border-emerald-500/20';
       case 'تصميم وجرافيك':
         return 'from-pink-500/10 to-rose-600/10 text-pink-600 dark:text-pink-400 border-pink-500/20';
       case 'أدوات المطورين':
@@ -120,7 +120,7 @@ export default async function SoftwareDetailsPage({ params }: PageProps) {
         <div className="mb-6">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-amber-800 dark:hover:text-emerald-400 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 rotate-180" />
             <span>العودة للدليل الرئيسي</span>
@@ -134,9 +134,9 @@ export default async function SoftwareDetailsPage({ params }: PageProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
           {/* Column 1: App identity and actions (Desktop Right, Mobile Top) */}
           <div className="md:col-span-1 flex flex-col gap-6">
-            <div className="p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900/90 shadow-xs flex flex-col items-center text-center relative overflow-hidden">
+            <div className="p-6 rounded-2xl border border-border dark:border-slate-800 bg-card dark:bg-slate-900/90 shadow-xs flex flex-col items-center text-center relative overflow-hidden">
               {/* Trust Badge */}
-              <div className="absolute top-3 right-3 text-emerald-600 dark:text-emerald-400 flex items-center gap-1 text-[10px] font-bold">
+              <div className="absolute top-3 right-3 text-amber-800 dark:text-emerald-400 flex items-center gap-1 text-[10px] font-bold">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>إصدار رسمي</span>
               </div>
@@ -149,7 +149,7 @@ export default async function SoftwareDetailsPage({ params }: PageProps) {
               </div>
 
               {/* Identity */}
-              <h1 className="mt-5 text-xl font-extrabold text-slate-800 dark:text-slate-500 ">
+              <h1 className="mt-5 text-xl font-extrabold text-[#1E1E1E] dark:text-[#f4f0e6]">
                 {software.name}
               </h1>
 
@@ -183,7 +183,7 @@ export default async function SoftwareDetailsPage({ params }: PageProps) {
               {/* CTA link to download buffer screen */}
               <Link
                 href={`/software/${software.id}/download`}
-                className="w-full mt-8 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/10 hover:shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                className="w-full mt-8 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold bg-[#1E1E1E] hover:bg-black dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white shadow-lg shadow-amber-500/10 dark:shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
               >
                 <span>الانتقال إلى صفحة التحميل</span>
                 <ArrowLeft className="w-4.5 h-4.5" />
@@ -193,8 +193,8 @@ export default async function SoftwareDetailsPage({ params }: PageProps) {
 
           {/* Column 2: Details Description Block (Desktop Left, Mobile Bottom) */}
           <div className="md:col-span-2 flex flex-col gap-6">
-            <div className="p-6 md:p-8 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900/90 shadow-xs">
-              <h2 className="text-base sm:text-lg font-bold text-slate-800 dark:text-slate-500  mb-4 pb-2.5 border-b border-slate-100 dark:border-slate-800/80">
+            <div className="p-6 md:p-8 rounded-2xl border border-border dark:border-slate-800 bg-card dark:bg-slate-900/90 shadow-xs">
+              <h2 className="text-base sm:text-lg font-bold text-[#1E1E1E] dark:text-[#f4f0e6] mb-4 pb-2.5 border-b border-border dark:border-slate-800/80">
                 تفاصيل ومميزات البرنامج
               </h2>
               <div className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed space-y-4">
@@ -204,13 +204,13 @@ export default async function SoftwareDetailsPage({ params }: PageProps) {
                   كتاب الله وعلومه. تم تطويره بلغة Flutter لتقديم أداء مستقر
                   وتجربة مستخدم سلسة على مختلف منصات التشغيل.
                 </p>
-                <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-xl p-4.5 mt-6 flex items-start gap-3 text-xs sm:text-sm text-emerald-800 dark:text-emerald-400">
+                <div className="bg-amber-500/5 dark:bg-emerald-950/20 border border-amber-500/10 dark:border-emerald-500/20 rounded-xl p-4.5 mt-6 flex items-start gap-3 text-xs sm:text-sm text-amber-900 dark:text-emerald-400">
                   <ShieldCheck className="w-5 h-5 shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-bold mb-1">تنبيه وملاحظات</h4>
                     <p className="leading-relaxed opacity-90">
-                      جميع الروابط والملفات المتوفرة على دليل تطبيقات علوم
-                      القرآن يتم توفيرها بشكل مباشر وتدعم التنزيل السهل من
+                      جميع الروابط والملفات المتوفرة على منصة تِيجَان
+                      يتم توفيرها بشكل مباشر وتدعم التنزيل السهل من
                       مصادرها الرسمية لضمان سلامة بياناتك وخصوصيتك.
                     </p>
                   </div>

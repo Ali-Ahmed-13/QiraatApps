@@ -84,12 +84,12 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
             value={searchVal}
             onChange={(e) => setSearchVal(e.target.value)}
             placeholder="ابحث عن التطبيقات القرآنية، معاجم التلاوة، أو الأقسام..."
-            className="w-full pl-12 pr-11 py-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-900  dark:bg-slate-100/60 text-slate-100 dark:text-slate-900  shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all text-sm placeholder:text-slate-400 dark:placeholder:text-slate-500"
+            className="w-full pl-12 pr-11 py-3.5 rounded-2xl border border-border dark:border-slate-800 bg-card dark:bg-slate-900 text-[#1E1E1E] dark:text-slate-100 shadow-xs focus:outline-none focus:ring-2 focus:ring-amber-500/50 dark:focus:ring-emerald-500/50 focus:border-amber-500 dark:focus:border-emerald-500 transition-all text-sm placeholder:text-slate-450 dark:placeholder:text-slate-550"
           />
           {searchVal && (
             <button
               onClick={() => setSearchVal('')}
-              className="absolute inset-y-0 left-0 pl-4.5 flex items-center text-slate-900 hover:text-slate-600 dark:hover:text-slate-300 transition-colors cursor-pointer"
+              className="absolute inset-y-0 left-0 pl-4.5 flex items-center text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-300 transition-colors cursor-pointer"
               aria-label="مسح البحث"
             >
               <X className="w-4 h-4" />
@@ -107,8 +107,8 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-200 border cursor-pointer ${
                   selectedCategory === category
-                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-md shadow-emerald-500/10'
-                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+                    ? 'bg-[#1E1E1E] text-white border-[#1E1E1E] shadow-sm dark:bg-emerald-600 dark:text-white dark:border-emerald-600 dark:shadow-md dark:shadow-emerald-500/10'
+                    : 'bg-card dark:bg-slate-900 border-border dark:border-slate-800 text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60'
                 }`}
               >
                 {category}
@@ -160,7 +160,7 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
                     setCurrentPage((prev) => Math.max(prev - 1, 1))
                   }
                   disabled={currentPage === 1}
-                  className="inline-flex items-center justify-center px-4 py-2 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+                  className="inline-flex items-center justify-center px-4 py-2 text-xs font-bold rounded-xl border border-border dark:border-slate-800 text-slate-700 dark:text-slate-300 bg-card dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800/60 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
                 >
                   السابق
                 </button>
@@ -174,8 +174,8 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
                         onClick={() => setCurrentPage(pageNum)}
                         className={`w-9 h-9 rounded-xl text-xs font-bold flex items-center justify-center transition-all cursor-pointer ${
                           currentPage === pageNum
-                            ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/20'
-                            : 'border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800'
+                            ? 'bg-[#1E1E1E] text-white border border-[#1E1E1E] shadow-sm dark:bg-emerald-600 dark:border-emerald-600 dark:shadow-md dark:shadow-emerald-500/20'
+                            : 'border border-border dark:border-slate-800 text-slate-700 dark:text-slate-300 bg-card dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800/60'
                         }`}
                       >
                         {pageNum}
@@ -189,7 +189,7 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
                     setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                   }
                   disabled={currentPage === totalPages}
-                  className="inline-flex items-center justify-center px-4 py-2 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+                  className="inline-flex items-center justify-center px-4 py-2 text-xs font-bold rounded-xl border border-border dark:border-slate-800 text-slate-700 dark:text-slate-300 bg-card dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800/60 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
                 >
                   التالي
                 </button>
@@ -199,7 +199,7 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
         </>
       ) : (
         /* Empty State */
-        <div className="text-center py-16 px-6 rounded-3xl border border-dashed border-slate-200 dark:border-slate-800 bg-white/30 dark:bg-slate-900/20 backdrop-blur-sm max-w-lg mx-auto">
+        <div className="text-center py-16 px-6 rounded-3xl border border-dashed border-border dark:border-slate-800 bg-card/30 dark:bg-slate-900/20 backdrop-blur-sm max-w-lg mx-auto">
           <ShieldAlert className="w-12 h-12 text-amber-500 mx-auto mb-4 animate-bounce" />
           <h3 className="text-base font-bold text-slate-800 dark:text-slate-200 mb-2">
             عذراً، لم نجد أي تطبيقات تطابق بحثك...
@@ -213,7 +213,7 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
               setSearchVal('');
               setSelectedCategory('الكل');
             }}
-            className="inline-flex items-center justify-center py-2 px-5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition-all duration-200 cursor-pointer"
+            className="inline-flex items-center justify-center py-2 px-5 rounded-xl text-xs font-bold bg-[#1E1E1E] hover:bg-black dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white transition-all duration-200 cursor-pointer"
           >
             إعادة ضبط عوامل التصفية
           </button>

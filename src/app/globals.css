@@ -1,31 +1,53 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --color-brand-primary: #059669; /* Safe Secure Green */
-  --color-brand-primary-hover: #047857;
-  --color-brand-secondary: #0ea5e9; /* Premium Sky Blue */
-  --color-brand-accent: #f59e0b; /* Attention/Download Amber */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-hover: var(--brand-primary-hover);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-secondary-hover: var(--brand-secondary-hover);
+  --color-brand-accent: var(--brand-accent);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   --font-sans: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --background: #f8fafc; /* slate-50 */
-  --foreground: #0f172a; /* slate-900 */
-  --card: #ffffff;
-  --card-foreground: #0f172a;
-  --border: #e2e8f0; /* slate-200 */
-  --muted: #64748b; /* slate-500 */
-  --muted-foreground: #475569; /* slate-600 */
+  --background: #F7F4EB; /* Creamy Warm Background */
+  --foreground: #1E1E1E; /* Dark Charcoal for high readability */
+  --card: #FDFBF7;       /* Ivory White Warm Card Background */
+  --card-foreground: #1E1E1E;
+  --border: #E7E0D2;     /* Warm Sand Border */
+  --muted: #4A4A4A;      /* Charcoal Muted */
+  --muted-foreground: #555555;
+  
+  --brand-primary: #1E1E1E;       /* Charcoal Primary in Light Mode */
+  --brand-primary-hover: #000000;
+  --brand-secondary: #b89053;     /* Quranic Gold */
+  --brand-secondary-hover: #9c773e;
+  --brand-accent: #d97706;        /* Amber Accent */
 }
 
 .dark {
-  --background: #0b0f19; /* premium deep dark */
-  --foreground: #f8fafc; /* slate-50 */
-  --card: #131c2e; /* slate-900ish */
-  --card-foreground: #f8fafc;
-  --border: #1e293b; /* slate-800 */
-  --muted: #94a3b8; /* slate-400 */
-  --muted-foreground: #cbd5e1; /* slate-300 */
+  --background: #0a120e; /* Deep Olive Night */
+  --foreground: #f4f0e6; /* Warm Cream Text */
+  --card: #101c16;       /* Slightly Lighter Deep Olive */
+  --card-foreground: #f4f0e6;
+  --border: #192f25;     /* Dark Olive Border */
+  --muted: #8a9a92;      /* Olive Muted */
+  --muted-foreground: #cbd5e1;
+  
+  --brand-primary: #15803d;       /* Emerald/Islamic Green for Dark Mode */
+  --brand-primary-hover: #166534;
+  --brand-secondary: #c5a880;     /* Light gold for contrast */
+  --brand-secondary-hover: #b09168;
+  --brand-accent: #f59e0b;
 }
 
 body {
@@ -33,6 +55,11 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--foreground);
+  transition: color 0.3s ease;
 }
 
 /* Custom Scrollbar */
