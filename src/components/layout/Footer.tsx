@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { ShieldCheck, Cpu } from 'lucide-react';
+import Image from 'next/image';
+import { Cpu } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -11,9 +12,13 @@ export default function Footer() {
           {/* Column 1: Detailed About (100+ words) */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-amber-100 dark:bg-emerald-950/40 text-amber-800 dark:text-emerald-400">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
+              <Image
+                src="/fullIcon.png"
+                alt="لوجو تِيجَان"
+                width={28}
+                height={28}
+                className="object-contain"
+              />
               <h3 className="font-bold text-[#1E1E1E] dark:text-slate-200 text-base">
                 منصة تِيجَان
               </h3>
@@ -26,9 +31,29 @@ export default function Footer() {
           {/* Column 2: App Categories Description */}
           <div className="flex flex-col gap-4">
             <h3 className="font-bold text-[#1E1E1E] dark:text-slate-200 text-base border-r-2 border-amber-600 dark:border-emerald-500 pr-2">
-              أقسام التطبيقات والبرامج
+              أقسام المنصة
             </h3>
             <ul className="flex flex-col gap-3.5">
+              <li>
+                <Link href="/articles" className="group block">
+                  <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 group-hover:text-amber-800 dark:group-hover:text-emerald-400 transition-colors">
+                    مقالات العلوم الشرعية
+                  </span>
+                  <span className="block text-[11px] text-slate-500 dark:text-slate-500 mt-0.5 leading-normal">
+                    مقالات متخصصة في التجويد والعقيدة والفقه والحديث والقراءات العشر.
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/sciences" className="group block">
+                  <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 group-hover:text-amber-800 dark:group-hover:text-emerald-400 transition-colors">
+                    أقسام العلوم الشرعية
+                  </span>
+                  <span className="block text-[11px] text-slate-500 dark:text-slate-500 mt-0.5 leading-normal">
+                    استكشف الأقسام الستة الرئيسية وتصفح المقالات المصنفة بحسب كل علم.
+                  </span>
+                </Link>
+              </li>
               <li>
                 <Link href="/#catalog" className="group block">
                   <span className="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 group-hover:text-amber-800 dark:group-hover:text-emerald-400 transition-colors">

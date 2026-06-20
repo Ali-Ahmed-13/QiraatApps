@@ -38,35 +38,42 @@ export default function Home() {
         <div className="container mx-auto max-w-3xl relative z-10">
           {/* Trust Badge */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/20 dark:border-emerald-500/20 bg-amber-500/5 dark:bg-emerald-500/5 text-amber-800 dark:text-emerald-400 text-xs font-bold mb-6">
-            <ShieldCheck className="w-4 h-4 shrink-0" />
-            <span>تتضمن تطبيقات رسمية مطورة بلغة فلاتر 100%</span>
+            <Sparkles className="w-4 h-4 shrink-0" />
+            <span>✨ منصة إسلامية شاملة تجمع بين أصالة العلم ومعاصرة التقنية</span>
           </div>
 
           {/* Heading */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200 leading-tight">
             منصة{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-l from-amber-700 dark:from-emerald-400 to-amber-500 dark:to-sky-400 font-black">
-              تِيجَان
+              تِيْجَان الإسلام
             </span>{' '}
-            لتطبيقات علوم القرآن والقراءات
+            للعلوم الشرعية والتطبيقات الرقمية
           </h1>
 
           {/* Subheading */}
           <p className="mt-6 text-sm sm:text-base md:text-lg text-slate-650 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto">
-            منصة برمجية متكاملة توفر لك وصولاً مباشراً لأحدث التطبيقات والأدوات
-            الرقمية المتخصصة في علوم المصحف الشريف والقراءات العشر مجاناً.
+            بوابتك البرمجية المعرفية الموثوقة؛ نوفر لك وصولاً مباشراً لأحدث التطبيقات والأدوات
+            الرقمية المتخصصة في علوم المصحف الشريف والقراءات العشر، بجانب مكتبة زاخرة
+            بالمقالات والبحوث الشرعية مجاناً وبدون قيود.
           </p>
 
           {/* Feature Highlights */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs font-bold text-slate-500 dark:text-slate-400">
-            <div className="flex items-center gap-1.5">
-              <Zap className="w-4 h-4 text-amber-600 dark:text-emerald-500" />
-              <span>تحميل مباشر وسريع</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-amber-600 dark:text-emerald-500" />
-              <span>مطورة بالكامل بلغة Flutter</span>
-            </div>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-xs font-bold">
+            <a
+              href="/#catalog"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#1E1E1E] hover:bg-black dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
+            >
+              <Zap className="w-4 h-4" />
+              🚀 تصفح مكتبة التطبيقات
+            </a>
+            <a
+              href="/articles"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-amber-500/30 dark:border-emerald-500/30 bg-amber-50 dark:bg-emerald-950/30 text-amber-800 dark:text-emerald-400 hover:bg-amber-100 dark:hover:bg-emerald-950/50 hover:-translate-y-0.5 transition-all"
+            >
+              <BookOpen className="w-4 h-4" />
+              📖 ابدأ القراءة الآن
+            </a>
           </div>
         </div>
       </section>

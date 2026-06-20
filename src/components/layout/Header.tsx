@@ -2,7 +2,8 @@
 
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
-import { Sun, Moon, ShieldCheck, Menu, X, AlertCircle } from 'lucide-react';
+import { Sun, Moon, Menu, X, AlertCircle } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Header() {
@@ -21,9 +22,9 @@ export default function Header() {
 
   const navLinks = [
     { name: 'الرئيسية', href: '/' },
-    { name: 'مكتبة التطبيقات', href: '/#catalog' },
-    { name: 'عن المنصة', href: '/#about' },
-    { name: 'مدونة التقنية القرآنية', href: '/#blog' },
+    { name: 'التطبيقات', href: '/#catalog' },
+    { name: 'المقالات', href: '/articles' },
+    { name: 'العلوم الشرعية', href: '/sciences' },
     { name: 'اتصل بنا', href: '/contact' },
   ];
 
@@ -60,9 +61,13 @@ export default function Header() {
           
           {/* Logo and Identity */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="p-2 rounded-xl bg-amber-100 dark:bg-emerald-950/40 text-amber-800 dark:text-emerald-400 group-hover:scale-105 transition-transform duration-300">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
+            <Image
+              src="/fullIcon.png"
+              alt="لوجو تيجان"
+              width={40}
+              height={40}
+              className="object-contain group-hover:scale-105 transition-transform duration-300"
+            />
             <span className="font-bold text-base sm:text-lg text-slate-850 dark:text-slate-200 tracking-tight">
               منصة{' '}
               <span className="text-amber-800 dark:text-emerald-400 font-extrabold">
