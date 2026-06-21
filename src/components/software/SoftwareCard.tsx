@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image'; // استيراد مكون الصور من نكست
 import { SoftwareResource } from 'src/types/software';
 import { ArrowLeft, HardDrive, Info, Tag } from 'lucide-react';
 
@@ -48,11 +49,24 @@ export default function SoftwareCard({ software }: SoftwareCardProps) {
         <div>
           {/* Header Metadata */}
           <div className="flex items-start gap-4">
-            {/* Visual Icon Container */}
-            <div
-              className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${fromBg} ${toBg} flex items-center justify-center font-bold text-xl border border-slate-100 dark:border-transparent shrink-0 shadow-inner`}
-            >
-              <span className={textCol}>{fallbackLetter}</span>
+            {/* 🛠️ تعديل حاوية الأيقونة لعرض الصورة الحقيقية وإبقاء الحرف كبديل فقط */}
+            <div className="w-14 h-14 rounded-2xl overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center border border-slate-100 dark:border-transparent shrink-0 shadow-inner relative">
+              {software.iconUrl ? (
+                <Image
+                  src={software.iconUrl}
+                  alt={software.name}
+                  fill
+                  sizes="56px"
+                  className="object-cover group-hover:scale-105 transition-transform duration-350"
+                  priority
+                />
+              ) : (
+                <div
+                  className={`w-full h-full flex items-center justify-center font-bold text-xl bg-gradient-to-br ${fromBg} ${toBg}`}
+                >
+                  <span className={textCol}>{fallbackLetter}</span>
+                </div>
+              )}
             </div>
 
             <div className="flex-grow min-w-0">

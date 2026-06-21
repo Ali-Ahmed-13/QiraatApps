@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
+import Image from 'next/image'; // 1. استيراد مكون الصور من نكست
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { SoftwareResource } from 'src/types/software';
@@ -141,11 +142,24 @@ export default async function SoftwareDetailsPage({ params }: PageProps) {
                 <span>إصدار رسمي</span>
               </div>
 
-              {/* Large Visual Icon Fallback */}
+              {/* 🛠️ تعديل هنا لتظهر صورة الشيخ المنشاوي بدلاً من الحرف الافتراضي */}
               <div
-                className={`w-24 h-24 rounded-3xl bg-gradient-to-br ${fromBg} ${toBg} flex items-center justify-center font-bold text-3xl border border-slate-100 dark:border-transparent shadow-inner mt-4`}
+                className="w-24 h-24 rounded-3xl overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center border border-slate-100 dark:border-transparent shrink-0 shadow-inner mt-4 relative"
               >
-                <span className={textCol}>{fallbackLetter}</span>
+                {software.iconUrl ? (
+                  <Image
+                    src={software.iconUrl}
+                    alt={software.name}
+                    fill
+                    sizes="96px"
+                    className="object-cover"
+                    priority
+                  />
+                ) : (
+                  <div className={`w-full h-full flex items-center justify-center font-bold text-3xl bg-gradient-to-br ${fromBg} ${toBg}`}>
+                    <span className={textCol}>{fallbackLetter}</span>
+                  </div>
+                )}
               </div>
 
               {/* Identity */}
@@ -171,8 +185,7 @@ export default async function SoftwareDetailsPage({ params }: PageProps) {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="flex items-center gap-1.5">
-                    <HardDrive className="w-4 h-4 text-slate-400" /> الحجم
-                    التقريبي
+                    <HardDrive className="w-4 h-4 text-slate-400" /> الحجم التقريبي
                   </span>
                   <strong className="text-slate-700 dark:text-slate-200">
                     {software.size}
@@ -201,7 +214,7 @@ export default async function SoftwareDetailsPage({ params }: PageProps) {
                 <p>{software.description}</p>
                 <p>
                   يعد هذا التطبيق من الخيارات المثالية والأكثر تميزاً في خدمة
-                  كتاب الله وعلومه. تم تطويره بلغة Flutter لتقديم أداء مستقر
+                  كتاب الله وعلومه. تم تطويره بأحدث التقنيات الرقمية لتقديم أداء مستقر
                   وتجربة مستخدم سلسة على مختلف منصات التشغيل.
                 </p>
                 <div className="bg-amber-500/5 dark:bg-emerald-950/20 border border-amber-500/10 dark:border-emerald-500/20 rounded-xl p-4.5 mt-6 flex items-start gap-3 text-xs sm:text-sm text-amber-900 dark:text-emerald-400">

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, use } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image'; // 1. استيراد مكون الصور من نكست
 import softwareList from 'src/data/softwareData.json';
 import AdBanner from 'src/components/layout/AdBanner';
 import { ArrowLeft, Download, ShieldCheck, Timer } from 'lucide-react';
@@ -24,7 +25,6 @@ export default function DownloadPage({ params }: DownloadPageProps) {
 
   useEffect(() => {
     if (timeLeft <= 0) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsReady(true);
       return;
     }
@@ -58,9 +58,22 @@ export default function DownloadPage({ params }: DownloadPageProps) {
         <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 dark:from-emerald-500/5 via-sky-500/5 to-transparent pointer-events-none" />
 
         <div className="relative z-10 flex flex-col items-center">
-          {/* Identity Icon Fallback */}
-          <div className="w-16 h-16 rounded-2xl bg-card dark:bg-slate-800 border border-border dark:border-transparent flex items-center justify-center font-extrabold text-2xl text-[#1E1E1E] dark:text-[#f4f0e6] shadow-inner mb-4">
-            {software.name.trim().charAt(0)}
+          {/* 🛠️ تعديل عرض أيقونة التطبيق الرسمية أو الفولباك الحرفي */}
+          <div className="w-16 h-16 rounded-2xl bg-card dark:bg-slate-800 border border-border dark:border-transparent flex items-center justify-center shadow-inner mb-4 relative overflow-hidden shrink-0">
+            {software.iconUrl ? (
+              <Image
+                src={software.iconUrl}
+                alt={software.name}
+                fill
+                sizes="64px"
+                className="object-cover"
+                priority
+              />
+            ) : (
+              <span className="font-extrabold text-2xl text-[#1E1E1E] dark:text-[#f4f0e6]">
+                {software.name.trim().charAt(0)}
+              </span>
+            )}
           </div>
 
           <h2 className="text-base sm:text-lg font-extrabold text-[#1E1E1E] dark:text-[#f4f0e6] mb-2">

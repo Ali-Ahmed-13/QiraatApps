@@ -12,7 +12,6 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
@@ -30,13 +29,10 @@ export default function Header() {
 
   return (
     <>
-      {/* Top Banner Notice / Islamic Ticker */}
-      <div className="w-full bg-[#F5EFE0] dark:bg-emerald-950 text-[#1E1E1E] dark:text-emerald-300 text-xs py-2 overflow-hidden border-b border-[#E7E0D2] dark:border-emerald-500/20 select-none">
+      {/* 🌟 الشريط العلوي الموحد: تم تحويله بالكامل إلى درجات الـ Amber الدافئة المتناسقة مع الهوية الذهبية */}
+      <div className="w-full bg-[#F5EFE0] dark:bg-amber-950/20 text-amber-900 dark:text-amber-300 text-xs py-2 overflow-hidden border-b border-[#E7E0D2] dark:border-amber-500/10 select-none">
         <div className="container mx-auto px-4 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-1.5 shrink-0 bg-amber-100 dark:bg-emerald-900 text-amber-950 dark:text-emerald-300 px-2 py-0.5 rounded-md text-[10px] font-bold z-10 border border-amber-200/60 dark:border-transparent">
-            <AlertCircle className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 animate-pulse" />
-            <span>تحديثات برمجية</span>
-          </div>
+          
           <div className="relative flex-grow overflow-hidden h-4 flex items-center">
             <div className="animate-marquee flex gap-16 font-medium text-[11px] sm:text-xs">
               <span>حديث شريف: قال رسول الله ﷺ: «اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه» (رواه مسلم)</span>
@@ -45,7 +41,7 @@ export default function Header() {
               <span>•</span>
               <span>جديد: إضافة ميزة حفظ موضع الاستماع تلقائياً في معجم التجويد المبسط وتحديث ملفات الـ APK المباشرة</span>
               <span>•</span>
-              {/* Duplicate contents for seamless looping */}
+              {/* التكرار لضمان حركة شريط سلسة ودائرية */}
               <span>حديث شريف: قال رسول الله ﷺ: «اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه» (رواه مسلم)</span>
               <span>•</span>
               <span>تحديث: تم إطلاق إصدارات فلاتر (Flutter 3.24) المحدثة بالكامل لتطبيقات المصاحف المرتلة ومصحف القراءات العشر لتحسين الأداء والأمان</span>
@@ -68,9 +64,9 @@ export default function Header() {
               height={40}
               className="object-contain group-hover:scale-105 transition-transform duration-300"
             />
-            <span className="font-bold text-base sm:text-lg text-slate-850 dark:text-slate-200 tracking-tight">
+            <span className="font-bold text-base sm:text-lg text-slate-800 dark:text-slate-200 tracking-tight">
               منصة{' '}
-              <span className="text-amber-800 dark:text-emerald-400 font-extrabold">
+              <span className="text-amber-700 dark:text-amber-500 font-extrabold">
                 تِيجَان
               </span>
             </span>
@@ -82,7 +78,7 @@ export default function Header() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="hover:text-amber-800 dark:hover:text-emerald-400 transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-850 dark:after:bg-emerald-400 hover:after:w-full after:transition-all after:duration-300"
+                className="hover:text-amber-700 dark:hover:text-amber-500 transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-amber-700 dark:after:bg-amber-500 hover:after:w-full after:transition-all after:duration-300"
               >
                 {link.name}
               </Link>
@@ -95,7 +91,7 @@ export default function Header() {
             {mounted ? (
               <button
                 onClick={toggleTheme}
-                className="relative p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 cursor-pointer"
+                className="relative p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-amber-500/50 cursor-pointer"
                 aria-label="تبديل المظهر"
               >
                 {resolvedTheme === 'dark' ? (
@@ -111,7 +107,7 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 cursor-pointer"
+              className="md:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-amber-500/50 cursor-pointer"
               aria-label="القائمة الرئيسية"
             >
               {isMenuOpen ? (
@@ -132,7 +128,7 @@ export default function Header() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-amber-800 dark:hover:text-emerald-400 transition-all"
+                  className="px-3 py-2 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-amber-700 dark:hover:text-amber-500 transition-all"
                 >
                   {link.name}
                 </Link>
