@@ -37,7 +37,7 @@ export default function Home() {
 
         <div className="container mx-auto max-w-3xl relative z-10">
           {/* Trust Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/20 dark:border-emerald-500/20 bg-amber-500/5 dark:bg-emerald-500/5 text-amber-800 dark:text-emerald-400 text-xs font-bold mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/20 dark:border-amber-600/25 bg-amber-500/5 dark:bg-amber-900/20 text-amber-800 dark:text-[#C9A84C] text-xs font-bold mb-6">
             <Sparkles className="w-4 h-4 shrink-0" />
             <span>✨ منصة إسلامية شاملة تجمع بين أصالة العلم ومعاصرة التقنية</span>
           </div>
@@ -45,7 +45,7 @@ export default function Home() {
           {/* Heading */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200 leading-tight">
             منصة{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-l from-amber-700 dark:from-emerald-400 to-amber-500 dark:to-sky-400 font-black">
+            <span className="text-transparent bg-clip-text bg-gradient-to-l from-amber-700 dark:from-[#C9A84C] to-amber-500 dark:to-[#A07B30] font-black">
               تِيْجَان الإسلام
             </span>{' '}
             للعلوم الشرعية والتطبيقات الرقمية
@@ -62,14 +62,14 @@ export default function Home() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-xs font-bold">
             <a
               href="/#catalog"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#1E1E1E] hover:bg-black dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#1E1E1E] hover:bg-black dark:bg-[#A07B30] dark:hover:bg-[#8a6926] text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
             >
               <Zap className="w-4 h-4" />
               🚀 تصفح مكتبة التطبيقات
             </a>
             <a
               href="/articles"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-amber-500/30 dark:border-emerald-500/30 bg-amber-50 dark:bg-emerald-950/30 text-amber-800 dark:text-emerald-400 hover:bg-amber-100 dark:hover:bg-emerald-950/50 hover:-translate-y-0.5 transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-amber-500/30 dark:border-amber-600/30 bg-amber-50 dark:bg-amber-900/20 text-amber-800 dark:text-[#C9A84C] hover:bg-amber-100 dark:hover:bg-amber-900/35 hover:-translate-y-0.5 transition-all"
             >
               <BookOpen className="w-4 h-4" />
               📖 ابدأ القراءة الآن
@@ -105,8 +105,8 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {/* Card 1: Sound Processing */}
-          <div className="p-6 rounded-3xl border border-border dark:border-slate-800 bg-card dark:bg-[#0f1422] hover:border-amber-500/40 dark:hover:border-emerald-500/30 transition-all duration-300 shadow-sm flex flex-col gap-4 group">
-            <div className="p-3.5 rounded-2xl bg-amber-100 dark:bg-emerald-950/40 text-amber-800 dark:text-emerald-400 w-fit group-hover:scale-110 transition-transform duration-300">
+          <div className="p-6 rounded-3xl border border-border dark:border-[#1e2e1a] bg-card dark:bg-[#131a0f] hover:border-amber-500/40 dark:hover:border-amber-600/30 transition-all duration-300 shadow-sm flex flex-col gap-4 group">
+            <div className="p-3.5 rounded-2xl bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-[#C9A84C] w-fit group-hover:scale-110 transition-transform duration-300">
               <Volume2 className="w-6 h-6" />
             </div>
             <h3 className="font-bold text-base sm:text-lg text-slate-800 dark:text-slate-200">
@@ -124,8 +124,8 @@ export default function Home() {
           </div>
 
           {/* Card 2: Offline Capability */}
-          <div className="p-6 rounded-3xl border border-border dark:border-slate-800 bg-card dark:bg-[#0f1422] hover:border-amber-500/40 dark:hover:border-emerald-500/30 transition-all duration-300 shadow-sm flex flex-col gap-4 group">
-            <div className="p-3.5 rounded-2xl bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 w-fit group-hover:scale-110 transition-transform duration-300">
+          <div className="p-6 rounded-3xl border border-border dark:border-[#1e2e1a] bg-card dark:bg-[#131a0f] hover:border-amber-500/40 dark:hover:border-amber-600/30 transition-all duration-300 shadow-sm flex flex-col gap-4 group">
+            <div className="p-3.5 rounded-2xl bg-sky-50 dark:bg-amber-900/20 text-sky-600 dark:text-[#C9A84C] w-fit group-hover:scale-110 transition-transform duration-300">
               <WifiOff className="w-6 h-6" />
             </div>
             <h3 className="font-bold text-[#1E1E1E] dark:text-slate-200 text-base">
@@ -143,21 +143,15 @@ export default function Home() {
           </div>
 
           {/* Card 3: Flutter Architecture */}
-          <div className="p-6 rounded-3xl border border-border dark:border-slate-800 bg-card dark:bg-[#0f1422] hover:border-amber-500/40 dark:hover:border-emerald-500/30 transition-all duration-300 shadow-sm flex flex-col gap-4 group">
-            <div className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 w-fit group-hover:scale-110 transition-transform duration-300">
+          <div className="p-6 rounded-3xl border border-border dark:border-[#1e2e1a] bg-card dark:bg-[#131a0f] hover:border-amber-500/40 dark:hover:border-amber-600/30 transition-all duration-300 shadow-sm flex flex-col gap-4 group">
+            <div className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-900/25 text-amber-600 dark:text-[#C9A84C] w-fit group-hover:scale-110 transition-transform duration-300">
               <Terminal className="w-6 h-6" />
             </div>
             <h3 className="font-bold text-base sm:text-lg text-slate-800 dark:text-slate-200">
-              معمارية فلاتر متعددة المنصات
+              أداء رقمي مستقر وعالي الكفاءة
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed text-justify">
-              نعتمد في تطوير كافة تطبيقاتنا على إطار عمل فلاتر (Flutter) المدعوم
-              من جوجل، مما يسمح لنا بكتابة كود برمجي موحد وعالي الكفاءة يعمل
-              بسلاسة تامة على نظامي أندرويد (Android) وآي أو إس (iOS). تضمن هذه
-              المعمارية أداءً قريباً من التطبيقات الأصلية (Native Performance)
-              مع استهلاك ضئيل للذاكرة العشوائية وبطارية الهاتف، بالإضافة إلى
-              مرونة تامة في تحديث الواجهات وتصحيح الأخطاء وإطلاق الميزات الجديدة
-              لجميع المستخدمين في وقت واحد وبسرعة قياسية.
+              نعتمد في تطوير برامجنا على بيئة عمل مستقرة ومدعومة، مما يتيح لنا تقديم واجهات منسقة تعمل بسلاسة تامة على مختلف الأنظمة (Android و iOS) وبأداء سريع، مع مرونة تامة في تحديث الواجهات وإطلاق الميزات الجديدة لجميع المستفيدين في وقت واحد.
             </p>
           </div>
         </div>
@@ -180,7 +174,7 @@ export default function Home() {
 
           <div className="relative z-10 flex flex-col lg:flex-row gap-8 items-center">
             <div className="flex-grow">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-emerald-950/40 text-amber-800 dark:text-emerald-400 text-xs font-bold mb-4">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-[#C9A84C] text-xs font-bold mb-4">
                 <BookOpen className="w-3.5 h-3.5" />
                 <span>التراث الصوتي القرآني</span>
               </div>
@@ -207,16 +201,14 @@ export default function Home() {
             </div>
 
             <div className="w-full lg:w-72 shrink-0 p-6 rounded-2xl bg-card dark:bg-[#12192c] border border-border dark:border-slate-800 text-center flex flex-col items-center gap-3">
-              <div className="w-16 h-16 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-amber-50 dark:bg-amber-900/25 text-amber-600 dark:text-[#C9A84C] flex items-center justify-center">
                 <Sparkles className="w-8 h-8" />
               </div>
               <h4 className="font-bold text-sm sm:text-base text-slate-800 dark:text-slate-200">
                 إحياء المدارس العتيقة
               </h4>
               <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-450 leading-relaxed">
-                نهتم في مشاريعنا البرمجية بإتاحة التلاوات الخاشعة للرعيل الأول
-                من القراء بتنسيقات صوتية متطورة تلائم سرعات الإنترنت المختلفة
-                وتعمل بشكل محلي كامل.
+                نهتم في مشاريعنا المعرفية بإعادة التلاوات النادرة للرعيل الأول من القراء بتسجيلات صوتية متطورة تلائم كافة المستخدمين وتعمل بشكل محلي كامل.
               </p>
             </div>
           </div>
@@ -228,7 +220,7 @@ export default function Home() {
       {/* ======================================================== */}
       <section className="container mx-auto px-4 py-12 border-t border-slate-200/60 dark:border-slate-800/60">
         <div className="max-w-4xl mx-auto text-center mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-950/40 text-sky-700 dark:text-sky-400 text-xs font-bold mb-4">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 dark:bg-amber-900/25 text-sky-700 dark:text-[#C9A84C] text-xs font-bold mb-4">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>الأسئلة المتكررة</span>
           </div>
@@ -248,7 +240,7 @@ export default function Home() {
               <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-850 dark:text-slate-200">
                 كيف يمكنني تحميل التطبيقات وهل هي مجانية بالكامل؟
               </h3>
-              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-amber-100 dark:bg-emerald-950/30 text-amber-800 dark:text-emerald-400">
+              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/25 text-amber-800 dark:text-[#C9A84C]">
                 <ChevronDown className="w-4 h-4" />
               </span>
             </summary>
@@ -267,7 +259,7 @@ export default function Home() {
               <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-850 dark:text-slate-200">
                 هل تدعم التطبيقات العمل على إصدارات أندرويد القديمة؟
               </h3>
-              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-amber-100 dark:bg-emerald-950/30 text-amber-800 dark:text-emerald-400">
+              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/25 text-amber-800 dark:text-[#C9A84C]">
                 <ChevronDown className="w-4 h-4" />
               </span>
             </summary>
@@ -307,7 +299,7 @@ export default function Home() {
                 كيف يتم التأكد من صحة النصوص القرآنية وتطابقها مع الرسم
                 العثماني؟
               </h3>
-              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-amber-100 dark:bg-emerald-950/30 text-amber-800 dark:text-emerald-400">
+              <span className="shrink-0 transition duration-350 group-open:-rotate-180 p-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/25 text-amber-800 dark:text-[#C9A84C]">
                 <ChevronDown className="w-4 h-4" />
               </span>
             </summary>
@@ -327,7 +319,7 @@ export default function Home() {
               <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-850 dark:text-slate-200">
                 هل تصل تحديثات دورية للتطبيقات وكيف أحصل عليها؟
               </h3>
-              <span className="shrink-0 transition duration-355 group-open:-rotate-180 p-1.5 rounded-lg bg-amber-100 dark:bg-emerald-950/30 text-amber-800 dark:text-emerald-400">
+              <span className="shrink-0 transition duration-355 group-open:-rotate-180 p-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/25 text-amber-800 dark:text-[#C9A84C]">
                 <ChevronDown className="w-4 h-4" />
               </span>
             </summary>
@@ -350,7 +342,7 @@ export default function Home() {
         className="container mx-auto px-4 py-12 border-t border-slate-200/60 dark:border-slate-800/60 scroll-mt-20"
       >
         <div className="max-w-3xl mx-auto rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f1422] p-8 shadow-sm text-center flex flex-col items-center gap-6">
-          <div className="p-4 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400">
+          <div className="p-4 rounded-full bg-amber-50 dark:bg-amber-900/25 text-amber-700 dark:text-[#C9A84C]">
             <Mail className="w-8 h-8" />
           </div>
           <div className="max-w-xl">

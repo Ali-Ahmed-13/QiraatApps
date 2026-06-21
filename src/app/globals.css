@@ -35,19 +35,19 @@
 }
 
 .dark {
-  --background: #0a120e; /* Deep Olive Night */
-  --foreground: #f4f0e6; /* Warm Cream Text */
-  --card: #101c16;       /* Slightly Lighter Deep Olive */
-  --card-foreground: #f4f0e6;
-  --border: #192f25;     /* Dark Olive Border */
-  --muted: #8a9a92;      /* Olive Muted */
-  --muted-foreground: #cbd5e1;
+  --background: #0c1109; /* Deep Olive Night — rich, not pure black */
+  --foreground: #EAE7DE; /* Warm ivory cream — easy on the eyes */
+  --card: #131a0f;       /* Warm olive-charcoal card surface */
+  --card-foreground: #EAE7DE;
+  --border: #1e2e1a;     /* Subtle olive border */
+  --muted: #8a9a8a;      /* Warm olive muted */
+  --muted-foreground: #c8c4b8;
   
-  --brand-primary: #15803d;       /* Emerald/Islamic Green for Dark Mode */
-  --brand-primary-hover: #166534;
-  --brand-secondary: #c5a880;     /* Light gold for contrast */
-  --brand-secondary-hover: #b09168;
-  --brand-accent: #f59e0b;
+  --brand-primary: #A07B30;       /* Muted scholarly gold — warm, not neon */
+  --brand-primary-hover: #8a6926;
+  --brand-secondary: #C9A84C;     /* Bright gold for accents */
+  --brand-secondary-hover: #b8962e;
+  --brand-accent: #C9A84C;        /* Unified warm gold accent */
 }
 
 body {
