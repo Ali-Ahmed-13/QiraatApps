@@ -2,7 +2,7 @@
 
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
-import { Sun, Moon, Menu, X, AlertCircle } from 'lucide-react';
+import { Sun, Moon, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -21,9 +21,8 @@ export default function Header() {
 
   const navLinks = [
     { name: 'الرئيسية', href: '/' },
-    { name: 'التطبيقات', href: '/#catalog' },
-    { name: 'المقالات', href: '/articles' },
-    { name: 'العلوم الشرعية', href: '/sciences' },
+    { name: 'التطبيقات', href: '/software' },
+    { name: 'ركن طالب العلم', href: '/sciences' },
     { name: 'اتصل بنا', href: '/contact' },
   ];
 
@@ -32,21 +31,44 @@ export default function Header() {
       {/* 🌟 الشريط العلوي الموحد: تم تحويله بالكامل إلى درجات الـ Amber الدافئة المتناسقة مع الهوية الذهبية */}
       <div className="w-full bg-[#F5EFE0] dark:bg-amber-950/20 text-amber-900 dark:text-amber-300 text-xs py-2 overflow-hidden border-b border-[#E7E0D2] dark:border-amber-500/10 select-none">
         <div className="container mx-auto px-4 flex items-center justify-between gap-4">
-          
           <div className="relative flex-grow overflow-hidden h-4 flex items-center">
             <div className="animate-marquee flex gap-16 font-medium text-[11px] sm:text-xs">
-              <span>حديث شريف: قال رسول الله ﷺ: «اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه» (رواه مسلم)</span>
+              <span>
+                حديث شريف: قال رسول الله ﷺ: «خَيرُكُم مَن تَعَلَّمَ القُرآنَ
+                وعَلَّمَهُ» (رواه البخاري)
+              </span>
               <span>•</span>
-              <span>تحديث: تم إطلاق إصدارات فلاتر (Flutter 3.24) المحدثة بالكامل لتطبيقات المصاحف المرتلة ومصحف القراءات العشر لتحسين الأداء والأمان</span>
+              <span>
+                حديث شريف: قال رسول الله ﷺ: «مَن سَلَكَ طَرِيقًا يَلْتَمِسُ فيه
+                عِلْمًا، سَهَّلَ اللَّهُ له به طَرِيقًا إلى الجَنَّةِ» (رواه
+                مسلم)
+              </span>
               <span>•</span>
-              <span>جديد: إضافة ميزة حفظ موضع الاستماع تلقائياً في معجم التجويد المبسط وتحديث ملفات الـ APK المباشرة</span>
+              <span>
+                حديث شريف: قال رسول الله ﷺ: «إنَّ للهِ أهلِينَ مِنَ الناسِ.. هُم
+                أهلُ القرآنِ، أهلُ اللهِ وخاصَّتُهُ» (رواه أحمد)
+              </span>
               <span>•</span>
-              {/* التكرار لضمان حركة شريط سلسة ودائرية */}
-              <span>حديث شريف: قال رسول الله ﷺ: «اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه» (رواه مسلم)</span>
+              <span>
+                حديث شريف: قال رسول الله ﷺ: «مَن يُرِدِ اللَّهُ به خَيْرًا
+                يُفَقِّهْهُ في الدِّينِ» (متفق عليه)
+              </span>
               <span>•</span>
-              <span>تحديث: تم إطلاق إصدارات فلاتر (Flutter 3.24) المحدثة بالكامل لتطبيقات المصاحف المرتلة ومصحف القراءات العشر لتحسين الأداء والأمان</span>
+              <span>
+                حديث شريف: قال رسول الله ﷺ: «إنَّ اللَّهَ يَرْفَعُ بهذا
+                الكِتَابِ أَقْوَامًا، وَيَضَعُ به آخَرِينَ» (رواه مسلم)
+              </span>
               <span>•</span>
-              <span>جديد: إضافة ميزة حفظ موضع الاستماع تلقائياً في معجم التجويد المبسط وتحديث ملفات الـ APK المباشرة</span>
+              <span>
+                حديث شريف: قال رسول الله ﷺ: «الْمَاهِرُ بالْقُرْآنِ مع
+                السَّفَرَةِ الْكِرَامِ الْبَرَرَةِ» (متفق عليه)
+              </span>
+              <span>•</span>
+              <span>
+                حديث شريف: قال رسول الله ﷺ: «ومَا اجْتَمَعَ قَوْمٌ في بَيْتٍ مِن
+                بُيُوتِ اللهِ يَتْلُونَ كِتَابَ اللهِ وَيَتَدَارَسُونَهُ
+                بيْنَهُمْ، إِلَّا نَزَلَتْ عَلَيْهِمِ السَّكِينَةُ» (رواه مسلم)
+              </span>
             </div>
           </div>
         </div>
@@ -54,7 +76,6 @@ export default function Header() {
 
       <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-card/80 dark:bg-[#0b0f19]/80 backdrop-blur-md transition-colors duration-300">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          
           {/* Logo and Identity */}
           <Link href="/" className="flex items-center gap-2.5 group">
             <Image

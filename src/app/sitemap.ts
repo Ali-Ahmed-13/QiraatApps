@@ -1,6 +1,5 @@
 import { MetadataRoute } from "next";
 import softwareList from "src/data/softwareData.json";
-import articleList from "src/data/articles.json";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://tijan-alislam.vercel.app";
@@ -21,26 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.4,
   }));
 
-  // Dynamic entries for article detail pages
-  const articleEntries = articleList.map((article) => ({
-    url: `${baseUrl}/articles/${article.id}`,
-    lastModified: new Date(article.date),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
   return [
     {
       url: baseUrl,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/articles`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
     },
     {
       url: `${baseUrl}/sciences`,
@@ -68,6 +53,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...softwareEntries,
     ...downloadEntries,
-    ...articleEntries,
   ];
 }

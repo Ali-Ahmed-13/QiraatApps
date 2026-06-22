@@ -1,0 +1,141 @@
+[
+  {
+    "number": 1,
+    "id": "arabic-language",
+    "name": "اللغة العربية",
+    "topics": [
+      {
+        "id": "nahw",
+        "name": "النحو",
+        "levels": [
+          {
+            "id": "nahw-beginner",
+            "label": "للمبتدئين",
+            "order": 1,
+            "matn": {
+              "id": "ajurrumiyyah",
+              "title": "متن الآجرومية",
+              "companionAppId": "quran-qiraat-app",
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "nahw-intermediate",
+            "label": "مستوى متوسط",
+            "order": 2,
+            "matn": {
+              "id": "qatr-al-nada",
+              "title": "متن قطر الندى وبل الصدى",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          }
+        ]
+      },
+      {
+        "id": "sarf",
+        "name": "الصرف",
+        "levels": []
+      }
+    ]
+  },
+  {
+    "number": 2,
+    "id": "quranic-sciences",
+    "name": "القرآن وعلومه وتفسيره",
+    "topics": [
+      {
+        "id": "tajwid",
+        "name": "التجويد",
+        "levels": [
+          {
+            "id": "tajwid-beginner",
+            "label": "للمبتدئين",
+            "order": 1,
+            "matn": {
+              "id": "tuhfat-atfal-jazariyyah",
+              "title": "متن تحفة الأطفال والغلمان والجزيرية",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "tajwid-intermediate",
+            "label": "مستوى متوسط",
+            "order": 2,
+            "matn": {
+              "id": "salsabil-shafi",
+              "title": "متن السلسبيل الشافي",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          }
+        ]
+      },
+      {
+        "id": "qiraat",
+        "name": "القراءات",
+        "levels": [
+          {
+            "id": "qiraat-beginner",
+            "label": "للمبتدئين",
+            "order": 1,
+            "matn": {
+              "id": "shatibiyyah-durrah",
+              "title": "متن الشاطبية والدرة",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "qiraat-intermediate",
+            "label": "مستوى متوسط",
+            "order": 2,
+            "matn": {
+              "id": "ithaf-aqilah",
+              "title": "متن إتحاف البرية وعقيلة أتراب القصائد",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "qiraat-advanced",
+            "label": "متقدم",
+            "order": 3,
+            "matn": {
+              "id": "tayyibat-al-nashr",
+              "title": "متن طيبة النشر في القراءات العشر",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ulum-al-quran",
+        "name": "علوم القرآن",
+        "levels": [
+          {
+            "id": "ulum-beginner",
+            "label": "للمبتدئين",
+            "order": 1,
+            "matn": {
+              "id": "zamzamiyyah",
+              "title": "منظومة الزمزمية",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
