@@ -1,57 +1,20 @@
-import { MetadataRoute } from "next";
-import softwareList from "src/data/softwareData.json";
+import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://tijan-alislam.vercel.app";
+  const baseUrl = 'https://tijan-alislam.vercel.app';
 
-  // Dynamic entries for software detail pages
-  const softwareEntries = softwareList.map((item) => ({
-    url: `${baseUrl}/software/${item.id}`,
+  // الصفحات الأساسية الثابتة في الموقع
+  const routes = [
+    '',
+    '/contact',
+    '/privacy-policy',
+    '/terms',
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
+    changeFrequency: (route === '' ? 'daily' : 'monthly') as const,
+    priority: route === '' ? 1.0 : 0.8,
   }));
 
-  // Dynamic entries for software download screens
-  const downloadEntries = softwareList.map((item) => ({
-    url: `${baseUrl}/software/${item.id}/download`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.4,
-  }));
-
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/sciences`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/privacy-policy`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/terms`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    ...softwareEntries,
-    ...downloadEntries,
-  ];
+  return [...routes];
 }
