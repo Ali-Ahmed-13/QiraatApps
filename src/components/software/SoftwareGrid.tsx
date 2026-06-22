@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { SoftwareResource } from 'src/types/software';
 import SoftwareCard from 'src/components/software/SoftwareCard';
-import AdBanner from 'src/components/layout/AdBanner';
 import { Search, X, ShieldAlert, SlidersHorizontal } from 'lucide-react';
 
 interface SoftwareGridProps {
