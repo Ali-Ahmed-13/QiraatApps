@@ -29,7 +29,6 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
 
   // Reset page when search or category changes to avoid empty pagination views
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCurrentPage(1);
   }, [debouncedQuery, selectedCategory]);
 
@@ -70,7 +69,7 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
   }, [currentPage, filteredSoftware]);
 
   return (
-    <section className="container mx-auto px-4 py-8">
+    <section className="container mx-auto px-4 py-8" dir="rtl">
       {/* Search and Filter Section */}
       <div className="max-w-4xl mx-auto mb-12">
         {/* Search Input */}
@@ -83,7 +82,7 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
             value={searchVal}
             onChange={(e) => setSearchVal(e.target.value)}
             placeholder="ابحث عن التطبيقات القرآنية، معاجم التلاوة، أو الأقسام..."
-            className="w-full pl-12 pr-11 py-3.5 rounded-2xl border border-border dark:border-slate-800 bg-card dark:bg-slate-900 text-[#1E1E1E] dark:text-slate-100 shadow-xs focus:outline-none focus:ring-2 focus:ring-amber-500/50 dark:focus:ring-emerald-500/50 focus:border-amber-500 dark:focus:border-emerald-500 transition-all text-sm placeholder:text-slate-450 dark:placeholder:text-slate-550"
+            className="w-full pl-12 pr-11 py-3.5 rounded-2xl border border-border dark:border-slate-800 bg-card dark:bg-slate-900 text-[#1E1E1E] dark:text-slate-100 shadow-xs focus:outline-none focus:ring-2 focus:ring-amber-500/50 dark:focus:ring-amber-500/30 focus:border-amber-500 dark:focus:border-amber-500 transition-all text-sm placeholder:text-slate-450 dark:placeholder:text-slate-550"
           />
           {searchVal && (
             <button
@@ -106,7 +105,7 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-200 border cursor-pointer ${
                   selectedCategory === category
-                    ? 'bg-[#1E1E1E] text-white border-[#1E1E1E] shadow-sm dark:bg-emerald-600 dark:text-white dark:border-emerald-600 dark:shadow-md dark:shadow-emerald-500/10'
+                    ? 'bg-[#1E1E1E] text-white border-[#1E1E1E] shadow-sm dark:bg-amber-500 dark:text-slate-950 dark:border-amber-500 dark:shadow-md dark:shadow-amber-500/10'
                     : 'bg-card dark:bg-slate-900 border-border dark:border-slate-800 text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60'
                 }`}
               >
@@ -124,17 +123,8 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             id="catalog"
           >
-            {currentPageData.map((item, index) => (
-              <React.Fragment key={item.id}>
-                <SoftwareCard software={item} />
-
-                {/* Inject Ad Banner after the first row of cards (index 2 in a 3-column grid) */}
-                {index === 2 && (
-                  <div className="col-span-full py-2">
-                    <AdBanner position="content" />
-                  </div>
-                )}
-              </React.Fragment>
+            {currentPageData.map((item) => (
+              <SoftwareCard key={item.id} software={item} />
             ))}
           </div>
 
@@ -173,7 +163,7 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
                         onClick={() => setCurrentPage(pageNum)}
                         className={`w-9 h-9 rounded-xl text-xs font-bold flex items-center justify-center transition-all cursor-pointer ${
                           currentPage === pageNum
-                            ? 'bg-[#1E1E1E] text-white border border-[#1E1E1E] shadow-sm dark:bg-emerald-600 dark:border-emerald-600 dark:shadow-md dark:shadow-emerald-500/20'
+                            ? 'bg-[#1E1E1E] text-white border border-[#1E1E1E] shadow-sm dark:bg-amber-500 dark:border-amber-500 dark:text-slate-950 dark:shadow-md dark:shadow-amber-500/20'
                             : 'border border-border dark:border-slate-800 text-slate-700 dark:text-slate-300 bg-card dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800/60'
                         }`}
                       >
@@ -199,20 +189,19 @@ export default function SoftwareGrid({ softwareList }: SoftwareGridProps) {
       ) : (
         /* Empty State */
         <div className="text-center py-16 px-6 rounded-3xl border border-dashed border-border dark:border-slate-800 bg-card/30 dark:bg-slate-900/20 backdrop-blur-sm max-w-lg mx-auto">
-          <ShieldAlert className="w-12 h-12 text-amber-500 mx-auto mb-4 animate-bounce" />
+          <ShieldAlert className="w-12 h-12 text-amber-500 mx-auto mb-4 animate-pulse" />
           <h3 className="text-base font-bold text-slate-800 dark:text-slate-200 mb-2">
             عذراً، لم نجد أي تطبيقات تطابق بحثك...
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 mb-6 max-w-xs mx-auto leading-relaxed">
-            تأكد من كتابة الكلمات بشكل صحيح أو جرب استخدام كلمات بحث بديلة مثل
-            تصنيف التطبيق أو اسم الأداة العام.
+            تأكد من كتابة الكلمات بشكل صحيح أو جرب استخدام عوامل تصفية أخرى.
           </p>
           <button
             onClick={() => {
               setSearchVal('');
               setSelectedCategory('الكل');
             }}
-            className="inline-flex items-center justify-center py-2 px-5 rounded-xl text-xs font-bold bg-[#1E1E1E] hover:bg-black dark:bg-emerald-600 dark:hover:bg-emerald-700 text-white transition-all duration-200 cursor-pointer"
+            className="inline-flex items-center justify-center py-2 px-5 rounded-xl text-xs font-bold bg-[#1E1E1E] hover:bg-black dark:bg-amber-500 dark:text-slate-950 dark:hover:bg-amber-400 transition-all duration-200 cursor-pointer"
           >
             إعادة ضبط عوامل التصفية
           </button>
