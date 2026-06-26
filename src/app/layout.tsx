@@ -62,6 +62,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // كود البيانات المنظمة لإجبار جوجل على قراءة اسم الموقع
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "تِيجَان الإسلام",
+    "alternateName": ["منصة تيجان الإسلام", "Tijan Alislam"],
+    "url": "https://tijan-alislam.vercel.app" // استبدله بالدومين الجديد مستقبلاً لو غيرته
+  };
+
   return (
     <html
       lang="ar"
@@ -73,6 +82,11 @@ export default function RootLayout({
         <meta
           name="google-site-verification"
           content="6m4cvKjfzOIaoX_uomrPRcUBviSVY6ueK9IIz_hxQ6Y"
+        />
+        {/* إضافة الـ Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="min-h-full flex flex-col theme-transition bg-white dark:bg-[#0c111d]">
