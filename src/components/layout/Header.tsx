@@ -88,7 +88,7 @@ export default function Header() {
             <span className="font-bold text-base sm:text-lg text-slate-800 dark:text-slate-200 tracking-tight">
               منصة{' '}
               <span className="text-amber-700 dark:text-amber-500 font-extrabold">
-                تِيجَان
+                 تِيجَان الإسلام
               </span>
             </span>
           </Link>
