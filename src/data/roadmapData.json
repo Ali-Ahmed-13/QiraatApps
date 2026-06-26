@@ -5,39 +5,52 @@
     "name": "اللغة العربية",
     "topics": [
       {
-        "id": "nahw",
-        "name": "النحو",
+        "id": "nahw-sarf",
+        "name": "النحو والصرف",
         "levels": [
           {
-            "id": "nahw-beginner",
+            "id": "arabic-ajurrumiyyah",
             "label": "للمبتدئين",
             "order": 1,
             "matn": {
-              "id": "ajurrumiyyah",
-              "title": "متن الآجرومية",
-              "companionAppId": "quran-qiraat-app",
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "nazm-al-ajurrumiyyah",
+              "title": "نظم الآجرومية",
+              "companionAppId": null,
               "youtubeUrl": "#",
               "pdfUrl": "#"
             }
           },
           {
-            "id": "nahw-intermediate",
+            "id": "arabic-qatr-al-nada",
             "label": "مستوى متوسط",
             "order": 2,
             "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
               "id": "qatr-al-nada",
               "title": "متن قطر الندى وبل الصدى",
               "companionAppId": null,
               "youtubeUrl": "#",
               "pdfUrl": "#"
             }
+          },
+          {
+            "id": "arabic-alfiyyah",
+            "label": "متقدم",
+            "order": 3,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "alfiyyat-ibn-malik",
+              "title": "متن ألفية ابن مالك",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
           }
         ]
-      },
-      {
-        "id": "sarf",
-        "name": "الصرف",
-        "levels": []
       }
     ]
   },
@@ -51,27 +64,72 @@
         "name": "التجويد",
         "levels": [
           {
-            "id": "tajwid-beginner",
+            "id": "tajwid-tuhfa",
             "label": "للمبتدئين",
             "order": 1,
             "matn": {
-              "id": "tuhfat-atfal-jazariyyah",
-              "title": "متن تحفة الأطفال والغلمان والجزيرية",
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "tuhfat-al-atfal",
+              "title": "متن تحفة الأطفال والغلمان",
               "companionAppId": null,
               "youtubeUrl": "#",
               "pdfUrl": "#"
             }
           },
           {
-            "id": "tajwid-intermediate",
-            "label": "مستوى متوسط",
+            "id": "tajwid-khaqaniyyah",
+            "label": "للمبتدئين",
             "order": 2,
             "matn": {
-              "id": "salsabil-shafi",
-              "title": "متن السلسبيل الشافي",
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "al-khaqaniyyah",
+              "title": "الرائية الخاقانية في التجويد",
               "companionAppId": null,
               "youtubeUrl": "#",
               "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "tajwid-jazariyyah",
+            "label": "مستوى متوسط",
+            "order": 3,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "al-jazariyyah",
+              "title": "المقدمة الجزرية",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "tajwid-salsabil",
+            "label": "متقدم",
+            "order": 4,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "yes",
+              "id": "al-salsabil-al-shafi",
+              "title": "متن السلسبيل الشافي",
+              "companionAppId": "salsabil-app",
+              "youtubeUrl": "#",
+              "pdfUrl": [
+                {
+                  "label": "شرح المبتدئين (ميسر)",
+                  "url": "/docs/salsabil-beginner.pdf"
+                },
+                {
+                  "label": "شرح متوسط (توضيحي)",
+                  "url": "/docs/salsabil-medium.pdf"
+                },
+                {
+                  "label": "شرح متقدم (موسع)",
+                  "url": "/docs/salsabil-advanced.pdf"
+                }
+              ]
             }
           }
         ]
@@ -81,34 +139,85 @@
         "name": "القراءات",
         "levels": [
           {
-            "id": "qiraat-beginner",
+            "id": "qiraat-shatibiyyah",
             "label": "للمبتدئين",
             "order": 1,
             "matn": {
-              "id": "shatibiyyah-durrah",
-              "title": "متن الشاطبية والدرة",
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "al-shatibiyyah",
+              "title": "متن الشاطبية (حرز الأماني)",
               "companionAppId": null,
               "youtubeUrl": "#",
-              "pdfUrl": "#"
+              "pdfUrl": [
+                { "label": "اسم الملف الأول", "url": "رابط التحميل" },
+                { "label": "اسم الملف الثاني", "url": "رابط التحميل" }
+              ]
             }
           },
           {
-            "id": "qiraat-intermediate",
-            "label": "مستوى متوسط",
+            "id": "qiraat-durrah",
+            "label": "للمبتدئين",
             "order": 2,
             "matn": {
-              "id": "ithaf-aqilah",
-              "title": "متن إتحاف البرية وعقيلة أتراب القصائد",
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "al-durrah-al-mudiyyah",
+              "title": "متن الدرة المضية",
               "companionAppId": null,
               "youtubeUrl": "#",
               "pdfUrl": "#"
             }
           },
           {
-            "id": "qiraat-advanced",
-            "label": "متقدم",
+            "id": "qiraat-aqilah",
+            "label": "مستوى متوسط",
             "order": 3,
             "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "aqilah-atrab-al-qasaid",
+              "title": "عقيلة أتراب القصائد في الرسم",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "qiraat-zahr",
+            "label": "مستوى متوسط",
+            "order": 4,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "manzumat-al-zahr",
+              "title": "منظومة ناظمة الزهر في الفواصل",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "qiraat-ithaf",
+            "label": "مستوى متوسط",
+            "order": 5,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "ithaf-al-barriyyah",
+              "title": "متن إتحاف البرية بتحريرات الشاطبية",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "qiraat-tayyibah",
+            "label": "متقدم",
+            "order": 6,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
               "id": "tayyibat-al-nashr",
               "title": "متن طيبة النشر في القراءات العشر",
               "companionAppId": null,
@@ -119,16 +228,224 @@
         ]
       },
       {
-        "id": "ulum-al-quran",
-        "name": "علوم القرآن",
+        "id": "tafsir-sciences",
+        "name": "التفسير وعلومه",
         "levels": [
           {
-            "id": "ulum-beginner",
+            "id": "tafsir-zamzamiyyah",
             "label": "للمبتدئين",
             "order": 1,
             "matn": {
-              "id": "zamzamiyyah",
-              "title": "منظومة الزمزمية",
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "al-zamzamiyyah",
+              "title": "منظومة الزمزمية في علوم القرآن",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "tafsir-kalimat-quran",
+            "label": "متقدم",
+            "order": 2,
+            "matn": {
+              "type": "book",
+              "hasCompanionApp": "no",
+              "id": "kalimat-al-quran",
+              "title": "كتاب كلمات القرآن تفسير وبيان",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "number": 3,
+    "id": "hadith-sciences",
+    "name": "الحديث وعلومه",
+    "topics": [
+      {
+        "id": "hadith-mustalah",
+        "name": "مصطلح الحديث ومتونه",
+        "levels": [
+          {
+            "id": "hadith-bayquniyyah",
+            "label": "للمبتدئين",
+            "order": 1,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "al-bayquniyyah",
+              "title": "متن البيقونية",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "hadith-arbain",
+            "label": "للمبتدئين",
+            "order": 2,
+            "matn": {
+              "type": "book",
+              "hasCompanionApp": "no",
+              "id": "al-arbain-al-nawawiyyah",
+              "title": "كتاب الأربعين النووية",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "hadith-qasab-sukkar",
+            "label": "مستوى متوسط",
+            "order": 3,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "qasab-al-sukkar",
+              "title": "متن قصب السكر نظم نخبة الفكر",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "hadith-jamie-ulum",
+            "label": "للمبتدئين",
+            "order": 4,
+            "matn": {
+              "type": "book",
+              "hasCompanionApp": "no",
+              "id": "jamie-al-ulum-wal-hikam",
+              "title": "كتاب جامع العلوم والحكم",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "number": 4,
+    "id": "fiqh-principles",
+    "name": "الفقه وأصوله",
+    "topics": [
+      {
+        "id": "fiqh-shafii",
+        "name": "الفقه الشافعي وأصول الفقه",
+        "levels": [
+          {
+            "id": "fiqh-ghayah",
+            "label": "للمبتدئين",
+            "order": 1,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "al-ghayah-wal-taqrib",
+              "title": "متن الغاية والتقريب (متن أبي شجاع)",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "fiqh-waraqat",
+            "label": "للمبتدئين",
+            "order": 2,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "nazm-al-waraqat",
+              "title": "نظم الورقات للعمريطي في الأصول",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "number": 5,
+    "id": "aqidah-sects",
+    "name": "العقيدة والمذاهب والفرق",
+    "topics": [
+      {
+        "id": "aqidah-mutun",
+        "name": "متون العقيدة والتوحيد",
+        "levels": [
+          {
+            "id": "aqidah-kharidah",
+            "label": "للمبتدئين",
+            "order": 1,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "al-kharidah-al-bahiyyah",
+              "title": "متن الخريدة البهية",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "aqidah-jawharah",
+            "label": "مستوى متوسط",
+            "order": 2,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "jawharat-al-tawhid",
+              "title": "متن جوهرة التوحيد",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          },
+          {
+            "id": "aqidah-kubra",
+            "label": "متقدم",
+            "order": 3,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "al-kubra-lil-sanusi",
+              "title": "متن العقيدة الكبرى للسنوسي",
+              "companionAppId": null,
+              "youtubeUrl": "#",
+              "pdfUrl": "#"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "number": 6,
+    "id": "seerah-history",
+    "name": "السيرة النبوية والتاريخ الإسلامي",
+    "topics": [
+      {
+        "id": "seerah-mutun",
+        "name": "السيرة النبوية المطهرة",
+        "levels": [
+          {
+            "id": "seerah-miyyah",
+            "label": "للمبتدئين",
+            "order": 1,
+            "matn": {
+              "type": "matn",
+              "hasCompanionApp": "no",
+              "id": "al-urjuzah-al-miyyah",
+              "title": "الأرجوزة المئية في ذكر حال أشرف البرية",
               "companionAppId": null,
               "youtubeUrl": "#",
               "pdfUrl": "#"
