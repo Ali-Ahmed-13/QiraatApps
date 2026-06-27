@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useState, useRef } from 'react';
 import {
-  ArrowRight,
   BookOpen,
   CheckCircle2,
   Compass,
@@ -28,7 +27,6 @@ type Matn = {
   title: string;
   companionAppId: string | null;
   youtubeUrl: string;
-  // عدّلنا الـ Type ليدعم إما string كالسابق أو Array من الملفات المتعددة
   pdfUrl: string | PdfFile[];
 };
 
@@ -105,7 +103,6 @@ export default function SciencesPage() {
     []
   );
 
-  // State لإدارة أي القوائم المنسدلة مفتوحة حالياً عبر تتبع level.id
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -123,7 +120,6 @@ export default function SciencesPage() {
     };
   }, []);
 
-  // إغلاق القائمة عند الضغط في أي مكان خارجها
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -216,11 +212,10 @@ export default function SciencesPage() {
                   key={science.id}
                   type="button"
                   onClick={() => selectScience(science)}
-                  className={`group min-w-[245px] rounded-[1.4rem] border p-4 text-right shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-600/35 ${
-                    isActive
-                      ? 'border-amber-700/35 bg-slate-950 text-white shadow-amber-900/10 dark:border-amber-500/45 dark:bg-amber-500 dark:text-slate-950 dark:shadow-amber-500/20'
-                      : 'border-amber-900/10 bg-card/88 text-slate-800 hover:border-amber-700/25 dark:border-amber-400/10 dark:bg-[#0c111d]/88 dark:text-slate-200 dark:hover:border-amber-500/35'
-                  }`}
+                  className={`group min-w-[245px] rounded-[1.4rem] border p-4 text-right shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-amber-600/35 ${isActive
+                    ? 'border-amber-700/35 bg-slate-950 text-white shadow-amber-900/10 dark:border-amber-500/45 dark:bg-amber-500 dark:text-slate-950 dark:shadow-amber-500/20'
+                    : 'border-amber-900/10 bg-card/88 text-slate-800 hover:border-amber-700/25 dark:border-amber-400/10 dark:bg-[#0c111d]/88 dark:text-slate-200 dark:hover:border-amber-500/35'
+                    }`}
                 >
                   <span className="flex items-start justify-between gap-4">
                     <span className="block text-lg font-black">
@@ -262,11 +257,10 @@ export default function SciencesPage() {
                     setActiveTopicId(topic.id);
                     setOpenDropdownId(null);
                   }}
-                  className={`flex items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-right transition-all duration-300 ${
-                    isActive
-                      ? 'border-amber-700/30 bg-amber-100/70 text-amber-900 dark:border-amber-500/35 dark:bg-amber-500/10 dark:text-amber-300'
-                      : 'border-slate-200 bg-white/70 text-slate-700 dark:border-slate-700 dark:bg-slate-900/50 dark:text-slate-300'
-                  }`}
+                  className={`flex items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-right transition-all duration-300 ${isActive
+                    ? 'border-amber-700/30 bg-amber-100/70 text-amber-900 dark:border-amber-500/35 dark:bg-amber-500/10 dark:text-amber-300'
+                    : 'border-slate-200 bg-white/70 text-slate-700 dark:border-slate-700 dark:bg-slate-900/55 dark:text-slate-300'
+                    }`}
                 >
                   <span className="block text-sm font-black">{topic.name}</span>
                 </button>
@@ -300,8 +294,8 @@ export default function SciencesPage() {
                     const isBook = level.matn.type === 'book';
                     const showAppButton = companion.kind !== 'hidden';
 
-                    // التحقق مما إذا كان هناك ملفات متعددة أم رابط واحد عادي
-                    const hasMultiplePdfs = Array.isArray(level.matn.pdfUrl);
+                    // الإصلاح الحاسم هنا لفحص المصفوفة بشكل سليم
+                    const hasMultiplePdfs = Array.isArray(level.matn.pdfUrl) && level.matn.pdfUrl.length > 0;
                     const isDropdownOpen = openDropdownId === level.id;
 
                     return (
@@ -335,32 +329,30 @@ export default function SciencesPage() {
                           </div>
 
                           <div
-                            className={`mt-5 grid gap-2 ${
-                              isBook
-                                ? 'grid-cols-1'
-                                : showAppButton
-                                  ? 'grid-cols-1 sm:grid-cols-3'
-                                  : 'grid-cols-1 sm:grid-cols-2'
-                            }`}
+                            className={`mt-5 grid gap-2 ${isBook
+                              ? 'grid-cols-1'
+                              : showAppButton
+                                ? 'grid-cols-1 sm:grid-cols-3'
+                                : 'grid-cols-1 sm:grid-cols-2'
+                              }`}
                           >
                             {isBook ? (
-                              <a
-                                href={
-                                  hasMultiplePdfs
-                                    ? '#'
-                                    : (level.matn.pdfUrl as string)
-                                }
-                                target={
-                                  isPlaceholderHref(level.matn.pdfUrl as string)
-                                    ? undefined
-                                    : '_blank'
-                                }
-                                rel="noreferrer"
-                                className="w-full inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-amber-800/10 bg-white/80 px-3 py-2 text-xs font-black text-slate-800 dark:border-slate-700 dark:bg-slate-900/55 dark:text-slate-200"
-                              >
-                                <Download className="h-4 w-4" />
-                                <span>تحميل الكتاب pdf</span>
-                              </a>
+                              typeof level.matn.pdfUrl === 'string' && isPlaceholderHref(level.matn.pdfUrl) ? (
+                                <div
+                                  className="w-full inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-dashed border-amber-800/20 bg-slate-100 px-3 py-2 text-xs font-bold text-slate-400 dark:border-slate-700 dark:bg-slate-900/40 dark:text-slate-500 cursor-not-allowed"
+                                >
+                                  <Download className="h-4 w-4 opacity-50" />
+                                  <span>تحميل الكتاب pdf (قريباً)</span>
+                                </div>
+                              ) : (
+                                <Link
+                                  href={`/pdf/${level.id}?file=0`}
+                                  className="w-full inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-amber-800/10 bg-white/80 px-3 py-2 text-xs font-black text-slate-800 dark:border-slate-700 dark:bg-slate-900/55 dark:text-slate-200"
+                                >
+                                  <Download className="h-4 w-4" />
+                                  <span>تحميل الكتاب pdf</span>
+                                </Link>
+                              )
                             ) : (
                               <>
                                 <a
@@ -377,7 +369,6 @@ export default function SciencesPage() {
                                   <span>شرح مرئي</span>
                                 </a>
 
-                                {/* حقل زر ملفات الشرح يدعم المنسدلة الذكية */}
                                 <div
                                   className="relative"
                                   ref={isDropdownOpen ? dropdownRef : null}
@@ -390,11 +381,10 @@ export default function SciencesPage() {
                                           isDropdownOpen ? null : level.id
                                         )
                                       }
-                                      className={`w-full inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border px-3 py-2 text-xs font-black transition-all duration-300 ${
-                                        isDropdownOpen
-                                          ? 'border-amber-700 bg-amber-50 text-amber-900 dark:border-amber-500 dark:bg-amber-500/10 dark:text-amber-300'
-                                          : 'border-amber-800/10 bg-white/80 text-slate-800 dark:border-slate-700 dark:bg-slate-900/55 dark:text-slate-200'
-                                      }`}
+                                      className={`w-full inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border px-3 py-2 text-xs font-black transition-all duration-300 ${isDropdownOpen
+                                        ? 'border-amber-700 bg-amber-50 text-amber-900 dark:border-amber-500 dark:bg-amber-500/10 dark:text-amber-300'
+                                        : 'border-amber-800/10 bg-white/80 text-slate-800 dark:border-slate-700 dark:bg-slate-900/55 dark:text-slate-200'
+                                        }`}
                                     >
                                       <Download className="h-4 w-4" />
                                       <span>تحميل pdf الشرح</span>
@@ -402,53 +392,50 @@ export default function SciencesPage() {
                                         className={`h-4 w-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}
                                       />
                                     </button>
+                                  ) : typeof level.matn.pdfUrl === 'string' && isPlaceholderHref(level.matn.pdfUrl) ? (
+                                    <div
+                                      className="inline-flex w-full min-h-12 items-center justify-center gap-2 rounded-2xl border border-dashed border-amber-800/20 bg-slate-100 px-3 py-2 text-xs font-bold text-slate-400 dark:border-slate-700 dark:bg-slate-900/40 dark:text-slate-500 cursor-not-allowed"
+                                    >
+                                      <Download className="h-4 w-4 opacity-50" />
+                                      <span>تحميل pdf الشرح (قريباً)</span>
+                                    </div>
                                   ) : (
-                                    <a
-                                      href={level.matn.pdfUrl as string}
-                                      target={
-                                        isPlaceholderHref(
-                                          level.matn.pdfUrl as string
-                                        )
-                                          ? undefined
-                                          : '_blank'
-                                      }
-                                      rel="noreferrer"
+                                    <Link
+                                      href={`/pdf/${level.id}?file=0`}
                                       className="inline-flex w-full min-h-12 items-center justify-center gap-2 rounded-2xl border border-amber-800/10 bg-white/80 px-3 py-2 text-xs font-black text-slate-800 dark:border-slate-700 dark:bg-slate-900/55 dark:text-slate-200"
                                     >
                                       <Download className="h-4 w-4" />
                                       <span>تحميل pdf الشرح</span>
-                                    </a>
+                                    </Link>
                                   )}
-
-                                  {/* القائمة المنسدلة المحدثة لتفتح للأعلى وتتجنب الاقتصاص */}
                                   {hasMultiplePdfs && isDropdownOpen && (
                                     <div className="absolute left-0 right-0 bottom-full z-50 mb-2 origin-bottom rounded-2xl border border-amber-900/10 bg-white p-1.5 shadow-xl shadow-amber-950/10 dark:border-slate-800 dark:bg-slate-900 animate-in fade-in slide-in-from-bottom-2 duration-200">
-                                      {(level.matn.pdfUrl as PdfFile[]).map(
-                                        (file, fileIdx) => (
-                                          <a
+                                      {(level.matn.pdfUrl as PdfFile[]).map((file, fileIdx) => {
+                                        const isFilePlaceholder = isPlaceholderHref(file.url);
+                                        return isFilePlaceholder ? (
+                                          <div
                                             key={fileIdx}
-                                            href={file.url}
-                                            target={
-                                              isPlaceholderHref(file.url)
-                                                ? undefined
-                                                : '_blank'
-                                            }
-                                            rel="noreferrer"
-                                            onClick={() =>
-                                              setOpenDropdownId(null)
-                                            }
+                                            className="flex items-center justify-between rounded-xl px-3 py-2.5 text-right text-xs font-bold text-slate-400 dark:text-slate-500 cursor-not-allowed transition-colors"
+                                          >
+                                            <span>{file.label} (قريباً)</span>
+                                            <Download className="h-3.5 w-3.5 opacity-40" />
+                                          </div>
+                                        ) : (
+                                          <Link
+                                            key={fileIdx}
+                                            href={`/pdf/${level.id}?file=${fileIdx}`}
+                                            onClick={() => setOpenDropdownId(null)}
                                             className="flex items-center justify-between rounded-xl px-3 py-2.5 text-right text-xs font-bold text-slate-700 hover:bg-amber-50 hover:text-amber-900 dark:text-slate-300 dark:hover:bg-amber-500/10 dark:hover:text-amber-400 transition-colors"
                                           >
                                             <span>{file.label}</span>
                                             <Download className="h-3.5 w-3.5 opacity-60" />
-                                          </a>
-                                        )
-                                      )}
+                                          </Link>
+                                        );
+                                      })}
                                     </div>
                                   )}
                                 </div>
 
-                                {/* زر التطبيق المساند الأسود */}
                                 {showAppButton &&
                                   (companion.kind === 'internal' ? (
                                     <Link

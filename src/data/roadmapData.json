@@ -101,8 +101,17 @@
               "id": "al-jazariyyah",
               "title": "المقدمة الجزرية",
               "companionAppId": null,
-              "youtubeUrl": "#",
-              "pdfUrl": "#"
+              "youtubeUrl": "https://youtube.com/playlist?list=PLJN0i5WJcTaxqJY-uTcGDJIEkI_NVJ_Ev&si=WgRgSB1Js_-qQJYX",
+              "pdfUrl": [
+                {
+                  "label": "فتح رب البرية شرح المقدمة الجزرية ( مبسط )",
+                  "url": "/pdf/eljazereyyyah-sharh-1.pdf"
+                },
+                {
+                  "label": "المنح الفكرية في شرح المقدمة الجزرية ( مفصل )",
+                  "url": "/pdf/eljazereyyyah-sharh-2.pdf"
+                }
+              ]
             }
           },
           {
@@ -111,23 +120,15 @@
             "order": 4,
             "matn": {
               "type": "matn",
-              "hasCompanionApp": "yes",
+              "hasCompanionApp": "no",
               "id": "al-salsabil-al-shafi",
               "title": "متن السلسبيل الشافي",
               "companionAppId": "salsabil-app",
-              "youtubeUrl": "#",
+              "youtubeUrl": "https://youtube.com/playlist?list=PLNKQ26Ct6MKKywUNCn1tY6Rf_xnwqWkiJ&si=VvCJyNXGUaItWXzU",
               "pdfUrl": [
                 {
-                  "label": "شرح المبتدئين (ميسر)",
-                  "url": "/docs/salsabil-beginner.pdf"
-                },
-                {
-                  "label": "شرح متوسط (توضيحي)",
-                  "url": "/docs/salsabil-medium.pdf"
-                },
-                {
-                  "label": "شرح متقدم (موسع)",
-                  "url": "/docs/salsabil-advanced.pdf"
+                  "label": "الوافي في شرح السلسبيل الشافي",
+                  "url": "/pdf/salsabil-shar7-1.pdf"
                 }
               ]
             }
