@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import roadmapData from '@/data/roadmapData.json';
 import type { SoftwareResource } from 'src/types/software';
+import booksData from '@/data/booksData.json';
+import { Book } from 'src/utils/bookHelper';
 
 type PdfFile = {
   label: string;
@@ -34,6 +36,7 @@ type RoadmapLevel = {
   id: string;
   label: string;
   order: number;
+  bookId?: string;
   matn: Matn;
 };
 
@@ -66,6 +69,10 @@ const stageLabel = (level: RoadmapLevel) => {
 };
 
 const isPlaceholderHref = (href: string) => href.trim() === '#';
+
+const getBookByFileUrl = (url: string): Book | undefined => {
+  return (booksData as Book[]).find((b) => b.fileUrl === url);
+};
 
 const resolveCompanion = (
   matn: Matn,
@@ -329,12 +336,13 @@ export default function SciencesPage() {
                           </div>
 
                           <div
-                            className={`mt-5 grid gap-2 ${isBook
-                              ? 'grid-cols-1'
-                              : showAppButton
-                                ? 'grid-cols-1 sm:grid-cols-3'
-                                : 'grid-cols-1 sm:grid-cols-2'
-                              }`}
+                            className={`mt-5 grid gap-2 ${
+                              isBook
+                                ? 'grid-cols-1'
+                                : showAppButton
+                                  ? 'grid-cols-1 sm:grid-cols-3'
+                                  : 'grid-cols-1 sm:grid-cols-2'
+                            }`}
                           >
                             {isBook ? (
                               typeof level.matn.pdfUrl === 'string' && isPlaceholderHref(level.matn.pdfUrl) ? (
@@ -344,14 +352,25 @@ export default function SciencesPage() {
                                   <Download className="h-4 w-4 opacity-50" />
                                   <span>تحميل الكتاب pdf (قريباً)</span>
                                 </div>
-                              ) : (
+                              ) : level.bookId ? (
                                 <Link
-                                  href={`/pdf/${level.id}?file=0`}
+                                  href={`/books/${level.bookId}`}
+                                  className="w-full inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-amber-700/25 bg-amber-50 hover:bg-amber-100 dark:border-amber-500/25 dark:bg-amber-500/10 text-amber-900 dark:text-amber-300 dark:hover:bg-amber-500/20 px-3 py-2 text-xs font-black shadow-sm transition-all duration-300 hover:-translate-y-0.5"
+                                >
+                                  <BookOpen className="h-4 w-4 text-amber-700 dark:text-amber-400" />
+                                  <span>اقرأ الكتاب المقرّر</span>
+                                </Link>
+                              ) : (
+                                <a
+                                  href={level.matn.pdfUrl as string}
+                                  download
+                                  target="_blank"
+                                  rel="noreferrer"
                                   className="w-full inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-amber-800/10 bg-white/80 px-3 py-2 text-xs font-black text-slate-800 dark:border-slate-700 dark:bg-slate-900/55 dark:text-slate-200"
                                 >
                                   <Download className="h-4 w-4" />
                                   <span>تحميل الكتاب pdf</span>
-                                </Link>
+                                </a>
                               )
                             ) : (
                               <>
@@ -381,10 +400,11 @@ export default function SciencesPage() {
                                           isDropdownOpen ? null : level.id
                                         )
                                       }
-                                      className={`w-full inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border px-3 py-2 text-xs font-black transition-all duration-300 ${isDropdownOpen
-                                        ? 'border-amber-700 bg-amber-50 text-amber-900 dark:border-amber-500 dark:bg-amber-500/10 dark:text-amber-300'
-                                        : 'border-amber-800/10 bg-white/80 text-slate-800 dark:border-slate-700 dark:bg-slate-900/55 dark:text-slate-200'
-                                        }`}
+                                      className={`w-full inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border px-3 py-2 text-xs font-black transition-all duration-300 ${
+                                        isDropdownOpen
+                                          ? 'border-amber-700 bg-amber-50 text-amber-900 dark:border-amber-500 dark:bg-amber-500/10 dark:text-amber-300'
+                                          : 'border-amber-800/10 bg-white/80 text-slate-800 dark:border-slate-700 dark:bg-slate-900/55 dark:text-slate-200'
+                                      }`}
                                     >
                                       <Download className="h-4 w-4" />
                                       <span>تحميل pdf الشرح</span>
@@ -399,19 +419,34 @@ export default function SciencesPage() {
                                       <Download className="h-4 w-4 opacity-50" />
                                       <span>تحميل pdf الشرح (قريباً)</span>
                                     </div>
-                                  ) : (
-                                    <Link
-                                      href={`/pdf/${level.id}?file=0`}
-                                      className="inline-flex w-full min-h-12 items-center justify-center gap-2 rounded-2xl border border-amber-800/10 bg-white/80 px-3 py-2 text-xs font-black text-slate-800 dark:border-slate-700 dark:bg-slate-900/55 dark:text-slate-200"
-                                    >
-                                      <Download className="h-4 w-4" />
-                                      <span>تحميل pdf الشرح</span>
-                                    </Link>
-                                  )}
+                                  ) : (() => {
+                                    const matchedSingleBook = getBookByFileUrl(level.matn.pdfUrl as string);
+                                    return matchedSingleBook ? (
+                                      <Link
+                                        href={`/books/${matchedSingleBook.id}`}
+                                        className="inline-flex w-full min-h-12 items-center justify-center gap-2 rounded-2xl border border-amber-800/10 bg-white/80 px-3 py-2 text-xs font-black text-slate-800 dark:border-slate-700 dark:bg-slate-900/55 dark:text-slate-200 hover:bg-amber-50 hover:text-amber-900 dark:hover:bg-amber-500/10 dark:hover:text-amber-400 transition-colors"
+                                      >
+                                        <Download className="h-4 w-4" />
+                                        <span>تحميل pdf الشرح</span>
+                                      </Link>
+                                    ) : (
+                                      <a
+                                        href={level.matn.pdfUrl as string}
+                                        download
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="inline-flex w-full min-h-12 items-center justify-center gap-2 rounded-2xl border border-amber-800/10 bg-white/80 px-3 py-2 text-xs font-black text-slate-800 dark:border-slate-700 dark:bg-slate-900/55 dark:text-slate-200"
+                                      >
+                                        <Download className="h-4 w-4" />
+                                        <span>تحميل pdf الشرح</span>
+                                      </a>
+                                    );
+                                  })()}
                                   {hasMultiplePdfs && isDropdownOpen && (
                                     <div className="absolute left-0 right-0 bottom-full z-50 mb-2 origin-bottom rounded-2xl border border-amber-900/10 bg-white p-1.5 shadow-xl shadow-amber-950/10 dark:border-slate-800 dark:bg-slate-900 animate-in fade-in slide-in-from-bottom-2 duration-200">
                                       {(level.matn.pdfUrl as PdfFile[]).map((file, fileIdx) => {
                                         const isFilePlaceholder = isPlaceholderHref(file.url);
+                                        const matchedOptionBook = getBookByFileUrl(file.url);
                                         return isFilePlaceholder ? (
                                           <div
                                             key={fileIdx}
@@ -420,16 +455,29 @@ export default function SciencesPage() {
                                             <span>{file.label} (قريباً)</span>
                                             <Download className="h-3.5 w-3.5 opacity-40" />
                                           </div>
-                                        ) : (
+                                        ) : matchedOptionBook ? (
                                           <Link
                                             key={fileIdx}
-                                            href={`/pdf/${level.id}?file=${fileIdx}`}
+                                            href={`/books/${matchedOptionBook.id}`}
                                             onClick={() => setOpenDropdownId(null)}
                                             className="flex items-center justify-between rounded-xl px-3 py-2.5 text-right text-xs font-bold text-slate-700 hover:bg-amber-50 hover:text-amber-900 dark:text-slate-300 dark:hover:bg-amber-500/10 dark:hover:text-amber-400 transition-colors"
                                           >
                                             <span>{file.label}</span>
                                             <Download className="h-3.5 w-3.5 opacity-60" />
                                           </Link>
+                                        ) : (
+                                          <a
+                                            key={fileIdx}
+                                            href={file.url}
+                                            download
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            onClick={() => setOpenDropdownId(null)}
+                                            className="flex items-center justify-between rounded-xl px-3 py-2.5 text-right text-xs font-bold text-slate-700 hover:bg-amber-50 hover:text-amber-900 dark:text-slate-300 dark:hover:bg-amber-500/10 dark:hover:text-amber-400 transition-colors"
+                                          >
+                                            <span>{file.label}</span>
+                                            <Download className="h-3.5 w-3.5 opacity-60" />
+                                          </a>
                                         );
                                       })}
                                     </div>

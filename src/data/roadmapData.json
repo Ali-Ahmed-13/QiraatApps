@@ -95,6 +95,7 @@
             "id": "tajwid-jazariyyah",
             "label": "مستوى متوسط",
             "order": 3,
+            "bookId": "jazariyyah-book-1",
             "matn": {
               "type": "matn",
               "hasCompanionApp": "no",
@@ -118,6 +119,7 @@
             "id": "tajwid-salsabil",
             "label": "متقدم",
             "order": 4,
+            "bookId": "salsabil-book",
             "matn": {
               "type": "matn",
               "hasCompanionApp": "no",
@@ -143,6 +145,7 @@
             "id": "qiraat-shatibiyyah",
             "label": "للمبتدئين",
             "order": 1,
+            "bookId": "shatibiyyah-book",
             "matn": {
               "type": "matn",
               "hasCompanionApp": "no",

@@ -23,6 +23,7 @@ export default function Header() {
     { name: 'الرئيسية', href: '/' },
     { name: 'التطبيقات', href: '/software' },
     { name: 'ركن طالب العلم', href: '/sciences' },
+    { name: 'الكتب', href: '/books' },
     { name: 'اتصل بنا', href: '/contact' },
   ];
 
