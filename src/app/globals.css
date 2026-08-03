@@ -1,0 +1,257 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-hover: var(--brand-primary-hover);
+  --color-brand-primary-light: var(--brand-primary-light);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-secondary-hover: var(--brand-secondary-hover);
+  --color-brand-secondary-light: var(--brand-secondary-light);
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-nav: var(--nav);
+  
+  --color-border: var(--border);
+  --color-border-focus: var(--border-focus);
+  
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-light-text: var(--light-text);
+  
+  --shadow-premium: var(--shadow-premium);
+  --shadow-premium-hover: var(--shadow-premium-hover);
+  --radius-premium: var(--radius-premium);
+  
+  --font-sans: var(--font-tajawal), var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
+  --font-amiri: var(--font-amiri), serif;
+  --font-tajawal: var(--font-tajawal), sans-serif;
+  --font-cairo: var(--font-cairo), sans-serif;
+}
+
+:root {
+  /* Colors */
+  --background: #FCFBF8; /* Warm Off-White */
+  --foreground: #222222; /* Primary Text */
+  --card: #FFFFFF;       /* Pure White Cards */
+  --card-foreground: #222222;
+  --nav: rgba(252, 251, 248, 0.85); /* Semi-transparent Navigation */
+  
+  --brand-primary: #006D6F;       /* Deep Islamic Teal */
+  --brand-primary-hover: #005456;
+  --brand-primary-light: #E6F2F2;
+  
+  --brand-secondary: #D8B15C;     /* Elegant Islamic Gold */
+  --brand-secondary-hover: #C49D49;
+  --brand-secondary-light: #FBF7EC;
+  
+  --border: #ECEAE4;     /* Default Border */
+  --border-focus: #006D6F; /* Focused Border */
+  
+  --muted: #666666;      /* Secondary Text */
+  --muted-foreground: #666666;
+  --light-text: #999999; /* Light Text */
+
+  /* Shadows */
+  --shadow-premium: 0 10px 40px -10px rgba(0, 109, 111, 0.04), 0 1px 3px rgba(0, 0, 0, 0.01);
+  --shadow-premium-hover: 0 20px 50px -12px rgba(0, 109, 111, 0.08), 0 8px 30px -10px rgba(216, 177, 92, 0.12);
+  --radius-premium: 1.5rem; /* Large border radius */
+}
+
+.dark {
+  /* Colors */
+  --background: #0B0E0E; /* Dark Main Background */
+  --foreground: #ECEAE4; /* Primary Text */
+  --card: #131A1A;       /* Cards Background */
+  --card-foreground: #ECEAE4;
+  --nav: rgba(11, 14, 14, 0.85); /* Navigation Background */
+  
+  --brand-primary: #00B3B7;       /* Primary Teal */
+  --brand-primary-hover: #00CDCF;
+  --brand-primary-light: #102929;
+  
+  --brand-secondary: #E7C682;     /* Secondary Gold */
+  --brand-secondary-hover: #F3D494;
+  --brand-secondary-light: #2C271B;
+  
+  --border: #212C2C;     /* Borders */
+  --border-focus: #00B3B7; /* Focus Border */
+  
+  --muted: #A0ABAB;      /* Muted Text */
+  --muted-foreground: #A0ABAB;
+  --light-text: #707A7A;  /* Light Text */
+
+  /* Shadows */
+  --shadow-premium: 0 10px 40px -10px rgba(0, 0, 0, 0.5), 0 0 1px rgba(0, 179, 183, 0.1);
+  --shadow-premium-hover: 0 25px 60px -12px rgba(0, 0, 0, 0.7), 0 0 2px rgba(231, 198, 130, 0.15);
+  --radius-premium: 1.5rem;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--foreground);
+  font-family: var(--font-amiri), var(--font-sans);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-primary);
+}
+
+/* Smooth transitions for theme changes */
+.theme-transition {
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              color 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Infinitely scrolling marquee animation for top-bar ticker */
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(50%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 45s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Instant & Ultra-Responsive Scroll Reveal Classes */
+.reveal-fade-in {
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+}
+.reveal-fade-in.active {
+  opacity: 1;
+}
+
+.reveal-fade-up {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+.reveal-fade-up.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-fade-left {
+  opacity: 0;
+  transform: translateX(8px);
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+.reveal-fade-left.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-fade-right {
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+.reveal-fade-right.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-zoom-in {
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+.reveal-zoom-in.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.reveal-scale-up {
+  opacity: 0;
+  transform: scale(0.99);
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+.reveal-scale-up.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.reveal-rotate {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+.reveal-rotate.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Floating Animations */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float-y {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  50% { transform: translateY(-20px) rotate(6deg) scale(1.03); }
+}
+.animate-float-slow {
+  animation: float-slow 12s ease-in-out infinite;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.05); }
+}
+.animate-pulse-soft {
+  animation: pulse-soft 8s ease-in-out infinite;
+}
+
+/* Glassmorphism utility */
+.glassmorphism {
+  background: var(--nav);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+}
+
+/* Accent badge hover pulse */
+.premium-glow:hover {
+  box-shadow: 0 0 20px rgba(0, 179, 183, 0.15);
+}
+
