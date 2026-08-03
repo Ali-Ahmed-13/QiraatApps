@@ -127,23 +127,21 @@ export async function saveStudentData(user: any, updatedData: PersistedStudentDa
     lastSaved: new Date().toISOString()
   };
 
-  // LocalStorage
+  // LocalStorage - حفظ فوري لحماية تجربة المستخدم من البطء
   try {
     localStorage.setItem(LOCAL_STORAGE_KEY(user.id), JSON.stringify(dataToSave));
   } catch (_) {}
 
-  // Clerk Cloud Sync
-  try {
-    if (typeof user.update === 'function') {
-      await user.update({
-        unsafeMetadata: {
-          ...user.unsafeMetadata,
-          tijanStudentData: dataToSave
-        }
-      });
-    }
-  } catch (err) {
-    console.warn('Clerk Cloud Sync Warning:', err);
+  // Clerk Cloud Sync - مزامنة سحابية خلفية غير حاجبة (Background Async)
+  if (typeof user.update === 'function') {
+    user.update({
+      unsafeMetadata: {
+        ...user.unsafeMetadata,
+        tijanStudentData: dataToSave
+      }
+    }).catch((err: any) => {
+      console.warn('Clerk Cloud Sync Warning:', err);
+    });
   }
 }
 

@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+import { useUser } from '@clerk/nextjs';
 import {
   FileText,
   Search,
@@ -15,15 +16,21 @@ import {
 } from 'lucide-react';
 import PageTransition from 'src/components/ui/PageTransition';
 import ScrollReveal from 'src/components/ui/ScrollReveal';
+import AuthModal from 'src/components/ui/AuthModal';
 import articlesData from '@/data/articlesData.json';
 import { ArticlesData } from 'src/types/articles';
 import { searchAndRank } from '@/utils/searchEngine';
+import { getStudentData, toggleFavoriteBook } from 'src/utils/studentSync';
 
 const data = articlesData as ArticlesData;
 
 export default function ArticlesPage() {
+  const { user } = useUser();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'tajweed' | 'arabic' | 'aqeedah' | 'fiqh'>('all');
+  const [favoriteTitles, setFavoriteTitles] = useState<string[]>([]);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -33,7 +40,34 @@ export default function ArticlesPage() {
         setSelectedCategory(catParam as any);
       }
     }
-  }, []);
+
+    if (user) {
+      const studentData = getStudentData(user);
+      setFavoriteTitles(studentData.favorites || []);
+    }
+  }, [user]);
+
+  const handleToggleFav = (articleTitle: string) => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+
+    const isFav = favoriteTitles.includes(articleTitle);
+    const updated = isFav
+      ? favoriteTitles.filter((t) => t !== articleTitle)
+      : [...favoriteTitles, articleTitle];
+
+    setFavoriteTitles(updated);
+    setToastMessage(
+      !isFav
+        ? `تمت إضافة "${articleTitle}" إلى مفضلتك 🔖`
+        : `تمت إزالة "${articleTitle}" من المفضلة`
+    );
+    setTimeout(() => setToastMessage(null), 3000);
+
+    toggleFavoriteBook(user, articleTitle);
+  };
 
   const handleCategoryChange = (catId: string) => {
     setSelectedCategory(catId as any);
@@ -71,7 +105,22 @@ export default function ArticlesPage() {
   return (
     <PageTransition>
       <main className="relative min-h-screen bg-background pb-20 pt-8" dir="rtl">
-        
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          title="تسجيل الدخول مطلوب 🔐"
+          description="لحفظ المقالات والكتب في مفضلتك السحابية وبوابة الطالب، يرجى تسجيل الدخول أولاً."
+        />
+
+        {toastMessage && (
+          <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-bounce">
+            <div className="bg-brand-primary text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-white/20">
+              <Sparkles className="w-5 h-5 text-brand-secondary" />
+              <span>{toastMessage}</span>
+            </div>
+          </div>
+        )}
+
         {/* 🌟 الخلفية الزخرفية الروحية الراقية */}
         <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
           <div className="absolute top-0 right-1/4 w-[800px] h-[500px] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,109,111,0.03),transparent_70%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(0,179,183,0.06),transparent_60%)]" />
@@ -178,21 +227,31 @@ export default function ArticlesPage() {
           {/* شبكة المقالات */}
           {filteredArticles.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredArticles.filter((art) => !art.featured || searchQuery !== '' || selectedCategory !== 'all').map((art, idx) => (
-                <ScrollReveal key={art.id} variant="fade-up" delay={idx * 100}>
-                  <div className="bg-card border border-border dark:border-[#212C2C] p-6 rounded-[24px] shadow-premium flex flex-col justify-between h-full group hover:-translate-y-1 hover:shadow-premium-hover transition-all duration-300">
-                    <div className="flex flex-col gap-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] text-brand-primary dark:text-[#00B3B7] font-black bg-brand-primary-light/50 dark:bg-brand-primary-light/10 px-2.5 py-1 rounded-full border border-brand-primary/10">
-                            {catLabel(art.category)}
-                          </span>
-                          <span className="text-[10px] text-light-text font-bold">
-                            مقال {art.id}
-                          </span>
+              {filteredArticles.filter((art) => !art.featured || searchQuery !== '' || selectedCategory !== 'all').map((art, idx) => {
+                const title = art.title || '';
+                const isFav = favoriteTitles.includes(title);
+                return (
+                  <ScrollReveal key={art.id} variant="fade-up" delay={idx * 100}>
+                    <div className="bg-card border border-border dark:border-[#212C2C] p-6 rounded-[24px] shadow-premium flex flex-col justify-between h-full group hover:-translate-y-1 hover:shadow-premium-hover transition-all duration-300">
+                      <div className="flex flex-col gap-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] text-brand-primary dark:text-[#00B3B7] font-black bg-brand-primary-light/50 dark:bg-brand-primary-light/10 px-2.5 py-1 rounded-full border border-brand-primary/10">
+                              {catLabel(art.category)}
+                            </span>
+                            <span className="text-[10px] text-light-text font-bold">
+                              مقال {art.id}
+                            </span>
+                          </div>
+                          
+                          <button
+                            onClick={() => handleToggleFav(title)}
+                            title={isFav ? "إزالة من المفضلة" : "حفظ في المفضلة"}
+                            className="p-1 rounded-lg border border-transparent hover:border-border transition-all cursor-pointer"
+                          >
+                            <Bookmark className={`w-4 h-4 transition-colors ${isFav ? 'fill-current text-brand-secondary' : 'text-light-text hover:text-brand-primary'}`} />
+                          </button>
                         </div>
-                        <Bookmark className="w-4 h-4 text-light-text hover:text-brand-primary cursor-pointer transition-colors" />
-                      </div>
                       <h3 className="font-amiri font-bold text-lg sm:text-xl text-foreground group-hover:text-brand-primary transition-colors line-clamp-2">
                         {art.title}
                       </h3>
@@ -216,7 +275,8 @@ export default function ArticlesPage() {
                     </div>
                   </div>
                 </ScrollReveal>
-              ))}
+              );
+            })}
             </div>
           ) : (
             <div className="text-center bg-card border border-border dark:border-[#212C2C] p-12 rounded-[24px] shadow-premium max-w-xl mx-auto mt-8">

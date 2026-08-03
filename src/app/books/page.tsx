@@ -111,24 +111,37 @@ export default function BooksPage() {
       return;
     }
 
-    const updated = await markTextAsCompleted(user, bookTitle);
-    const updatedDoneList = updated.completedCourses?.map(c => c.name) || [];
-    setCompletedTitles(updatedDoneList);
+    const isAlreadyDone = completedTitles.includes(bookTitle);
+    if (!isAlreadyDone) {
+      setCompletedTitles((prev) => [...prev, bookTitle]);
+      setToastMessage(`تم ختم وتجويز "${bookTitle}" بنجاح! تم التوثيق السحابي في بوابة الطالب ☁️✨`);
+      setTimeout(() => setToastMessage(null), 4000);
+    }
 
-    setToastMessage(`تم ختم وتجويز "${bookTitle}" بنجاح! تم التوثيق السحابي في بوابة الطالب ☁️✨`);
-    setTimeout(() => setToastMessage(null), 4000);
+    markTextAsCompleted(user, bookTitle);
   };
 
-  // دالة إضافة / إزالة من المفضلة
+  // دالة إضافة / إزالة من المفضلة (تحديث فوري غير معلق)
   const handleToggleFav = async (bookTitle: string) => {
     if (!user) {
       setShowAuthModal(true);
       return;
     }
-    const { data, isFav } = await toggleFavoriteBook(user, bookTitle);
-    setFavoriteTitles(data.favorites || []);
-    setToastMessage(isFav ? `تمت إضافة "${bookTitle}" إلى مفضلتك السحابية 🔖` : `تمت إزالة "${bookTitle}" من المفضلة`);
+
+    const isFav = favoriteTitles.includes(bookTitle);
+    const newFavs = isFav
+      ? favoriteTitles.filter((t) => t !== bookTitle)
+      : [...favoriteTitles, bookTitle];
+
+    setFavoriteTitles(newFavs);
+    setToastMessage(
+      !isFav
+        ? `تمت إضافة "${bookTitle}" إلى مفضلتك السحابية 🔖`
+        : `تمت إزالة "${bookTitle}" من المفضلة`
+    );
     setTimeout(() => setToastMessage(null), 3000);
+
+    toggleFavoriteBook(user, bookTitle);
   };
 
   if (!mounted) {
