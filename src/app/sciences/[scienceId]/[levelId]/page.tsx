@@ -3,6 +3,7 @@
 import React, { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import { notFound, useRouter } from 'next/navigation';
+import { useUser } from '@clerk/nextjs';
 import {
   ArrowRight,
   BookOpen,
@@ -20,6 +21,7 @@ import {
 } from 'lucide-react';
 import PageTransition from 'src/components/ui/PageTransition';
 import ScrollReveal from 'src/components/ui/ScrollReveal';
+import AuthModal from 'src/components/ui/AuthModal';
 import booksData from '@/data/books';
 import { Book } from 'src/utils/bookHelper';
 import type { SoftwareResource } from 'src/types/software';
@@ -38,6 +40,7 @@ export default function LevelDetailPage({
 }: {
   params: Promise<{ scienceId: string; levelId: string }>;
 }) {
+  const { user } = useUser();
   const resolvedParams = use(params);
   const rawId = resolvedParams.scienceId;
   const rawLevelSlug = resolvedParams.levelId;
@@ -52,6 +55,7 @@ export default function LevelDetailPage({
   const [softwareCatalog, setSoftwareCatalog] = useState<SoftwareResource[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -93,6 +97,11 @@ export default function LevelDetailPage({
     : null;
 
   const handleToggleCompletion = () => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+
     const isNowCompleted = toggleLevelCompletion(targetKey, currentLevelIndex);
     if (isNowCompleted) {
       setShowCelebration(true);
@@ -104,6 +113,13 @@ export default function LevelDetailPage({
   return (
     <PageTransition>
       <main className="relative min-h-screen bg-background pb-20 pt-8" dir="rtl">
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          title="تسجيل الدخول مطلوب 🔐"
+          description="لتسجيل إتمام المستويات ومتابعة تقدمك في الحساب السحابي، يرجى تسجيل الدخول أولاً."
+        />
+
         {/* خلفية جمالية */}
         <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
           <div className="absolute top-10 left-1/4 w-[750px] h-[450px] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,109,111,0.03),transparent_70%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(0,179,183,0.06),transparent_60%)]" />

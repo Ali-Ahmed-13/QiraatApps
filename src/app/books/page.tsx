@@ -18,6 +18,7 @@ import booksData from '@/data/books';
 import { Book } from 'src/utils/bookHelper';
 import PageTransition from 'src/components/ui/PageTransition';
 import ScrollReveal from 'src/components/ui/ScrollReveal';
+import AuthModal from 'src/components/ui/AuthModal';
 import { markTextAsCompleted, getStudentData, toggleFavoriteBook } from 'src/utils/studentSync';
 import { matchesSearchText } from '@/utils/textNormalization';
 
@@ -27,6 +28,7 @@ export default function BooksPage() {
   const [completedTitles, setCompletedTitles] = useState<string[]>([]);
   const [favoriteTitles, setFavoriteTitles] = useState<string[]>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
 
   // خريطة تحويل التصنيفات إلى أسماء بالإنجليزية في الـ URL
   const BOOK_SLUG_MAP: Record<string, string> = {
@@ -102,11 +104,10 @@ export default function BooksPage() {
     });
   }, [query, activeCategory]);
 
-  // دالة التعامل مع ختم وإكمال المتن
+  // دالة التعامل مع ختم وإكمال الكتاب
   const handleCompleteMatn = async (bookTitle: string) => {
     if (!user) {
-      setToastMessage("يرجى تسجيل الدخول أولاً لتسجيل إنجازك في بوابة الطالب وإضافته لحسابك السحابي.");
-      setTimeout(() => setToastMessage(null), 4000);
+      setShowAuthModal(true);
       return;
     }
 
@@ -114,15 +115,14 @@ export default function BooksPage() {
     const updatedDoneList = updated.completedCourses?.map(c => c.name) || [];
     setCompletedTitles(updatedDoneList);
 
-    setToastMessage(`تم ختم ותجويز "${bookTitle}" بنجاح! تم التوثيق السحابي في بوابة الطالب ☁️✨`);
+    setToastMessage(`تم ختم وتجويز "${bookTitle}" بنجاح! تم التوثيق السحابي في بوابة الطالب ☁️✨`);
     setTimeout(() => setToastMessage(null), 4000);
   };
 
   // دالة إضافة / إزالة من المفضلة
   const handleToggleFav = async (bookTitle: string) => {
     if (!user) {
-      setToastMessage("يرجى تسجيل الدخول أولاً لحفظ المتون في مفضلتك السحابية.");
-      setTimeout(() => setToastMessage(null), 3000);
+      setShowAuthModal(true);
       return;
     }
     const { data, isFav } = await toggleFavoriteBook(user, bookTitle);
@@ -145,7 +145,14 @@ export default function BooksPage() {
         dir="rtl"
         className="min-h-screen bg-background text-foreground transition-colors duration-500 pb-20 pt-8"
       >
-        {/* إشعار تفاعلي علوي عند ختم أو تفضيل المتن */}
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          title="تسجيل الدخول مطلوب 🔐"
+          description="لتسجيل ختم وإتمام الكتب وحفظها في حسابك السحابي وبوابة الطالب، يرجى تسجيل الدخول أولاً."
+        />
+
+        {/* إشعار تفاعلي علوي عند ختم أو تفضيل الكتاب */}
         {toastMessage && (
           <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-bounce">
             <div className="bg-brand-primary text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-white/20">
@@ -171,7 +178,7 @@ export default function BooksPage() {
                     خزانة الكتب والمراجع الرقمية
                   </h1>
                   <p className="mt-3 max-w-2xl text-xs sm:text-sm font-semibold leading-relaxed text-muted">
-                    اختر الكتب والمراجع، أضفها لمفضلتك السحابية أو اضغط &quot;تم ختم المتن&quot; لإصداره في بوابة الطالب.
+                    اختر الكتب والمراجع، أضفها لمفضلتك السحابية أو اضغط &quot;تم ختم الكتاب&quot; لإصداره في بوابة الطالب.
                   </p>
                 </div>
 
@@ -241,7 +248,7 @@ export default function BooksPage() {
                     <div
                       className="group flex flex-col justify-between rounded-3xl border border-border bg-card p-6 shadow-premium transition-all duration-500 hover:-translate-y-1 hover:border-brand-primary/25 hover:shadow-premium-hover h-full relative"
                     >
-                      {/* شارة إنجاز المتن إذا كان مكتملاً */}
+                      {/* شارة إنجاز الكتاب إذا كان مكتملاً */}
                       {isCompleted && (
                         <div className="absolute -top-3 right-6 bg-brand-primary text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg flex items-center gap-1 border border-white/20">
                           <Check className="w-3 h-3" />
@@ -290,7 +297,7 @@ export default function BooksPage() {
 
                       {/* أزرار الإجراءات التفاعلية */}
                       <div className="mt-6 pt-4 border-t border-border flex flex-col gap-2">
-                        {/* 🌟 الزر التفاعلي الإبداعي: إتمام وختم المتن */}
+                        {/* 🌟 الزر التفاعلي الإبداعي: إتمام وختم الكتاب */}
                         <button
                           onClick={() => handleCompleteMatn(book.title || 'مجهول')}
                           className={`w-full inline-flex min-h-10 items-center justify-center gap-2 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer ${
@@ -300,7 +307,7 @@ export default function BooksPage() {
                           }`}
                         >
                           <CheckCircle2 className="h-4 w-4" />
-                          <span>{isCompleted ? 'تم بحمد الله ختم المتن ✨' : 'أتممتُ دراسة هذا المتن'}</span>
+                          <span>{isCompleted ? 'تم بحمد الله ختم الكتاب ✨' : 'أتممتُ دراسة هذا الكتاب'}</span>
                         </button>
 
                         {isPlaceholder ? (

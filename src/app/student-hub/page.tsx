@@ -421,7 +421,7 @@ export default function StudentHubPage() {
                   <Award className="w-10 h-10 text-brand-secondary/40" />
                   <p className="text-xs sm:text-sm font-bold text-foreground">لم تقم بتسجيل ختم أي متن بعد.</p>
                   <p className="text-[11px] text-muted max-w-md leading-relaxed">
-                    تصفح الكتب واضغط زر &quot;أتممتُ دراسة هذا المتن&quot; لإصداره فوراً في هذا السجل!
+                    تصفح الكتب واضغط زر &quot;أتممتُ دراسة هذا الكتاب&quot; لإصداره فوراً في هذا السجل!
                   </p>
                   <Link
                     href="/books"
