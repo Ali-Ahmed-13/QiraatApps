@@ -117,7 +117,7 @@ export default function LevelDetailPage({
           isOpen={showAuthModal}
           onClose={() => setShowAuthModal(false)}
           title="تسجيل الدخول مطلوب 🔐"
-          description="لتسجيل إتمام المستويات ومتابعة تقدمك في الحساب السحابي، يرجى تسجيل الدخول أولاً."
+          description="لتسجيل إتمام المستويات ومتابعة تقدمك في حسابك التعليمي، يرجى تسجيل الدخول أولاً."
         />
 
         {/* خلفية جمالية */}

@@ -114,7 +114,7 @@ export default function BooksPage() {
     const isAlreadyDone = completedTitles.includes(bookTitle);
     if (!isAlreadyDone) {
       setCompletedTitles((prev) => [...prev, bookTitle]);
-      setToastMessage(`تم ختم وتجويز "${bookTitle}" بنجاح! تم التوثيق السحابي في بوابة الطالب ☁️✨`);
+      setToastMessage(`تم ختم وتجويز "${bookTitle}" بنجاح! تم التوثيق في سجلك العلمي ببوابة الطالب ✨`);
       setTimeout(() => setToastMessage(null), 4000);
     }
 
@@ -136,7 +136,7 @@ export default function BooksPage() {
     setFavoriteTitles(newFavs);
     setToastMessage(
       !isFav
-        ? `تمت إضافة "${bookTitle}" إلى مفضلتك السحابية 🔖`
+        ? `تمت إضافة "${bookTitle}" إلى قائمة مفضلتك 🔖`
         : `تمت إزالة "${bookTitle}" من المفضلة`
     );
     setTimeout(() => setToastMessage(null), 3000);
@@ -162,7 +162,7 @@ export default function BooksPage() {
           isOpen={showAuthModal}
           onClose={() => setShowAuthModal(false)}
           title="تسجيل الدخول مطلوب 🔐"
-          description="لتسجيل ختم وإتمام الكتب وحفظها في حسابك السحابي وبوابة الطالب، يرجى تسجيل الدخول أولاً."
+          description="لتسجيل ختم وإتمام الكتب وحفظها في حسابك وبوابة الطالب، يرجى تسجيل الدخول أولاً."
         />
 
         {/* إشعار تفاعلي علوي عند ختم أو تفضيل الكتاب */}
@@ -191,7 +191,7 @@ export default function BooksPage() {
                     خزانة الكتب والمراجع الرقمية
                   </h1>
                   <p className="mt-3 max-w-2xl text-xs sm:text-sm font-semibold leading-relaxed text-muted">
-                    اختر الكتب والمراجع، أضفها لمفضلتك السحابية أو اضغط &quot;تم ختم الكتاب&quot; لإصداره في بوابة الطالب.
+                    اختر الكتب والمراجع، أضفها لمفضلتك الشخصية أو اضغط &quot;تم ختم الكتاب&quot; لإصداره في بوابة الطالب.
                   </p>
                 </div>
 
@@ -265,7 +265,7 @@ export default function BooksPage() {
                       {isCompleted && (
                         <div className="absolute -top-3 right-6 bg-brand-primary text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg flex items-center gap-1 border border-white/20">
                           <Check className="w-3 h-3" />
-                          <span>تم ختمه ببوابة الطالب ☁️</span>
+                          <span>تم ختمه في سجلك العلمي ✨</span>
                         </div>
                       )}
 
@@ -280,7 +280,7 @@ export default function BooksPage() {
                             {/* زر التفضيل السريع */}
                             <button
                               onClick={() => handleToggleFav(book.title || 'مجهول')}
-                              title={isFav ? "إزالة من المفضلة" : "إضافة للمفضلة السحابية"}
+                              title={isFav ? "إزالة من المفضلة" : "إضافة للمفضلة"}
                               className={`p-2 rounded-xl border transition-all cursor-pointer ${
                                 isFav
                                   ? 'bg-brand-secondary/15 text-brand-secondary border-brand-secondary/30'

@@ -109,7 +109,7 @@ export default function ArticlesPage() {
           isOpen={showAuthModal}
           onClose={() => setShowAuthModal(false)}
           title="تسجيل الدخول مطلوب 🔐"
-          description="لحفظ المقالات والكتب في مفضلتك السحابية وبوابة الطالب، يرجى تسجيل الدخول أولاً."
+          description="لحفظ المقالات والكتب في قائمة مفضلتك وبوابة الطالب، يرجى تسجيل الدخول أولاً."
         />
 
         {toastMessage && (

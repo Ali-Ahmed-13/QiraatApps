@@ -46,39 +46,49 @@ export function buildDefaultStudentData(): PersistedStudentData {
 export function getStudentData(user: any): PersistedStudentData {
   if (!user) return buildDefaultStudentData();
 
-  // 1. فحص السحابة (Clerk unsafeMetadata)
-  const cloudData = user.unsafeMetadata?.tijanStudentData as PersistedStudentData | undefined;
-  if (cloudData && cloudData.stats) {
-    const cleanedCloudData: PersistedStudentData = {
-      ...cloudData,
-      favorites: cloudData.favorites || []
-    };
-
-    cleanedCloudData.stats = calculateRealStats(cleanedCloudData);
-
-    try {
-      localStorage.setItem(LOCAL_STORAGE_KEY(user.id), JSON.stringify(cleanedCloudData));
-    } catch (_) {}
-    return cleanedCloudData;
-  }
-
-  // 2. فحص LocalStorage كنسخة احتياطية
+  let localData: PersistedStudentData | null = null;
   try {
     const localRaw = localStorage.getItem(LOCAL_STORAGE_KEY(user.id));
     if (localRaw) {
-      const parsed = JSON.parse(localRaw) as PersistedStudentData;
-      if (parsed && parsed.stats) {
-        parsed.favorites = parsed.favorites || [];
-        parsed.stats = calculateRealStats(parsed);
-        return parsed;
-      }
+      localData = JSON.parse(localRaw) as PersistedStudentData;
     }
   } catch (_) {}
 
-  // 3. حساب جديد → إنشاء بيانات نظيفة
-  const fresh = buildDefaultStudentData();
-  saveStudentData(user, fresh);
-  return fresh;
+  const cloudData = user.unsafeMetadata?.tijanStudentData as PersistedStudentData | undefined;
+
+  let bestData: PersistedStudentData;
+
+  if (localData && cloudData) {
+    const localTime = localData.lastSaved ? new Date(localData.lastSaved).getTime() : 0;
+    const cloudTime = cloudData.lastSaved ? new Date(cloudData.lastSaved).getTime() : 0;
+    // اعتماد النسخة الأحدث دائماً لتجنب مسح التعديلات الفورية
+    bestData = localTime >= cloudTime ? localData : cloudData;
+  } else if (localData) {
+    bestData = localData;
+  } else if (cloudData) {
+    bestData = cloudData;
+  } else {
+    const fresh = buildDefaultStudentData();
+    saveStudentData(user, fresh);
+    return fresh;
+  }
+
+  const cleanedData: PersistedStudentData = {
+    ...bestData,
+    favorites: Array.isArray(bestData.favorites) ? bestData.favorites : [],
+    completedCourses: Array.isArray(bestData.completedCourses) ? bestData.completedCourses : [],
+    dailyGoals: Array.isArray(bestData.dailyGoals) ? bestData.dailyGoals : [],
+    currentCourses: Array.isArray(bestData.currentCourses) ? bestData.currentCourses : [],
+    lastSaved: bestData.lastSaved || new Date().toISOString(),
+  };
+
+  cleanedData.stats = calculateRealStats(cleanedData);
+
+  try {
+    localStorage.setItem(LOCAL_STORAGE_KEY(user.id), JSON.stringify(cleanedData));
+  } catch (_) {}
+
+  return cleanedData;
 }
 
 // ─── حساب الإحصائيات المركزية الحقيقية بدون حشو ──────────────────────────
@@ -131,6 +141,11 @@ export async function saveStudentData(user: any, updatedData: PersistedStudentDa
   try {
     localStorage.setItem(LOCAL_STORAGE_KEY(user.id), JSON.stringify(dataToSave));
   } catch (_) {}
+
+  // تحديث فوري لكائن المستخدم في الذاكرة
+  if (user.unsafeMetadata) {
+    user.unsafeMetadata.tijanStudentData = dataToSave;
+  }
 
   // Clerk Cloud Sync - مزامنة سحابية خلفية غير حاجبة (Background Async)
   if (typeof user.update === 'function') {

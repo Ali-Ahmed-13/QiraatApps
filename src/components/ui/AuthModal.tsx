@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { Lock, LogIn, X } from 'lucide-react';
 
@@ -15,17 +16,42 @@ export default function AuthModal({
   isOpen,
   onClose,
   title = 'تسجيل الدخول مطلوب 🔐',
-  description = 'لتسجيل إنجازك الدراسي وتوثيق التقدم في حسابك السحابي وبوابة الطالب، يرجى تسجيل الدخول أولاً.'
+  description = 'لتسجيل إنجازك وتوثيق التقدم في حسابك وبوابة الطالب، يرجى تسجيل الدخول أولاً.'
 }: AuthModalProps) {
-  if (!isOpen) return null;
+  const [mounted, setMounted] = useState(false);
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in" dir="rtl">
-      <div className="bg-card border border-border dark:border-[#212C2C] w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden text-center">
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // منع التمرير في الصفحة عند فتح النافذة المنبثقة
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  if (!isOpen || !mounted) return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in" dir="rtl">
+      {/* خلفية معتمة قابلة للنقر للإغلاق */}
+      <div 
+        className="fixed inset-0" 
+        onClick={onClose}
+      />
+      
+      <div className="bg-card border border-border dark:border-[#212C2C] w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative z-10 overflow-hidden text-center">
         {/* زر الإغلاق */}
         <button
           onClick={onClose}
           className="absolute top-4 left-4 p-2 text-muted hover:text-foreground rounded-full hover:bg-border/30 transition-all cursor-pointer"
+          aria-label="إغلاق"
         >
           <X className="w-5 h-5" />
         </button>
@@ -59,6 +85,7 @@ export default function AuthModal({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

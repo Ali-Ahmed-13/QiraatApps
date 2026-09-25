@@ -21,12 +21,20 @@ import {
   RefreshCw,
   BookOpen,
   RotateCcw,
-  AlertTriangle
+  AlertTriangle,
+  Users,
+  MessageSquare,
+  FileText,
+  ChevronLeft
 } from 'lucide-react';
 import PageTransition from 'src/components/ui/PageTransition';
 import ScrollReveal from 'src/components/ui/ScrollReveal';
 import { PersistedStudentData } from 'src/types/studentHub';
 import { getStudentData, saveStudentData, buildDefaultStudentData, toggleFavoriteBook, removeCompletedCourse } from 'src/utils/studentSync';
+import booksData from '@/data/booksData.json';
+import scholarsData from '@/data/scholars';
+import fatwasData from '@/data/fatwasData.json';
+import articlesData from '@/data/articlesData.json';
 
 // ─── أيقونات الإحصائيات ───────────────────────────────────────────────
 const iconMap: Record<string, LucideIcon> = { Clock, CheckCircle2, TrendingUp, Bookmark };
@@ -61,7 +69,7 @@ function ProtectedScreen() {
           بوابة الطالب المحمية
         </h2>
         <p className="text-xs sm:text-sm text-muted leading-relaxed font-medium mb-8">
-          هذه المنطقة مخصصة للطلاب المسجلين في منصة تِيجَان. سجّل دخولك أو أنشئ حساباً مجانياً للوصول إلى لوحة تحكمك الشخصية ومفضلتك السحابية.
+          هذه المنطقة مخصصة للطلاب المسجلين في منصة تِيجَان. سجّل دخولك أو أنشئ حساباً مجانياً للوصول إلى لوحة تحكمك الشخصية وسجلك التعليمي.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
@@ -80,6 +88,99 @@ function ProtectedScreen() {
       </div>
     </div>
   );
+}
+
+// ─── دالة استخراج وتحديد الرابط والتصنيف للعنصر المفضل ───────────────
+function getFavoriteItemInfo(rawTitle: string) {
+  const clean = (rawTitle || '').trim();
+
+  // 1. ترجمة وسيرة عالم
+  if (clean.startsWith('ترجمة:')) {
+    const scholarName = clean.replace('ترجمة:', '').trim();
+    const scholar = (scholarsData as any)?.scholars?.find((s: any) => 
+      s.name === scholarName || clean.includes(s.name) || scholarName.includes(s.name) || (s.name && s.name.includes(scholarName))
+    );
+    return {
+      title: clean,
+      displayTitle: scholarName,
+      typeLabel: 'ترجمة إمام وقارئ',
+      badgeColor: 'text-brand-secondary dark:text-[#E7C682] bg-brand-secondary-light/40 dark:bg-brand-secondary-light/10 border-brand-secondary/20',
+      icon: Users,
+      href: scholar ? `/scholars/${scholar.id}` : `/scholars?search=${encodeURIComponent(scholarName)}`
+    };
+  }
+
+  // 2. مسألة وفتوى شرعية
+  if (clean.startsWith('فتوى:')) {
+    const question = clean.replace('فتوى:', '').trim();
+    const fatwa = (fatwasData as any)?.fatwas?.find((f: any) => 
+      f.question === question || clean.includes(f.question) || (f.id && clean.includes(f.id))
+    );
+    return {
+      title: clean,
+      displayTitle: question,
+      typeLabel: 'مسألة وفتوى شرعية',
+      badgeColor: 'text-emerald-700 dark:text-emerald-400 bg-emerald-100/60 dark:bg-emerald-950/30 border-emerald-500/20',
+      icon: MessageSquare,
+      href: fatwa ? `/fatwas/${fatwa.id}` : `/fatwas?search=${encodeURIComponent(question)}`
+    };
+  }
+
+  // 3. مقال وبحث علمي
+  if (clean.startsWith('مقال:')) {
+    const artTitle = clean.replace('مقال:', '').trim();
+    const article = (articlesData as any)?.articles?.find((a: any) => 
+      a.title === artTitle || clean.includes(a.title)
+    );
+    return {
+      title: clean,
+      displayTitle: artTitle,
+      typeLabel: 'مقال علمي وبحث',
+      badgeColor: 'text-sky-700 dark:text-sky-400 bg-sky-100/60 dark:bg-sky-950/30 border-sky-500/20',
+      icon: FileText,
+      href: article ? `/articles/${article.id}` : `/articles?search=${encodeURIComponent(artTitle)}`
+    };
+  }
+
+  // 4. كتاب ومتن
+  const book = (booksData as any[])?.find((b: any) => 
+    b.title === clean || clean.includes(b.title) || (b.title && b.title.includes(clean))
+  );
+  if (book) {
+    return {
+      title: clean,
+      displayTitle: book.title || clean,
+      typeLabel: 'كتاب ومتن شرعي',
+      badgeColor: 'text-brand-primary dark:text-[#00B3B7] bg-brand-primary-light/50 dark:bg-brand-primary-light/10 border-brand-primary/20',
+      icon: BookOpen,
+      href: `/books/${book.id}`
+    };
+  }
+
+  // 5. فحص مقال بدون بادئة "مقال:"
+  const article = (articlesData as any)?.articles?.find((a: any) => 
+    a.title === clean || clean.includes(a.title)
+  );
+  if (article) {
+    return {
+      title: clean,
+      displayTitle: article.title || clean,
+      typeLabel: 'مقال علمي وبحث',
+      badgeColor: 'text-sky-700 dark:text-sky-400 bg-sky-100/60 dark:bg-sky-950/30 border-sky-500/20',
+      icon: FileText,
+      href: `/articles/${article.id}`
+    };
+  }
+
+  // Fallback
+  return {
+    title: clean,
+    displayTitle: clean,
+    typeLabel: 'كتاب / مرجع',
+    badgeColor: 'text-brand-primary dark:text-[#00B3B7] bg-brand-primary-light/50 dark:bg-brand-primary-light/10 border-brand-primary/20',
+    icon: Bookmark,
+    href: '/books'
+  };
 }
 
 // ─── الصفحة الرئيسية ──────────────────────────────────────────────────
@@ -266,12 +367,12 @@ export default function StudentHubPage() {
                   {isSyncing ? (
                     <>
                       <RefreshCw className="w-3 h-3 animate-spin" />
-                      <span>جاري المزامنة...</span>
+                      <span>جاري التحديث...</span>
                     </>
                   ) : (
                     <>
-                      <CloudCheck className="w-3.5 h-3.5" />
-                      <span>متزامن سحابياً ☁️</span>
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>سجل موثق ومتصل ✨</span>
                     </>
                   )}
                 </div>
@@ -307,13 +408,38 @@ export default function StudentHubPage() {
             </div>
           </div>
 
-          {/* ── شبكة الإحصائيات الأربعة ──────────────────────────────── */}
+          {/* ── شبكة الإحصائيات الأربعة (تفاعلية وقابلة للنقر) ──────────── */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {data.stats.map((stat, idx) => {
               const Icon = iconMap[stat.iconName] ?? Clock;
+              
+              // تحديد التبويب المرتبط بكل كارت إحصائي
+              const targetTab: 'favorites' | 'completed' | 'goals' =
+                stat.iconName === 'Bookmark'
+                  ? 'favorites'
+                  : stat.iconName === 'TrendingUp'
+                  ? 'goals'
+                  : 'completed';
+
+              const isActive = activeTab === targetTab;
+
               return (
                 <ScrollReveal key={idx} variant="scale-up" delay={idx * 60}>
-                  <div className="bg-card border border-border dark:border-[#212C2C] p-4 rounded-2xl shadow-sm flex items-center gap-3">
+                  <button
+                    onClick={() => {
+                      setActiveTab(targetTab);
+                      const el = document.getElementById('student-hub-tabs');
+                      if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }}
+                    title={`انقر لعرض ${stat.label}`}
+                    className={`w-full text-right bg-card border p-4 rounded-2xl shadow-sm flex items-center gap-3 transition-all duration-300 cursor-pointer hover:-translate-y-0.5 hover:shadow-md ${
+                      isActive
+                        ? 'border-brand-primary ring-2 ring-brand-primary/20 bg-brand-primary-light/10'
+                        : 'border-border dark:border-[#212C2C] hover:border-brand-primary/40'
+                    }`}
+                  >
                     <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${stat.color}`}>
                       <Icon className="w-4.5 h-4.5" />
                     </div>
@@ -321,14 +447,14 @@ export default function StudentHubPage() {
                       <span className="text-[11px] font-bold text-muted block truncate">{stat.label}</span>
                       <span className="text-sm sm:text-base font-black text-foreground mt-0.5 block truncate">{stat.value}</span>
                     </div>
-                  </div>
+                  </button>
                 </ScrollReveal>
               );
             })}
           </div>
 
           {/* ── تبويبات التصفح المركزة ─────────────────────────────────── */}
-          <div className="flex items-center justify-between gap-4 mb-6 pb-2 border-b border-border dark:border-[#212C2C]">
+          <div id="student-hub-tabs" className="flex items-center justify-between gap-4 mb-6 pb-2 border-b border-border dark:border-[#212C2C] scroll-mt-24">
             <div className="flex items-center gap-2 bg-card border border-border dark:border-[#212C2C] p-1 rounded-2xl">
               {(['favorites', 'completed', 'goals'] as const).map((tab) => (
                 <button
@@ -360,47 +486,96 @@ export default function StudentHubPage() {
           {activeTab === 'favorites' && (
             <div className="bg-card border border-border dark:border-[#212C2C] p-6 rounded-[24px] shadow-premium">
               <h3 className="font-amiri font-bold text-xl text-foreground mb-4 border-r-4 border-brand-secondary pr-3 flex items-center justify-between">
-                <span>الكتب والمتون المفضلة في حسابك</span>
-                <span className="text-xs text-muted font-normal">تُحفظ سحابياً في حسابك</span>
+                <span>قائمة المفضلة في حسابك الشخصي</span>
+                <span className="text-xs text-muted font-normal">تُحفظ تلقائياً في حسابك الشخصي</span>
               </h3>
 
               {favoritesList.length === 0 ? (
                 <div className="text-center py-10 px-4 border border-dashed border-border dark:border-[#212C2C] rounded-2xl bg-background/50 flex flex-col items-center gap-3">
                   <Bookmark className="w-10 h-10 text-brand-secondary/40" />
-                  <p className="text-xs sm:text-sm font-bold text-foreground">لم تضف أي كتاب للمفضلة بعد.</p>
+                  <p className="text-xs sm:text-sm font-bold text-foreground">لم تضف أي عنصر للمفضلة بعد.</p>
                   <p className="text-[11px] text-muted max-w-md leading-relaxed">
-                    اذهب إلى خزانة الكتب واضغط على علامة المفضلة 🔖 لحفظ أي كتاب أو متن هنا.
+                    تصفح الكتب والمقالات والفتاوى واضغط على علامة المفضلة 🔖 لحفظها هنا والرجوع إليها بسهولة.
                   </p>
-                  <Link
-                    href="/books"
-                    className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-primary text-white text-xs font-bold shadow-premium hover:bg-brand-primary-hover transition-all"
-                  >
-                    <BookOpen className="w-4 h-4 text-brand-secondary" />
-                    <span>تصفح خزانة الكتب</span>
-                  </Link>
+                  <div className="flex flex-wrap items-center justify-center gap-2 mt-2">
+                    <Link
+                      href="/books"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-primary text-white text-xs font-bold shadow-premium hover:bg-brand-primary-hover transition-all"
+                    >
+                      <BookOpen className="w-4 h-4 text-brand-secondary" />
+                      <span>خزانة الكتب</span>
+                    </Link>
+                    <Link
+                      href="/fatwas"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border bg-card hover:bg-border/20 text-foreground text-xs font-bold transition-all"
+                    >
+                      <span>أرشيف الفتاوى</span>
+                    </Link>
+                    <Link
+                      href="/scholars"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border bg-card hover:bg-border/20 text-foreground text-xs font-bold transition-all"
+                    >
+                      <span>دليل العلماء</span>
+                    </Link>
+                  </div>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {favoritesList.map((title, idx) => (
-                    <div key={idx} className="flex items-center justify-between gap-3 p-4 rounded-2xl bg-background border border-border dark:border-[#212C2C] hover:border-brand-primary/30 transition-all group">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <div className="w-9 h-9 rounded-xl bg-brand-secondary-light dark:bg-brand-secondary-light/10 text-brand-secondary flex items-center justify-center shrink-0">
-                          <Bookmark className="w-4 h-4 fill-current" />
-                        </div>
-                        <div className="flex flex-col min-w-0">
-                          <span className="text-xs font-bold text-foreground truncate group-hover:text-brand-primary transition-colors">{title}</span>
-                          <span className="text-[10px] text-emerald-600 font-bold">محفوظ في السحابة ☁️</span>
+                  {favoritesList.map((title, idx) => {
+                    const item = getFavoriteItemInfo(title);
+                    const Icon = item.icon;
+
+                    return (
+                      <div
+                        key={idx}
+                        className="relative flex items-center justify-between gap-3 p-4 rounded-2xl bg-background border border-border dark:border-[#212C2C] hover:border-brand-primary/40 hover:shadow-md transition-all duration-300 group"
+                      >
+                        <Link
+                          href={item.href}
+                          className="flex items-center gap-3 min-w-0 flex-1 cursor-pointer"
+                        >
+                          <div className="w-10 h-10 rounded-xl bg-brand-secondary-light dark:bg-brand-secondary-light/10 text-brand-secondary flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                            <Icon className="w-5 h-5" />
+                          </div>
+                          <div className="flex flex-col min-w-0 flex-1 text-right">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className={`text-[9px] font-black px-2 py-0.5 rounded-full border ${item.badgeColor}`}>
+                                {item.typeLabel}
+                              </span>
+                            </div>
+                            <span className="text-xs font-bold text-foreground truncate group-hover:text-brand-primary transition-colors">
+                              {item.displayTitle}
+                            </span>
+                            <span className="text-[10px] text-emerald-600 font-bold mt-0.5 flex items-center gap-1">
+                              <span>محفوظ في حسابك ✓</span>
+                              <span className="text-light-text font-normal">• انقر للفتح</span>
+                            </span>
+                          </div>
+                        </Link>
+
+                        <div className="flex items-center gap-1 shrink-0">
+                          <Link
+                            href={item.href}
+                            title="فتح العنصر"
+                            className="p-1.5 rounded-lg text-light-text hover:text-brand-primary hover:bg-brand-primary-light/30 transition-all cursor-pointer"
+                          >
+                            <ChevronLeft className="w-4 h-4" />
+                          </Link>
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              removeFavorite(title);
+                            }}
+                            title="إزالة من المفضلة"
+                            className="p-1.5 rounded-lg text-light-text hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all shrink-0 cursor-pointer"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
                         </div>
                       </div>
-                      <button
-                        onClick={() => removeFavorite(title)}
-                        title="إزالة من المفضلة"
-                        className="p-1.5 rounded-lg text-light-text hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all shrink-0 cursor-pointer"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>

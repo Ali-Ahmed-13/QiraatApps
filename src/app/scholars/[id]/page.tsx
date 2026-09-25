@@ -1,8 +1,9 @@
 'use client';
 
-import React, { use } from 'react';
+import React, { use, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { useUser } from '@clerk/nextjs';
 import {
   Users,
   Calendar,
@@ -14,28 +15,74 @@ import {
   GraduationCap,
   Quote,
   Library,
-  ChevronLeft
+  ChevronLeft,
+  Bookmark
 } from 'lucide-react';
 import PageTransition from 'src/components/ui/PageTransition';
 import ScrollReveal from 'src/components/ui/ScrollReveal';
 import scholarsData from '@/data/scholars';
 import { ScholarsData, Scholar } from 'src/types/scholars';
+import { getStudentData, toggleFavoriteBook } from '@/utils/studentSync';
+import AuthModal from '@/components/ui/AuthModal';
 
 const data = scholarsData as ScholarsData;
 
 export default function ScholarDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const scholarId = resolvedParams.id;
+  const { user } = useUser();
+
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [isFav, setIsFav] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const scholar: Scholar | undefined = data.scholars.find((s) => s.id === scholarId);
+
+  const scholarTitle = scholar ? `ترجمة: ${scholar.name}` : '';
+
+  useEffect(() => {
+    if (user && scholarTitle) {
+      const studentData = getStudentData(user);
+      setIsFav((studentData.favorites || []).includes(scholarTitle));
+    }
+  }, [user, scholarTitle]);
 
   if (!scholar) {
     notFound();
   }
 
+  const handleToggleFav = async () => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+
+    const nextState = !isFav;
+    setIsFav(nextState);
+    setToastMessage(nextState ? `تمت إضافة ترجمة "${scholar.name}" إلى مفضلتك 🔖` : 'تمت الإزالة من المفضلة');
+    setTimeout(() => setToastMessage(null), 3000);
+
+    toggleFavoriteBook(user, scholarTitle);
+  };
+
   return (
     <PageTransition>
       <main className="relative min-h-screen bg-background pb-24 pt-8" dir="rtl">
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          title="تسجيل الدخول مطلوب 🔐"
+          description="لحفظ تراجم العلماء وسير الأئمة في مفضلتك وبوابة الطالب، يرجى تسجيل الدخول أولاً."
+        />
+
+        {toastMessage && (
+          <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-bounce">
+            <div className="bg-brand-primary text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-2xl shadow-2xl flex items-center gap-2 border border-white/20">
+              <Sparkles className="w-5 h-5 text-brand-secondary" />
+              <span>{toastMessage}</span>
+            </div>
+          </div>
+        )}
 
         {/* 🌟 الخلفيات الروحية الزخرفية */}
         <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
@@ -55,12 +102,27 @@ export default function ScholarDetailPage({ params }: { params: Promise<{ id: st
               <span>العودة لدليل العلماء</span>
             </Link>
 
-            <div className="flex items-center gap-2 text-xs font-bold text-light-text">
-              <Link href="/" className="hover:text-foreground">الرئيسية</Link>
-              <span>/</span>
-              <Link href="/scholars" className="hover:text-foreground">العلماء والتراجم</Link>
-              <span>/</span>
-              <span className="text-brand-primary dark:text-[#00B3B7]">{scholar.name}</span>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handleToggleFav}
+                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
+                  isFav
+                    ? 'bg-brand-secondary/15 text-brand-secondary border-brand-secondary/40'
+                    : 'bg-card border-border dark:border-[#212C2C] hover:bg-border/20 text-foreground'
+                }`}
+                title={isFav ? "إزالة من المفضلة" : "إضافة للمفضلة"}
+              >
+                <Bookmark className={`w-3.5 h-3.5 ${isFav ? 'fill-current text-brand-secondary' : ''}`} />
+                <span>{isFav ? 'في المفضلة' : 'حفظ الترجمة'}</span>
+              </button>
+
+              <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-light-text">
+                <Link href="/" className="hover:text-foreground">الرئيسية</Link>
+                <span>/</span>
+                <Link href="/scholars" className="hover:text-foreground">العلماء والتراجم</Link>
+                <span>/</span>
+                <span className="text-brand-primary dark:text-[#00B3B7]">{scholar.name}</span>
+              </div>
             </div>
           </div>
 
