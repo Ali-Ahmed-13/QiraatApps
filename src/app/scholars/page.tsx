@@ -5,7 +5,10 @@ import Link from 'next/link';
 import {
   Users,
   Search,
-  ChevronLeft
+  ChevronLeft,
+  Calendar,
+  MapPin,
+  Sparkles
 } from 'lucide-react';
 import PageTransition from 'src/components/ui/PageTransition';
 import ScrollReveal from 'src/components/ui/ScrollReveal';
@@ -106,46 +109,75 @@ export default function ScholarsPage() {
 
           </div>
 
-          {/* قائمة العلماء – عرض بالكامل مع رابط تفاصيل الصفحة المستقلة */}
+          {/* شبكة تراجم وسير العلماء - تصميم بطاقات غني يملأ العرض بالكامل */}
           {filteredScholars.length > 0 ? (
-            <div className="flex flex-col divide-y divide-border dark:divide-[#212C2C] border border-border dark:border-[#212C2C] rounded-[24px] overflow-hidden bg-card shadow-premium">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredScholars.map((sch, idx) => (
-                <ScrollReveal key={sch.id} variant="fade-up" delay={idx * 40}>
-                  <div className="flex items-center justify-between gap-4 px-5 py-4 hover:bg-background/60 dark:hover:bg-background/20 transition-all duration-200 group">
-
-                    {/* يسار: رقم + الاسم + العنوان */}
-                    <div className="flex items-center gap-4 min-w-0">
-                      <span className="text-[11px] font-black text-light-text w-6 shrink-0 text-center">
-                        {idx + 1}
-                      </span>
-                      <div className="flex flex-col gap-0.5 min-w-0">
-                        <Link
-                          href={`/scholars/${sch.id}`}
-                          className="font-amiri font-bold text-base sm:text-lg text-foreground group-hover:text-brand-primary transition-colors truncate"
-                        >
-                          {sch.name}
-                        </Link>
-                        <span className="text-[10px] text-muted font-semibold truncate">
-                          {sch.title}
+                <ScrollReveal key={sch.id} variant="fade-up" delay={(idx % 6) * 50}>
+                  <Link
+                    href={`/scholars/${sch.id}`}
+                    className="group bg-card border border-border dark:border-[#212C2C] hover:border-brand-primary/50 rounded-[24px] p-6 shadow-premium hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-full cursor-pointer hover:-translate-y-1"
+                  >
+                    <div className="flex flex-col gap-3">
+                      {/* الهيدر: التصنيف والرقم والباج */}
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs font-bold text-brand-secondary dark:text-[#E7C682] bg-brand-secondary-light dark:bg-brand-secondary-light/10 border border-brand-secondary/20 px-3 py-1 rounded-full">
+                          {eraLabel(sch.era || '')}
+                        </span>
+                        <span className="text-xs font-black text-light-text bg-border/20 dark:bg-[#212C2C]/50 px-2.5 py-0.5 rounded-lg">
+                          #{idx + 1}
                         </span>
                       </div>
+
+                      {/* اسم الإمام واللقب */}
+                      <div className="mt-1">
+                        <h2 className="font-amiri font-bold text-xl sm:text-2xl text-foreground group-hover:text-brand-primary transition-colors leading-snug">
+                          {sch.name}
+                        </h2>
+                        {sch.title && (
+                          <p className="text-xs sm:text-sm text-brand-primary dark:text-[#00B3B7] font-bold font-tajawal mt-1 line-clamp-1">
+                            {sch.title}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* النبذة الموجزة */}
+                      <p className="text-xs sm:text-sm text-foreground/80 font-medium font-tajawal leading-relaxed line-clamp-3 mt-1">
+                        {sch.bio || sch.achievement || 'ترجمة وافية ومعلومات موثقة عن سيرة الإمام وسنده في القراءات.'}
+                      </p>
+
+                      {/* معطيات الحياة والمكان */}
+                      {(sch.lifespan || sch.location) && (
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-light-text font-bold pt-2">
+                          {sch.lifespan && (
+                            <span className="flex items-center gap-1.5">
+                              <Calendar className="w-3.5 h-3.5 text-brand-secondary shrink-0" />
+                              <span>{sch.lifespan}</span>
+                            </span>
+                          )}
+                          {sch.location && (
+                            <span className="flex items-center gap-1.5">
+                              <MapPin className="w-3.5 h-3.5 text-brand-primary shrink-0" />
+                              <span>{sch.location}</span>
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
 
-                    {/* يمين: باج العصر + زر الانقال للصفحة المستقلة */}
-                    <div className="flex items-center gap-3 shrink-0">
-                      <span className="hidden sm:inline-flex text-[9px] font-black text-brand-secondary dark:text-[#E7C682] bg-brand-secondary-light dark:bg-brand-secondary-light/10 border border-brand-secondary/15 px-2.5 py-1 rounded-full">
-                        {eraLabel(sch.era || '')}
+                    {/* زر الذهاب للترجمة */}
+                    <div className="pt-4 mt-4 border-t border-border/50 dark:border-[#212C2C]/50 flex items-center justify-between">
+                      <span className="text-xs font-bold text-brand-primary dark:text-[#00B3B7] flex items-center gap-1 group-hover:translate-x-[-4px] transition-transform">
+                        <span>عرض السيرة والترجمة المفصلة</span>
+                        <ChevronLeft className="w-4 h-4" />
                       </span>
-                      <Link
-                        href={`/scholars/${sch.id}`}
-                        className="inline-flex items-center gap-1 px-4 py-2 rounded-xl bg-brand-primary-light/50 dark:bg-brand-primary-light/10 hover:bg-brand-primary hover:text-white text-brand-primary border border-brand-primary/10 hover:border-brand-primary text-xs font-bold transition-all duration-200 cursor-pointer"
-                      >
-                        <span>عرض التفاصيل</span>
-                        <ChevronLeft className="w-3.5 h-3.5" />
-                      </Link>
+                      {sch.achievement && (
+                        <span className="text-[10px] text-muted font-bold truncate max-w-[120px]">
+                          {sch.achievement}
+                        </span>
+                      )}
                     </div>
-
-                  </div>
+                  </Link>
                 </ScrollReveal>
               ))}
             </div>

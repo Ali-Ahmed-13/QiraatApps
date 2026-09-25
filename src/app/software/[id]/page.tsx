@@ -1,218 +1,117 @@
-import fs from 'fs';
-import path from 'path';
-import Link from 'next/link';
-import Image from 'next/image';
+import React from 'react';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { SoftwareResource } from 'src/types/software';
-import { ArrowLeft, HardDrive, Info, ShieldCheck, Tag } from 'lucide-react';
+import { islamicApps } from 'src/data/islamicAppsData';
+import PageTransition from 'src/components/ui/PageTransition';
+import AppDetails from 'src/components/software/AppDetails';
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-// جلب البيانات محلياً من ملف الـ JSON
-function getSoftwareList(): SoftwareResource[] {
-  const filePath = path.join(process.cwd(), 'src/data/softwareData.json');
-  const jsonData = fs.readFileSync(filePath, 'utf-8');
-  return JSON.parse(jsonData);
-}
-
-// توليد المسارات الثابتة وقت البناء (Build Time)
+// Generate static params for all 24 apps (plus backwards compatibility)
 export async function generateStaticParams() {
-  const list = getSoftwareList();
-  return list.map((item) => ({
-    id: item.id,
+  const params = islamicApps.map((app) => ({
+    id: app.id,
   }));
+
+  // Backwards compatibility for previous id if any
+  if (!params.find((p) => p.id === 'quran-qiraat-app')) {
+    params.push({ id: 'quran-qiraat-app' });
+  }
+
+  return params;
 }
 
-// توليد البيانات الوصفية (Metadata) لـ SEO
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const resolvedParams = await params;
-  const list = getSoftwareList();
-  const software = list.find((item) => item.id === resolvedParams.id);
+// Generate SEO Metadata
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  let app = islamicApps.find((item) => item.id === id);
 
-  if (!software) {
+  // Fallback for legacy ID
+  if (!app && id === 'quran-qiraat-app') {
+    app = islamicApps.find((item) => item.id === 'al-mushaf-al-shareef');
+  }
+
+  if (!app) {
     return {
       title: 'التطبيق غير موجود | تِيجَان',
     };
   }
 
+  const title = `تحميل تطبيق ${app.name} (${app.version}) مجاناً | منصة تِيجَان`;
+  const description = app.fullDescription || app.description;
+
   return {
-    title: `تحميل تطبيق ${software.name} بأحدث إصدار | تِيجَان`,
-    description: software.description.substring(0, 155),
+    title,
+    description: description.substring(0, 160),
     openGraph: {
-      title: `تحميل تطبيق ${software.name} بأحدث إصدار | تِيجَان`,
-      description: software.description.substring(0, 155),
-      type: 'website',
+      title,
+      description: description.substring(0, 160),
+      type: 'article',
+      url: `https://tijan-alislam.vercel.app/software/${app.id}`,
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description: description.substring(0, 160),
     },
   };
 }
 
-export default async function SoftwareDetailsPage({ params }: PageProps) {
-  const resolvedParams = await params;
-  const list = getSoftwareList();
-  const software = list.find((item) => item.id === resolvedParams.id);
+export default async function SoftwareDetailPage({ params }: PageProps) {
+  const { id } = await params;
+  let app = islamicApps.find((item) => item.id === id);
 
-  if (!software) {
+  // Fallback for legacy ID
+  if (!app && id === 'quran-qiraat-app') {
+    app = islamicApps.find((item) => item.id === 'al-mushaf-al-shareef');
+  }
+
+  if (!app) {
     notFound();
   }
 
-  // إعداد تلوين الفئات بهوية تيجان - إزالة اللون الأخضر تماماً واعتماد درجات الـ Amber الفخمة
-  const getCategoryColor = (cat: string) => {
-    switch (cat) {
-      case 'متصفحات الإنترنت':
-        return 'from-amber-500/10 to-amber-600/10 text-amber-700 dark:text-amber-400 border-amber-500/20';
-      case 'مراسلة وتواصل':
-        return 'from-slate-500/10 to-slate-600/10 text-slate-700 dark:text-slate-300 border-slate-500/20';
-      case 'مشغلات الصوت والفيديو':
-        return 'from-amber-500/10 to-orange-600/10 text-amber-600 dark:text-amber-400 border-amber-500/20';
-      case 'برامج مكتبية':
-        return 'from-amber-600/10 to-amber-700/10 text-amber-800 dark:text-amber-400 border-amber-600/20 dark:border-amber-500/20';
-      case 'تصميم وجرافيك':
-        return 'from-amber-500/10 to-amber-600/10 text-amber-700 dark:text-amber-400 border-amber-500/20';
-      case 'أدوات المطورين':
-        return 'from-slate-600/10 to-slate-700/10 text-slate-700 dark:text-slate-300 border-slate-600/20';
-      default:
-        return 'from-amber-500/10 to-amber-600/10 text-amber-700 dark:text-amber-400 border-amber-500/20';
-    }
-  };
-
-  const styleClass = getCategoryColor(software.category);
-  const classArray = styleClass.split(' ');
-  const fromBg = classArray[0];
-  const toBg = classArray[1];
-  const textCol = classArray[2];
-  const fallbackLetter = software.name.trim().charAt(0);
-
-  // هيكلة البيانات لمحركات البحث (Schema.org)
+  // Schema.org SoftwareApplication structured data
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: software.name,
-    operatingSystem: 'Windows, macOS, Linux, Android, iOS',
-    applicationCategory: 'UtilityApplication',
-    softwareVersion: software.version,
-    fileSize: software.size,
-    description: software.description,
+    name: app.name,
+    operatingSystem: 'Android, iOS, HarmonyOS',
+    applicationCategory: 'EducationalApplication',
+    softwareVersion: app.version,
+    fileSize: app.size,
+    description: app.fullDescription || app.description,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: app.rating.toString(),
+      ratingCount: app.reviewsCount ? app.reviewsCount.replace(/[^0-9]/g, '') : '2340',
+    },
     offers: {
       '@type': 'Offer',
-      price: '0.00',
+      price: '0',
       priceCurrency: 'USD',
     },
   };
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+    <PageTransition>
+      <main className="relative min-h-screen bg-background pb-24 pt-8" dir="rtl">
+        {/* SEO Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
 
-      <div className="container mx-auto px-4 py-8 max-w-5xl" dir="rtl">
-        {/* زر العودة للدليل الرئيسي */}
-        <div className="mb-6">
-          <Link
-            href="/software"
-            className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-amber-700 dark:hover:text-amber-400 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>العودة لدليل التطبيقات</span>
-          </Link>
+        {/* Ambient background glow */}
+        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+          <div className="absolute top-10 right-1/4 w-[800px] h-[500px] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,109,111,0.03),transparent_70%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(0,179,183,0.06),transparent_60%)]" />
         </div>
 
-        {/* شبكة عرض التفاصيل */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
-          
-          {/* العمود الأول: الهوية والأزرار */}
-          <div className="md:col-span-1 flex flex-col gap-6">
-            <div className="p-6 rounded-[2rem] border border-amber-900/10 dark:border-amber-400/10 bg-white/80 dark:bg-[#0c111d] shadow-xl shadow-amber-900/5 dark:shadow-black/25 flex flex-col items-center text-center relative overflow-hidden">
-              
-              {/* شارة التوثيق */}
-              <div className="absolute top-4 right-4 text-amber-700 dark:text-amber-500 flex items-center gap-1 text-[10px] font-black">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>إصدار رسمي</span>
-              </div>
-
-              {/* الصورة في المنتصف كما طلبت تماماً مع توهج ذهبي خفيف */}
-              <div className="w-24 h-24 rounded-3xl overflow-hidden bg-gradient-to-br from-amber-50 to-amber-100/50 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center border border-amber-500/10 shrink-0 shadow-md mt-6 relative">
-                {software.iconUrl ? (
-                  <Image
-                    src={software.iconUrl}
-                    alt={software.name}
-                    fill
-                    sizes="96px"
-                    className="object-cover"
-                    priority
-                  />
-                ) : (
-                  <div className={`w-full h-full flex items-center justify-center font-black text-3xl bg-gradient-to-br ${fromBg} ${toBg}`}>
-                    <span className={textCol}>{fallbackLetter}</span>
-                  </div>
-                )}
-              </div>
-
-              {/* اسم التطبيق */}
-              <h1 className="mt-5 text-xl font-black text-slate-950 dark:text-[#f8f4ea]">
-                {software.name}
-              </h1>
-
-              {/* شارة الفئة */}
-              <div className="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-500/5 border border-amber-200/40 dark:border-amber-500/10 text-xs font-bold text-amber-800 dark:text-amber-400">
-                <Tag className="w-3.5 h-3.5" />
-                <span>{software.category}</span>
-              </div>
-
-              {/* معلومات الإصدار والحجم */}
-              <div className="w-full mt-6 space-y-3 pt-4 border-t border-amber-900/5 dark:border-slate-800 text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400">
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center gap-1.5 text-slate-400 dark:text-slate-500">
-                    <Info className="w-4 h-4 text-amber-700 dark:text-amber-500" /> الإصدار الرسمي
-                  </span>
-                  <strong className="text-slate-800 dark:text-slate-200 font-black">
-                    {software.version}
-                  </strong>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="flex items-center gap-1.5 text-slate-400 dark:text-slate-500">
-                    <HardDrive className="w-4 h-4 text-amber-700 dark:text-amber-500" /> الحجم التقريبي
-                  </span>
-                  <strong className="text-slate-800 dark:text-slate-200 font-black">
-                    {software.size}
-                  </strong>
-                </div>
-              </div>
-
-              {/* زر الانتقال إلى صفحة التحميل */}
-              <Link
-                href={`/software/${software.id}/download`}
-                className="w-full mt-8 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-2xl text-xs sm:text-sm font-black bg-slate-950 hover:bg-black dark:bg-amber-500 dark:text-slate-950 dark:hover:bg-amber-400 text-white shadow-lg shadow-amber-900/10 dark:shadow-amber-500/10 transition-all hover:-translate-y-0.5 active:translate-y-0"
-              >
-                <span>الانتقال إلى صفحة التحميل</span>
-                <ArrowLeft className="w-4 h-4 rotate-180" />
-              </Link>
-            </div>
-          </div>
-
-          {/* العمود الثاني: تفاصيل ومميزات البرنامج */}
-          <div className="md:col-span-2 flex flex-col gap-6">
-            <div className="p-6 md:p-8 rounded-[2rem] border border-amber-900/10 dark:border-amber-400/10 bg-white/80 dark:bg-[#0c111d] shadow-xl shadow-amber-900/5 dark:shadow-black/25">
-              <h2 className="text-base sm:text-lg font-black text-slate-950 dark:text-[#f8f4ea] mb-4 pb-2.5 border-b border-amber-900/5 dark:border-slate-800">
-                تفاصيل ومميزات البرنامج
-              </h2>
-              <div className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed space-y-4 font-semibold">
-                <p>{software.description}</p>
-                <p>
-                  يعد هذا التطبيق من المناهج والحلول التقنية المتميزة في خدمة كتاب الله عز وجل وعلوم اللغة. تم بناؤه ومراجعته بعناية لتقديم أداء مستقر وتجربة مستخدم سلسة تتوافق مع متطلبات طلاب العلم والباحثين.
-                </p>
-              </div>
-            </div>
-          </div>
-
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AppDetails app={app} />
         </div>
-      </div>
-    </>
+      </main>
+    </PageTransition>
   );
 }

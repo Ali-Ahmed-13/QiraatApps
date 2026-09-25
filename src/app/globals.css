@@ -255,3 +255,76 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 0 20px rgba(0, 179, 183, 0.15);
 }
 
+/* ============================================================
+   🖨️ نمط الطباعة الاحترافي المخصص (Professional Clean Print)
+   ============================================================ */
+@media print {
+  /* 1. إخفاء كافة عناصر واجهة الموقع، القوائم، والتذييل */
+  header,
+  footer,
+  aside,
+  nav,
+  .no-print,
+  [data-no-print],
+  button,
+  .fixed,
+  .sticky {
+    display: none !important;
+  }
+
+  /* 2. تصفية خلفية الصفحة بالكامل لتوفير الحبر وجعل القراءة نقية */
+  html,
+  body,
+  main {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 13pt !important;
+    line-height: 1.8 !important;
+  }
+
+  /* 3. إزالة كافة الظلال والحدود الداكنة من البطاقات وجعلها بعرض كامل */
+  article,
+  .print-clean {
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* 4. إلغاء تقسيم الـ flex والـ grid وجعل المحتوى انسيابياً رأسياً */
+  .lg\:flex-row,
+  .grid {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  /* 5. نصوص نقية وواضحة جداً */
+  p, span, h1, h2, h3, h4, div {
+    color: #111111 !important;
+  }
+
+  /* 6. منع قص العناوين أو تفتيتها في نهاية الورقة */
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    break-after: avoid;
+    color: #000000 !important;
+  }
+
+  p, blockquote {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* 7. إظهار العناصر المخصصة فقط للطباعة */
+  .print-only {
+    display: flex !important;
+  }
+}
+
+

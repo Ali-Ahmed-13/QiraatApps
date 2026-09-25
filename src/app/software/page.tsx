@@ -1,234 +1,241 @@
 'use client';
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, Layers, Search, Compass } from 'lucide-react';
-import type { SoftwareResource } from 'src/types/software';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useUser } from '@clerk/nextjs';
+import { Filter, X } from 'lucide-react';
 import PageTransition from 'src/components/ui/PageTransition';
 import ScrollReveal from 'src/components/ui/ScrollReveal';
+import { islamicApps, categoriesList } from 'src/data/islamicAppsData';
+import { IslamicApp } from 'src/types/software';
+import AppFilters from 'src/components/software/AppFilters';
+import AppSearch from 'src/components/software/AppSearch';
+import AppGrid from 'src/components/software/AppGrid';
 import { matchesSearchText } from '@/utils/textNormalization';
-
-type SoftwareCatalogItem = SoftwareResource & {
-  platform?: string;
-};
+import { getStudentData, toggleFavoriteBook } from '@/utils/studentSync';
 
 export default function SoftwarePage() {
-  const [apps, setApps] = useState<SoftwareCatalogItem[]>([]);
-  const [query, setQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState('الكل');
+  const { user } = useUser();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('الكل');
+  const [selectedSourceType, setSelectedSourceType] = useState<'all' | 'google_play' | 'apk'>('all');
+  const [sortBy, setSortBy] = useState<'newest' | 'rating' | 'downloads' | 'name'>('newest');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
+  // Sync favorites with Clerk student sync
   useEffect(() => {
-    fetch('/data/softwareData.json')
-      .then((res) => res.json())
-      .then((data) => setApps(data))
-      .catch((err) => console.error('Error loading software data:', err));
+    if (user) {
+      const studentData = getStudentData(user);
+      setFavorites(studentData.favorites || []);
+    }
+  }, [user]);
 
+  // URL Query handling
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const catParam = params.get('category') || params.get('cat');
       if (catParam) {
-        // Map slug or use raw category
         const decoded = decodeURIComponent(catParam);
-        setActiveCategory(decoded === 'all' ? 'الكل' : decoded);
+        setSelectedCategory(decoded === 'all' ? 'الكل' : decoded);
       }
     }
   }, []);
 
-  const handleCategoryChange = (category: string) => {
-    setActiveCategory(category);
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    setMobileFiltersOpen(false);
     if (typeof window !== 'undefined') {
       const newUrl = category === 'الكل' ? '/software' : `/software?category=${encodeURIComponent(category)}`;
       window.history.pushState({}, '', newUrl);
     }
   };
 
-  // جلب الفئات ديناميكياً من ملف الـ JSON وتصفيتها
-  const categories = useMemo(() => {
-    const values = apps
-      .map((app) => app.category?.trim())
-      .filter((value): value is string => Boolean(value));
-    
-    return ['الكل', ...Array.from(new Set(values))];
-  }, [apps]);
+  const handleToggleFavorite = (appId: string) => {
+    const updated = favorites.includes(appId)
+      ? favorites.filter((id) => id !== appId)
+      : [...favorites, appId];
 
-  const filteredApps = useMemo(() => {
-    return apps.filter((app) => {
-      const matchesQuery =
-        !query ||
-        matchesSearchText(app.name, query) ||
-        matchesSearchText(app.description, query) ||
-        matchesSearchText(app.category, query);
+    setFavorites(updated);
+    if (user) {
+      toggleFavoriteBook(user, appId);
+    }
+  };
 
-      const matchesCategory =
-        activeCategory === 'الكل' || app.category === activeCategory;
-
-      return matchesQuery && matchesCategory;
+  // Compute categories with item counts
+  const categoriesWithCounts = useMemo(() => {
+    return categoriesList.map((cat) => {
+      if (cat.label === 'الكل') {
+        return { ...cat, count: islamicApps.length };
+      }
+      const count = islamicApps.filter(
+        (app) => app.category === cat.label || app.secondaryCategory === cat.label || app.tags?.includes(cat.label)
+      ).length;
+      return { ...cat, count };
     });
-  }, [apps, query, activeCategory]);
+  }, []);
+
+  // Filter and Sort Apps
+  const filteredAndSortedApps = useMemo(() => {
+    let result = islamicApps.filter((app) => {
+      // 1. Search filter
+      const matchesSearch =
+        !searchQuery.trim() ||
+        matchesSearchText(app.name, searchQuery) ||
+        matchesSearchText(app.description, searchQuery) ||
+        matchesSearchText(app.fullDescription, searchQuery) ||
+        matchesSearchText(app.subtitle || '', searchQuery) ||
+        matchesSearchText(app.sheikh || '', searchQuery) ||
+        (app.tags && app.tags.some((t) => matchesSearchText(t, searchQuery)));
+
+      // 2. Category filter
+      const matchesCategory =
+        selectedCategory === 'الكل' ||
+        app.category === selectedCategory ||
+        app.secondaryCategory === selectedCategory ||
+        app.tags?.includes(selectedCategory);
+
+      // 3. Source Type filter
+      const matchesSource =
+        selectedSourceType === 'all' ||
+        app.sourceType === 'both' ||
+        app.sourceType === selectedSourceType;
+
+      return matchesSearch && matchesCategory && matchesSource;
+    });
+
+    // 4. Sort
+    result = [...result].sort((a, b) => {
+      if (sortBy === 'rating') {
+        return b.rating - a.rating;
+      }
+      if (sortBy === 'downloads') {
+        const getNum = (str: string) => parseInt(str.replace(/[^0-9]/g, '')) || 0;
+        return getNum(b.downloads) - getNum(a.downloads);
+      }
+      if (sortBy === 'name') {
+        return a.name.localeCompare(b.name, 'ar');
+      }
+      // 'newest' default: keep featured first or order
+      if (a.isFeatured && !b.isFeatured) return -1;
+      if (!a.isFeatured && b.isFeatured) return 1;
+      return 0;
+    });
+
+    return result;
+  }, [searchQuery, selectedCategory, selectedSourceType, sortBy]);
 
   return (
     <PageTransition>
-      <main
-        dir="rtl"
-        className="min-h-screen bg-background text-foreground transition-colors duration-500 pb-20 pt-8"
-      >
-        {/* قسم الهيدر */}
-        <section className="border-b border-border pb-8 mb-10">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_8%,rgba(0,109,111,0.02),transparent_35%)] dark:bg-[radial-gradient(circle_at_16%_8%,rgba(0,179,183,0.05),transparent_35%)]" />
+      <main className="relative min-h-screen bg-background pb-24 pt-8" dir="rtl">
+        {/* Subtle Background glow */}
+        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+          <div className="absolute top-12 left-1/3 w-[800px] h-[500px] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,109,111,0.03),transparent_70%)] blur-3xl dark:bg-[radial-gradient(circle_at_center,rgba(0,179,183,0.06),transparent_60%)]" />
+        </div>
 
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="rounded-3xl border border-border bg-card p-6 shadow-premium sm:p-8">
-              <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-                <div className="max-w-3xl text-right">
-                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-primary/10 bg-brand-primary-light/50 dark:bg-brand-primary-light/10 px-3 py-1.5 text-xs font-black text-brand-primary dark:text-[#00B3B7]">
-                    <Layers className="h-4 w-4" />
-                    <span>برمجيات وتطبيقات القرآن الكريم</span>
-                  </div>
-                  <h1 className="text-3xl font-black leading-tight text-foreground sm:text-4xl lg:text-5xl font-amiri">
-                    دليل التطبيقات والبرمجيات الإسلامية
-                  </h1>
-                  <p className="mt-3 max-w-2xl text-xs sm:text-sm font-semibold leading-relaxed text-muted">
-                    اكتشف وحمّل تطبيقاتنا المصممة بعناية فائقة لخدمة كتاب الله عز وجل والقراءات العشر والعلوم الشرعية، مجمعة في مكان واحد لتيسير الوصول والاستخدام.
-                  </p>
-                </div>
-
-                {/* بطاقة الإحصائيات */}
-                <div className="grid grid-cols-3 gap-2 rounded-2xl border border-border bg-background p-2.5 shadow-sm w-fit shrink-0">
-                  <div className="px-3 py-2 text-center">
-                    <p className="text-lg font-black text-brand-primary">1</p>
-                    <p className="text-[10px] font-bold text-muted">برمجيات القراءات</p>
-                  </div>
-                  <div className="border-x border-border px-3 py-2 text-center">
-                    <p className="text-lg font-black text-brand-primary">1</p>
-                    <p className="text-[10px] font-bold text-muted">متون علمية</p>
-                  </div>
-                  <div className="px-3 py-2 text-center">
-                    <p className="text-lg font-black text-brand-primary">1</p>
-                    <p className="text-[10px] font-bold text-muted">تطبيقات المصاحف</p>
-                  </div>
-                </div>
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Main 2-Column Responsive Layout (RTL: Main area on the right, Sidebar on the left) */}
+          <div className="flex flex-col lg:flex-row gap-8 items-start">
+            
+            {/* 🌟 MAIN CONTENT AREA (On the right in RTL) */}
+            <div className="flex-1 w-full order-1">
+              
+              {/* Header Title & Subtitle */}
+              <div className="text-right mb-8">
+                <h1 className="font-amiri font-bold text-3xl sm:text-4xl lg:text-5xl text-foreground leading-tight">
+                  التطبيقات الإسلامية
+                </h1>
+                <p className="text-xs sm:text-sm text-muted mt-2 font-tajawal font-medium leading-relaxed">
+                  مجموعة من التطبيقات المختارة بعناية لخدمة طلاب العلم والمهتمين بالعلوم الشرعية.
+                </p>
               </div>
 
-              {/* البحث والفئات */}
-              <div className="mt-8 grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
-                <label className="flex items-center gap-3 rounded-xl border border-border bg-background px-4 py-3 text-muted shadow-sm transition-all focus-within:border-brand-primary">
-                  <Search className="h-4 w-4 shrink-0 text-brand-primary" />
-                  <input
-                    value={query}
-                    onChange={(event) => setQuery(event.target.value)}
-                    placeholder="ابحث عن التطبيق، المتن، أو اسم الشيخ..."
-                    className="w-full bg-transparent text-xs sm:text-sm font-semibold text-foreground outline-none placeholder:text-light-text"
-                  />
-                </label>
-
-                <div className="flex flex-wrap gap-2">
-                  {categories.map((category) => {
-                    const isActive = category === activeCategory;
-
-                    return (
-                      <button
-                        key={category}
-                        type="button"
-                        onClick={() => handleCategoryChange(category)}
-                        className={`rounded-xl border px-4 py-2.5 text-xs font-black transition-all cursor-pointer ${
-                          isActive
-                            ? 'border-brand-primary bg-brand-primary text-white dark:text-white shadow-premium'
-                            : 'border-border bg-card text-muted hover:border-brand-primary/30 hover:text-brand-primary'
-                        }`}
-                      >
-                        {category}
-                      </button>
-                    );
-                  })}
-                </div>
+              {/* Mobile Filter Toggle Button */}
+              <div className="lg:hidden mb-4">
+                <button
+                  onClick={() => setMobileFiltersOpen(true)}
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-card border border-border dark:border-[#212C2C] text-sm font-bold text-foreground shadow-xs cursor-pointer"
+                >
+                  <Filter className="w-4 h-4 text-brand-primary" />
+                  <span>تصفية التصنيفات ونوع التطبيق ({selectedCategory})</span>
+                </button>
               </div>
+
+              {/* Search and Sorting Controls */}
+              <AppSearch
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                sortBy={sortBy}
+                onSortChange={setSortBy}
+                viewMode={viewMode}
+                onViewModeChange={setViewMode}
+                totalCount={filteredAndSortedApps.length}
+              />
+
+              {/* Applications Grid / List */}
+              <ScrollReveal variant="fade-up">
+                <AppGrid
+                  apps={filteredAndSortedApps}
+                  favorites={favorites}
+                  onToggleFavorite={handleToggleFavorite}
+                  viewMode={viewMode}
+                />
+              </ScrollReveal>
+            </div>
+
+            {/* 🌟 SIDEBAR (On the left in RTL, width 280px) */}
+            <div className="hidden lg:block w-[280px] shrink-0 bg-card border border-border dark:border-[#212C2C] p-6 rounded-[28px] shadow-premium sticky top-28 order-2">
+              <AppFilters
+                categories={categoriesWithCounts}
+                selectedCategory={selectedCategory}
+                onSelectCategory={handleCategorySelect}
+                selectedSourceType={selectedSourceType}
+                onSelectSourceType={setSelectedSourceType}
+              />
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* 🌟 Mobile Drawer for Filters */}
+        {mobileFiltersOpen && (
+          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-end lg:hidden">
+            <div className="w-[300px] h-full bg-card p-6 overflow-y-auto shadow-2xl flex flex-col justify-between text-right">
+              <div>
+                <div className="flex items-center justify-between pb-4 mb-6 border-b border-border">
+                  <h3 className="font-amiri font-bold text-xl text-foreground">
+                    التصنيفات والفلاتر
+                  </h3>
+                  <button
+                    onClick={() => setMobileFiltersOpen(false)}
+                    aria-label="إغلاق الفلتر"
+                    className="p-1.5 rounded-xl hover:bg-border/30 text-muted"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <AppFilters
+                  categories={categoriesWithCounts}
+                  selectedCategory={selectedCategory}
+                  onSelectCategory={handleCategorySelect}
+                  selectedSourceType={selectedSourceType}
+                  onSelectSourceType={setSelectedSourceType}
+                />
+              </div>
+
+              <button
+                onClick={() => setMobileFiltersOpen(false)}
+                className="mt-8 w-full py-3 rounded-xl bg-brand-primary text-white font-bold text-sm shadow-md"
+              >
+                تطبيق الفلاتر
+              </button>
             </div>
           </div>
-        </section>
-
-        {/* قسم عرض الكروت */}
-        <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          {filteredApps.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {filteredApps.map((app, index) => (
-                <ScrollReveal key={app.id} variant="fade-up" delay={index * 80}>
-                  <div
-                    className="group flex flex-col items-center justify-between rounded-[24px] border border-border bg-card p-6 text-center shadow-premium hover:shadow-premium-hover transition-all duration-300 h-full"
-                  >
-                    <div className="flex w-full flex-col items-center justify-center text-center">
-                      <span className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-[1.5rem] border border-brand-primary/10 bg-brand-primary-light/50 dark:bg-brand-primary-light/10 text-brand-primary shadow-sm transition-all duration-300 group-hover:scale-105">
-                        {app.iconUrl ? (
-                          <Image
-                            src={app.iconUrl}
-                            alt={app.name}
-                            fill
-                            sizes="96px"
-                            className="object-cover"
-                          />
-                        ) : (
-                          <Layers className="h-10 w-10 text-brand-primary" />
-                        )}
-                      </span>
-
-                      <p className="mt-5 text-[10px] font-black uppercase tracking-widest text-brand-secondary">
-                        {app.category}
-                      </p>
-                      <h2 className="mt-2 text-xl font-bold leading-snug text-foreground transition-colors duration-300 group-hover:text-brand-primary font-amiri">
-                        {app.name}
-                      </h2>
-                    </div>
-
-                    <p className="mt-4 line-clamp-3 text-center text-xs sm:text-sm font-semibold leading-relaxed text-muted">
-                      {app.description}
-                    </p>
-
-                    {/* بيانات التطبيق */}
-                    <div className="mt-6 grid w-full grid-cols-2 gap-2 text-[11px] font-bold text-muted">
-                      <div className="rounded-xl border border-border bg-background/55 px-3 py-2">
-                        <span className="block text-light-text text-[10px]">حجم التطبيق</span>
-                        <span className="mt-1 block text-sm font-bold text-foreground">
-                          {app.size}
-                        </span>
-                      </div>
-                      <div className="rounded-xl border border-border bg-background/55 px-3 py-2">
-                        <span className="block text-light-text text-[10px]">الإصدار</span>
-                        <span className="mt-1 block text-sm font-bold text-foreground">
-                          {app.version}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="mt-3 w-full rounded-xl border border-border bg-background/55 px-3 py-2 text-[10px] font-bold text-light-text flex justify-between items-center">
-                      <span>التوافق التقني</span>
-                      <span className="text-xs font-bold text-foreground">
-                        Android / نظام أندرويد
-                      </span>
-                    </div>
-
-                    <Link
-                      href={`/software/${app.id}`}
-                      className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-primary hover:bg-brand-primary-hover px-4 py-3 text-xs sm:text-sm font-bold text-white shadow-premium transition-all duration-300 cursor-pointer"
-                    >
-                      <span>استكشاف وتحميل التطبيق</span>
-                      <ArrowLeft className="h-4 w-4" />
-                    </Link>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          ) : (
-            <div className="rounded-3xl border border-dashed border-border bg-card p-12 text-center max-w-lg mx-auto shadow-premium">
-              <Compass className="mx-auto h-12 w-12 text-light-text animate-pulse mb-4" />
-              <h3 className="text-lg font-bold text-foreground font-amiri mb-2">
-                لا توجد نتائج مطابقة لبحثك
-              </h3>
-              <p className="text-xs font-bold text-muted">
-                جرّب اسماً آخر أو اختر فئة مختلفة من أعلى الصفحة.
-              </p>
-            </div>
-          )}
-        </section>
+        )}
       </main>
     </PageTransition>
   );

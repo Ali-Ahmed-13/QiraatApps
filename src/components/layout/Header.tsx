@@ -56,6 +56,25 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Global scroll progress listener across entire website
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const progress = Math.min(100, Math.max(0, (window.scrollY / totalHeight) * 100));
+        setScrollProgress(progress);
+      } else {
+        setScrollProgress(0);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [pathname]);
+
   // Close menus on page change
   useEffect(() => {
     setActiveMegaMenu(null);
@@ -167,8 +186,8 @@ export default function Header() {
         </div>
       </div>
 
-      {/* 🌟 شريط التنقل الرئيسي الفاخر */}
-      <header className="w-full bg-nav backdrop-blur-md border-b border-border dark:border-[#212C2C] theme-transition">
+      {/* 🌟 شريط التنقل الرئيسي الفاخر مع شادو بارز للرفع والفصل عن المحتوى */}
+      <header className="w-full bg-card/95 dark:bg-[#0E1313]/95 backdrop-blur-xl border-b border-border/80 dark:border-[#212C2C] shadow-[0_10px_30px_-5px_rgba(0,0,0,0.09),0_4px_12px_-2px_rgba(0,0,0,0.05)] dark:shadow-[0_14px_40px_-5px_rgba(0,0,0,0.85),0_1px_3px_rgba(0,179,183,0.15)] theme-transition relative z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
 
           {/* الشعار والهوية البصرية */}
@@ -549,6 +568,14 @@ export default function Header() {
           </div>
         )}
       </header>
+
+      {/* 🌟 شريط تقدم التمرير العام للموقع بالكامل (Global Scroll Progress Bar) */}
+      <div className="w-full h-[3.5px] bg-border/40 dark:bg-black/40 overflow-hidden no-print print:hidden relative">
+        <div
+          className="h-full bg-gradient-to-l from-brand-secondary via-brand-primary to-brand-secondary dark:from-[#E7C682] dark:via-[#00B3B7] dark:to-[#E7C682] transition-[width] duration-150 ease-out shadow-[0_0_10px_rgba(0,179,183,0.6)]"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
     </div>
   );
 }

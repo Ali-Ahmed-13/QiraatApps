@@ -198,20 +198,20 @@ export default function ArticlesPage() {
                             <Sparkles className="w-3.5 h-3.5" />
                             <span>مقال مميز وموثق</span>
                           </div>
-                          <h2 className="font-amiri font-bold text-2xl sm:text-3xl text-foreground group-hover:text-brand-primary transition-colors">
+                          <h2 className="font-amiri font-bold text-2xl sm:text-3xl lg:text-4xl text-foreground group-hover:text-brand-primary transition-colors">
                             {featuredArt.title}
                           </h2>
-                          <p className="text-xs sm:text-sm text-muted leading-relaxed font-tajawal font-medium">
+                          <p className="text-sm sm:text-base lg:text-lg text-foreground/85 leading-relaxed font-tajawal font-medium">
                             {featuredArt.excerpt}
                           </p>
                         </div>
-                        <div className="flex flex-col gap-4 border-t border-border/60 dark:border-[#212C2C]/60 pt-4">
-                          <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs text-muted font-bold">
-                            <span className="flex items-center gap-1"><User className="w-4 h-4 text-brand-primary" /> {featuredArt.author}</span>
-                            <span className="flex items-center gap-1"><Calendar className="w-4 h-4 text-brand-secondary" /> {featuredArt.date}</span>
-                            <span className="flex items-center gap-1"><Clock className="w-4 h-4 text-light-text" /> {featuredArt.readTime}</span>
+                        <div className="flex flex-col gap-4 border-t border-border/60 dark:border-[#212C2C]/60 pt-5">
+                          <div className="flex flex-wrap items-center gap-y-2 gap-x-5 text-xs sm:text-sm text-foreground/80 font-bold">
+                            <span className="flex items-center gap-1.5"><User className="w-4 h-4 text-brand-primary" /> {featuredArt.author}</span>
+                            <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4 text-brand-secondary" /> {featuredArt.date}</span>
+                            <span className="flex items-center gap-1.5"><Clock className="w-4 h-4 text-light-text" /> {featuredArt.readTime}</span>
                           </div>
-                          <Link href={`/articles/${featuredArt.id}`} className="inline-flex items-center gap-1 text-xs font-bold text-brand-primary hover:text-brand-primary-hover w-fit cursor-pointer">
+                          <Link href={`/articles/${featuredArt.id}`} className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-brand-primary hover:text-brand-primary-hover w-fit cursor-pointer">
                             <span>اقرأ المقال كاملاً</span>
                             <ChevronLeft className="w-4 h-4" />
                           </Link>
@@ -232,14 +232,14 @@ export default function ArticlesPage() {
                 const isFav = favoriteTitles.includes(title);
                 return (
                   <ScrollReveal key={art.id} variant="fade-up" delay={idx * 100}>
-                    <div className="bg-card border border-border dark:border-[#212C2C] p-6 rounded-[24px] shadow-premium flex flex-col justify-between h-full group hover:-translate-y-1 hover:shadow-premium-hover transition-all duration-300">
+                    <div className="bg-card border border-border dark:border-[#212C2C] p-6 sm:p-7 rounded-[26px] shadow-premium flex flex-col justify-between h-full group hover:-translate-y-1 hover:shadow-premium-hover transition-all duration-300">
                       <div className="flex flex-col gap-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <span className="text-[10px] text-brand-primary dark:text-[#00B3B7] font-black bg-brand-primary-light/50 dark:bg-brand-primary-light/10 px-2.5 py-1 rounded-full border border-brand-primary/10">
+                            <span className="text-xs text-brand-primary dark:text-[#00B3B7] font-bold bg-brand-primary-light/50 dark:bg-brand-primary-light/10 px-3 py-1 rounded-full border border-brand-primary/10">
                               {catLabel(art.category)}
                             </span>
-                            <span className="text-[10px] text-light-text font-bold">
+                            <span className="text-xs text-light-text font-bold bg-border/20 dark:bg-[#212C2C]/50 px-2.5 py-0.5 rounded-lg">
                               مقال {art.id}
                             </span>
                           </div>
@@ -252,25 +252,25 @@ export default function ArticlesPage() {
                             <Bookmark className={`w-4 h-4 transition-colors ${isFav ? 'fill-current text-brand-secondary' : 'text-light-text hover:text-brand-primary'}`} />
                           </button>
                         </div>
-                      <h3 className="font-amiri font-bold text-lg sm:text-xl text-foreground group-hover:text-brand-primary transition-colors line-clamp-2">
+                      <h3 className="font-amiri font-bold text-xl sm:text-2xl text-foreground group-hover:text-brand-primary transition-colors line-clamp-2 leading-snug">
                         {art.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-muted leading-relaxed font-tajawal font-medium line-clamp-3">
+                      <p className="text-sm sm:text-base text-foreground/80 leading-relaxed font-tajawal font-medium line-clamp-3">
                         {art.excerpt}
                       </p>
                     </div>
                     
                     <div className="border-t border-border/60 dark:border-[#212C2C]/60 mt-6 pt-4 flex flex-col gap-4">
-                      <div className="flex flex-col gap-1.5 text-[11px] text-light-text font-bold">
-                        <span className="flex items-center gap-1 text-muted"><User className="w-3.5 h-3.5 text-brand-primary shrink-0" /> {art.author}</span>
-                        <div className="flex items-center justify-between text-[10px] mt-1">
-                          <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5 shrink-0" /> {art.date}</span>
-                          <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5 shrink-0" /> {art.readTime}</span>
+                      <div className="flex flex-col gap-1.5 text-xs text-foreground/75 font-bold">
+                        <span className="flex items-center gap-1.5 text-foreground/85"><User className="w-4 h-4 text-brand-primary shrink-0" /> {art.author}</span>
+                        <div className="flex items-center justify-between text-xs mt-1 text-light-text">
+                          <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 shrink-0" /> {art.date}</span>
+                          <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 shrink-0" /> {art.readTime}</span>
                         </div>
                       </div>
-                      <Link href={`/articles/${art.id}`} className="inline-flex items-center gap-1 text-xs font-bold text-brand-primary hover:text-brand-primary-hover w-fit cursor-pointer">
+                      <Link href={`/articles/${art.id}`} className="inline-flex items-center gap-1 text-xs sm:text-sm font-bold text-brand-primary hover:text-brand-primary-hover w-fit cursor-pointer">
                         <span>اقرأ المقال</span>
-                        <ChevronLeft className="w-3.5 h-3.5" />
+                        <ChevronLeft className="w-4 h-4" />
                       </Link>
                     </div>
                   </div>
