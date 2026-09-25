@@ -9,7 +9,6 @@ import Footer from 'src/components/layout/Footer';
 const cairo = Cairo({
   subsets: ['arabic'],
   variable: '--font-cairo',
-  weight: ['300', '400', '500', '600', '700', '800'],
 });
 
 const amiri = Amiri({
