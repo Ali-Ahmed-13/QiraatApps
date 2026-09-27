@@ -307,15 +307,17 @@ export default function Header() {
       <header className="w-full bg-[#FCFBF8]/95 dark:bg-[#071320]/95 backdrop-blur-md py-2.5 px-4 sm:px-6 lg:px-8 border-b border-[#E8E4D8]/80 dark:border-[#1E2E3E] transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           
-          {/* الحاوية المستديرة الحرة (Pill Card) بنمط المرجع الصوري المرفق */}
-          <div className="relative w-full bg-white dark:bg-[#0E1A29] rounded-2xl sm:rounded-3xl border border-[#EBE7DC] dark:border-[#1E3048] shadow-[0_4px_20px_-4px_rgba(16,47,75,0.06),0_2px_6px_-1px_rgba(16,47,75,0.03)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.5)] px-3 sm:px-5 py-2.5 flex items-center justify-between overflow-hidden">
+          {/* الحاوية المستديرة الحرة (Pill Card) بنمط المرجع الصوري المرفق مع overflow-visible لظهور القوائم */}
+          <div className="relative w-full bg-white dark:bg-[#0E1A29] rounded-2xl sm:rounded-3xl border border-[#EBE7DC] dark:border-[#1E3048] shadow-[0_4px_20px_-4px_rgba(16,47,75,0.06),0_2px_6px_-1px_rgba(16,47,75,0.03)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.5)] px-3 sm:px-5 py-2.5 flex items-center justify-between">
             
-            {/* الزخرفة الإسلامية الرقيقة كعلامة مائية على حواف الكارت */}
-            <div className="absolute top-0 right-0 pointer-events-none opacity-25 dark:opacity-10 translate-x-2 -translate-y-2">
-              <IslamicCornerPattern className="w-20 h-20 text-[#D7AE55]" />
-            </div>
-            <div className="absolute top-0 left-0 pointer-events-none opacity-25 dark:opacity-10 -translate-x-2 -translate-y-2 rotate-90">
-              <IslamicCornerPattern className="w-20 h-20 text-[#D7AE55]" />
+            {/* الزخرفة الإسلامية الرقيقة كعلامة مائية على حواف الكارت محصورة داخل حاوية منفصلة */}
+            <div className="absolute inset-0 rounded-2xl sm:rounded-3xl overflow-hidden pointer-events-none">
+              <div className="absolute top-0 right-0 opacity-25 dark:opacity-10 translate-x-2 -translate-y-2">
+                <IslamicCornerPattern className="w-20 h-20 text-[#D7AE55]" />
+              </div>
+              <div className="absolute top-0 left-0 opacity-25 dark:opacity-10 -translate-x-2 -translate-y-2 rotate-90">
+                <IslamicCornerPattern className="w-20 h-20 text-[#D7AE55]" />
+              </div>
             </div>
 
             {/* 1. الشعار والهوية البصرية (يمين الشريط في RTL) */}
@@ -344,7 +346,7 @@ export default function Header() {
             </Link>
 
             {/* 2. روابط التصفح الأساسية لسطح المكتب (وسط الشريط) */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 text-xs sm:text-[13px] font-bold text-[#17212B] dark:text-[#E2E8F0] relative z-10">
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 text-xs sm:text-[13px] font-bold text-[#17212B] dark:text-[#E2E8F0] relative z-20">
               
               {/* الرئيسية */}
               <Link
@@ -360,7 +362,10 @@ export default function Header() {
               </Link>
 
               {/* العلوم واللغة (ميجا منيو مع تمييز الحالة النشطة كما في الصورة) */}
-              <div className="relative">
+              <div
+                className="relative"
+                onMouseLeave={() => setActiveMegaMenu(null)}
+              >
                 <button
                   onClick={() => setActiveMegaMenu(activeMegaMenu === 'sciences' ? null : 'sciences')}
                   onMouseEnter={() => setActiveMegaMenu('sciences')}
@@ -382,61 +387,65 @@ export default function Header() {
                 {/* القائمة المنبثقة: العلوم واللغة */}
                 {activeMegaMenu === 'sciences' && (
                   <div
-                    onMouseLeave={() => setActiveMegaMenu(null)}
-                    className="absolute right-[-100px] top-[calc(100%+10px)] w-[920px] max-w-[92vw] bg-white dark:bg-[#0E1A29] border border-[#E7E2D6] dark:border-[#1E3048] rounded-2xl p-7 shadow-2xl z-50 grid grid-cols-3 gap-6 animate-in fade-in slide-in-from-top-2 duration-200"
+                    className="absolute right-[-80px] top-full pt-3 w-[920px] max-w-[90vw] z-50 animate-in fade-in slide-in-from-top-2 duration-200"
                   >
-                    {sciencesMegaList.map((col, index) => (
-                      <div
-                        key={index}
-                        className="flex flex-col gap-4 border-l border-[#EBE7DC] dark:border-[#1E3048] last:border-0 pl-5 last:pl-0"
-                      >
-                        <h4 className="font-amiri font-bold text-base text-[#102F4B] dark:text-[#F1F5F9] border-b border-[#D7AE55]/40 pb-2 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#087A78] shrink-0" />
-                          <span>{col.title}</span>
-                        </h4>
-                        <div className="flex flex-col gap-1.5">
-                          {col.items.map((item, itemIdx) => {
-                            const Icon = item.icon;
-                            const active = isLinkActive(item.href);
-                            return (
-                              <Link
-                                key={itemIdx}
-                                href={item.href}
-                                className={`flex items-start gap-3 p-2 rounded-xl transition-all duration-200 group/item ${
-                                  active
-                                    ? 'bg-[#EAF5F5] dark:bg-[#087A78]/20 text-[#087A78] dark:text-[#2DD4BF]'
-                                    : 'hover:bg-[#F8F6EF] dark:hover:bg-[#152538]'
-                                }`}
-                              >
-                                <div
-                                  className={`p-2 rounded-lg shrink-0 transition-colors ${
+                    <div className="bg-white dark:bg-[#0E1A29] border border-[#E7E2D6] dark:border-[#1E3048] rounded-2xl p-7 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.7)] grid grid-cols-3 gap-6">
+                      {sciencesMegaList.map((col, index) => (
+                        <div
+                          key={index}
+                          className="flex flex-col gap-4 border-l border-[#EBE7DC] dark:border-[#1E3048] last:border-0 pl-5 last:pl-0"
+                        >
+                          <h4 className="font-amiri font-bold text-base text-[#102F4B] dark:text-[#F1F5F9] border-b border-[#D7AE55]/40 pb-2 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#087A78] shrink-0" />
+                            <span>{col.title}</span>
+                          </h4>
+                          <div className="flex flex-col gap-1.5">
+                            {col.items.map((item, itemIdx) => {
+                              const Icon = item.icon;
+                              const active = isLinkActive(item.href);
+                              return (
+                                <Link
+                                  key={itemIdx}
+                                  href={item.href}
+                                  className={`flex items-start gap-3 p-2 rounded-xl transition-all duration-200 group/item ${
                                     active
-                                      ? 'bg-[#087A78]/15 text-[#087A78] dark:text-[#2DD4BF]'
-                                      : 'bg-[#F2EFE8] dark:bg-[#172535] text-[#6B7280] dark:text-[#94A3B8] group-hover/item:text-[#087A78] dark:group-hover/item:text-[#2DD4BF]'
+                                      ? 'bg-[#EAF5F5] dark:bg-[#087A78]/20 text-[#087A78] dark:text-[#2DD4BF]'
+                                      : 'hover:bg-[#F8F6EF] dark:hover:bg-[#152538]'
                                   }`}
                                 >
-                                  <Icon className="w-4 h-4" />
-                                </div>
-                                <div className="text-right">
-                                  <div className="text-xs font-bold text-[#17212B] dark:text-[#E2E8F0] group-hover/item:text-[#087A78] dark:group-hover/item:text-[#2DD4BF] transition-colors">
-                                    {item.name}
+                                  <div
+                                    className={`p-2 rounded-lg shrink-0 transition-colors ${
+                                      active
+                                        ? 'bg-[#087A78]/15 text-[#087A78] dark:text-[#2DD4BF]'
+                                        : 'bg-[#F2EFE8] dark:bg-[#172535] text-[#6B7280] dark:text-[#94A3B8] group-hover/item:text-[#087A78] dark:group-hover/item:text-[#2DD4BF]'
+                                    }`}
+                                  >
+                                    <Icon className="w-4 h-4" />
                                   </div>
-                                  <div className="text-[10px] text-[#6B7280] dark:text-[#94A3B8] mt-0.5 leading-snug">
-                                    {item.desc}
+                                  <div className="text-right">
+                                    <div className="text-xs font-bold text-[#17212B] dark:text-[#E2E8F0] group-hover/item:text-[#087A78] dark:group-hover/item:text-[#2DD4BF] transition-colors">
+                                      {item.name}
+                                    </div>
+                                    <div className="text-[10px] text-[#6B7280] dark:text-[#94A3B8] mt-0.5 leading-snug">
+                                      {item.desc}
+                                    </div>
                                   </div>
-                                </div>
-                              </Link>
-                            );
-                          })}
+                                </Link>
+                              );
+                            })}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
 
               {/* المكتبة والمعرفة (ميجا منيو) */}
-              <div className="relative">
+              <div
+                className="relative"
+                onMouseLeave={() => setActiveMegaMenu(null)}
+              >
                 <button
                   onClick={() => setActiveMegaMenu(activeMegaMenu === 'knowledge' ? null : 'knowledge')}
                   onMouseEnter={() => setActiveMegaMenu('knowledge')}
@@ -458,55 +467,56 @@ export default function Header() {
                 {/* القائمة المنبثقة: المكتبة والمعرفة */}
                 {activeMegaMenu === 'knowledge' && (
                   <div
-                    onMouseLeave={() => setActiveMegaMenu(null)}
-                    className="absolute right-[-240px] top-[calc(100%+10px)] w-[880px] max-w-[92vw] bg-white dark:bg-[#0E1A29] border border-[#E7E2D6] dark:border-[#1E3048] rounded-2xl p-7 shadow-2xl z-50 grid grid-cols-3 gap-6 animate-in fade-in slide-in-from-top-2 duration-200"
+                    className="absolute right-[-200px] top-full pt-3 w-[880px] max-w-[90vw] z-50 animate-in fade-in slide-in-from-top-2 duration-200"
                   >
-                    {knowledgeMegaList.map((col, index) => (
-                      <div
-                        key={index}
-                        className="flex flex-col gap-4 border-l border-[#EBE7DC] dark:border-[#1E3048] last:border-0 pl-5 last:pl-0"
-                      >
-                        <h4 className="font-amiri font-bold text-base text-[#102F4B] dark:text-[#F1F5F9] border-b border-[#D7AE55]/40 pb-2 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#087A78] shrink-0" />
-                          <span>{col.title}</span>
-                        </h4>
-                        <div className="flex flex-col gap-1.5">
-                          {col.items.map((item, itemIdx) => {
-                            const Icon = item.icon;
-                            const active = isLinkActive(item.href);
-                            return (
-                              <Link
-                                key={itemIdx}
-                                href={item.href}
-                                className={`flex items-start gap-3 p-2 rounded-xl transition-all duration-200 group/item ${
-                                  active
-                                    ? 'bg-[#EAF5F5] dark:bg-[#087A78]/20 text-[#087A78] dark:text-[#2DD4BF]'
-                                    : 'hover:bg-[#F8F6EF] dark:hover:bg-[#152538]'
-                                }`}
-                              >
-                                <div
-                                  className={`p-2 rounded-lg shrink-0 transition-colors ${
+                    <div className="bg-white dark:bg-[#0E1A29] border border-[#E7E2D6] dark:border-[#1E3048] rounded-2xl p-7 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.7)] grid grid-cols-3 gap-6">
+                      {knowledgeMegaList.map((col, index) => (
+                        <div
+                          key={index}
+                          className="flex flex-col gap-4 border-l border-[#EBE7DC] dark:border-[#1E3048] last:border-0 pl-5 last:pl-0"
+                        >
+                          <h4 className="font-amiri font-bold text-base text-[#102F4B] dark:text-[#F1F5F9] border-b border-[#D7AE55]/40 pb-2 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#087A78] shrink-0" />
+                            <span>{col.title}</span>
+                          </h4>
+                          <div className="flex flex-col gap-1.5">
+                            {col.items.map((item, itemIdx) => {
+                              const Icon = item.icon;
+                              const active = isLinkActive(item.href);
+                              return (
+                                <Link
+                                  key={itemIdx}
+                                  href={item.href}
+                                  className={`flex items-start gap-3 p-2 rounded-xl transition-all duration-200 group/item ${
                                     active
-                                      ? 'bg-[#087A78]/15 text-[#087A78] dark:text-[#2DD4BF]'
-                                      : 'bg-[#F2EFE8] dark:bg-[#172535] text-[#6B7280] dark:text-[#94A3B8] group-hover/item:text-[#087A78] dark:group-hover/item:text-[#2DD4BF]'
+                                      ? 'bg-[#EAF5F5] dark:bg-[#087A78]/20 text-[#087A78] dark:text-[#2DD4BF]'
+                                      : 'hover:bg-[#F8F6EF] dark:hover:bg-[#152538]'
                                   }`}
                                 >
-                                  <Icon className="w-4 h-4" />
-                                </div>
-                                <div className="text-right">
-                                  <div className="text-xs font-bold text-[#17212B] dark:text-[#E2E8F0] group-hover/item:text-[#087A78] dark:group-hover/item:text-[#2DD4BF] transition-colors">
-                                    {item.name}
+                                  <div
+                                    className={`p-2 rounded-lg shrink-0 transition-colors ${
+                                      active
+                                        ? 'bg-[#087A78]/15 text-[#087A78] dark:text-[#2DD4BF]'
+                                        : 'bg-[#F2EFE8] dark:bg-[#172535] text-[#6B7280] dark:text-[#94A3B8] group-hover/item:text-[#087A78] dark:group-hover/item:text-[#2DD4BF]'
+                                    }`}
+                                  >
+                                    <Icon className="w-4 h-4" />
                                   </div>
-                                  <div className="text-[10px] text-[#6B7280] dark:text-[#94A3B8] mt-0.5 leading-snug">
-                                    {item.desc}
+                                  <div className="text-right">
+                                    <div className="text-xs font-bold text-[#17212B] dark:text-[#E2E8F0] group-hover/item:text-[#087A78] dark:group-hover/item:text-[#2DD4BF] transition-colors">
+                                      {item.name}
+                                    </div>
+                                    <div className="text-[10px] text-[#6B7280] dark:text-[#94A3B8] mt-0.5 leading-snug">
+                                      {item.desc}
+                                    </div>
                                   </div>
-                                </div>
-                              </Link>
-                            );
-                          })}
+                                </Link>
+                              );
+                            })}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
