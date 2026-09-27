@@ -192,67 +192,114 @@ export default function Header() {
           <IslamicStarPattern className="w-20 h-20 text-[#D7AE55]" />
         </div>
 
-        <div className="max-w-7xl mx-auto flex items-center justify-center relative z-10">
-          
-          {/* العرض في شاشات سطح المكتب: مصفوف بالتساوي مع الفواصل الذهبية */}
-          <div className="hidden lg:flex items-center justify-center gap-8 text-[11px] xl:text-xs font-semibold text-white/95">
-            
-            {/* الآية الكريمة (على اليمين في RTL) */}
-            <div className="flex items-center gap-2">
-              <span className="text-[#D7AE55] font-bold">قال الله تعالى:</span>
-              <span className="font-amiri text-sm tracking-wide text-white">
-                ﴿وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا﴾
-              </span>
-              <span className="text-white/60 text-[10px]">(الطلاق 2)</span>
-              <BookOpen className="w-3.5 h-3.5 text-[#D7AE55]" />
-            </div>
+        <div className="w-full overflow-hidden h-6 flex items-center relative z-10">
+          <div className="animate-marquee flex flex-nowrap items-center gap-8 whitespace-nowrap text-white/95 text-[11px] sm:text-xs font-semibold">
+            {/* المجموعة الأولى من الأحاديث والآيات */}
+            {[
+              {
+                label: 'قال الله تعالى:',
+                text: '﴿وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا﴾',
+                ref: '(الطلاق 2)',
+                icon: BookOpen,
+              },
+              {
+                label: 'قال رسول الله ﷺ:',
+                text: '«من سلك طريقًا يلتمس فيه علمًا سهل الله له به طريقًا إلى الجنة»',
+                ref: '(رواه مسلم)',
+                icon: Award,
+              },
+              {
+                label: 'حديث شريف:',
+                text: '«طلب العلم فريضة على كل مسلم»',
+                ref: '(رواه ابن ماجه)',
+                icon: Bookmark,
+              },
+              {
+                label: 'قال رسول الله ﷺ:',
+                text: '«خَيرُكُم مَن تَعَلَّمَ القُرآنَ وعَلَّمَهُ»',
+                ref: '(رواه البخاري)',
+                icon: BookOpen,
+              },
+              {
+                label: 'قال رسول الله ﷺ:',
+                text: '«مَن يُرِدِ اللَّهُ به خَيْرًا يُفَقِّهْهُ في الدِّينِ»',
+                ref: '(متفق عليه)',
+                icon: Award,
+              },
+              {
+                label: 'حديث شريف:',
+                text: '«إنَّ للهِ أهلِينَ مِنَ الناسِ.. هُم أهلُ القرآنِ، أهلُ اللهِ وخاصَّتُهُ»',
+                ref: '(رواه أحمد)',
+                icon: Bookmark,
+              },
+            ].map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div key={`set1-${idx}`} className="inline-flex items-center gap-6 shrink-0 flex-nowrap whitespace-nowrap">
+                  <div className="inline-flex items-center gap-2 shrink-0 flex-nowrap whitespace-nowrap">
+                    <span className="text-[#D7AE55] font-bold shrink-0">{item.label}</span>
+                    <span className="text-white shrink-0 font-medium">{item.text}</span>
+                    <span className="text-white/60 text-[10px] shrink-0">{item.ref}</span>
+                    <Icon className="w-3.5 h-3.5 text-[#D7AE55] shrink-0" />
+                  </div>
+                  <span className="text-[#D7AE55]/60 font-serif shrink-0">|</span>
+                </div>
+              );
+            })}
 
-            <span className="text-[#D7AE55]/60 font-serif">|</span>
-
-            {/* الحديث الشريف المركزي */}
-            <div className="flex items-center gap-2">
-              <span className="text-[#D7AE55] font-bold">قال رسول الله ﷺ:</span>
-              <span className="text-white/95">
-                «من سلك طريقًا يلتمس فيه علمًا سهل الله له به طريقًا إلى الجنة»
-              </span>
-              <span className="text-white/60 text-[10px]">(رواه مسلم)</span>
-              <Award className="w-3.5 h-3.5 text-[#D7AE55]" />
-            </div>
-
-            <span className="text-[#D7AE55]/60 font-serif">|</span>
-
-            {/* الحديث الشريف الثالث (على اليسار) */}
-            <div className="flex items-center gap-2">
-              <span className="text-[#D7AE55] font-bold">حديث شريف:</span>
-              <span className="text-white/95">
-                «طلب العلم فريضة على كل مسلم»
-              </span>
-              <span className="text-white/60 text-[10px]">(رواه ابن ماجه)</span>
-              <Bookmark className="w-3.5 h-3.5 text-[#D7AE55]" />
-            </div>
-
+            {/* المجموعة الثانية للتكرار الانسيابي اللانهائي */}
+            {[
+              {
+                label: 'قال الله تعالى:',
+                text: '﴿وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا﴾',
+                ref: '(الطلاق 2)',
+                icon: BookOpen,
+              },
+              {
+                label: 'قال رسول الله ﷺ:',
+                text: '«من سلك طريقًا يلتمس فيه علمًا سهل الله له به طريقًا إلى الجنة»',
+                ref: '(رواه مسلم)',
+                icon: Award,
+              },
+              {
+                label: 'حديث شريف:',
+                text: '«طلب العلم فريضة على كل مسلم»',
+                ref: '(رواه ابن ماجه)',
+                icon: Bookmark,
+              },
+              {
+                label: 'قال رسول الله ﷺ:',
+                text: '«خَيرُكُم مَن تَعَلَّمَ القُرآنَ وعَلَّمَهُ»',
+                ref: '(رواه البخاري)',
+                icon: BookOpen,
+              },
+              {
+                label: 'قال رسول الله ﷺ:',
+                text: '«مَن يُرِدِ اللَّهُ به خَيْرًا يُفَقِّهْهُ في الدِّينِ»',
+                ref: '(متفق عليه)',
+                icon: Award,
+              },
+              {
+                label: 'حديث شريف:',
+                text: '«إنَّ للهِ أهلِينَ مِنَ الناسِ.. هُم أهلُ القرآنِ، أهلُ اللهِ وخاصَّتُهُ»',
+                ref: '(رواه أحمد)',
+                icon: Bookmark,
+              },
+            ].map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div key={`set2-${idx}`} className="inline-flex items-center gap-6 shrink-0 flex-nowrap whitespace-nowrap">
+                  <div className="inline-flex items-center gap-2 shrink-0 flex-nowrap whitespace-nowrap">
+                    <span className="text-[#D7AE55] font-bold shrink-0">{item.label}</span>
+                    <span className="text-white shrink-0 font-medium">{item.text}</span>
+                    <span className="text-white/60 text-[10px] shrink-0">{item.ref}</span>
+                    <Icon className="w-3.5 h-3.5 text-[#D7AE55] shrink-0" />
+                  </div>
+                  <span className="text-[#D7AE55]/60 font-serif shrink-0">|</span>
+                </div>
+              );
+            })}
           </div>
-
-          {/* العرض في الجوال والأجهزة الصغيرة: شريط متحرك بانسيابية */}
-          <div className="lg:hidden w-full overflow-hidden h-5 flex items-center">
-            <div className="animate-marquee flex gap-12 font-medium text-[11px] whitespace-nowrap text-white/95">
-              <span className="flex items-center gap-1.5">
-                <span className="text-[#D7AE55] font-bold">قال الله تعالى:</span>
-                <span className="font-amiri text-xs">﴿وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا﴾ (الطلاق 2)</span>
-              </span>
-              <span className="text-[#D7AE55]/60">•</span>
-              <span className="flex items-center gap-1.5">
-                <span className="text-[#D7AE55] font-bold">قال رسول الله ﷺ:</span>
-                <span>«من سلك طريقًا يلتمس فيه علمًا سهل الله له به طريقًا إلى الجنة» (رواه مسلم)</span>
-              </span>
-              <span className="text-[#D7AE55]/60">•</span>
-              <span className="flex items-center gap-1.5">
-                <span className="text-[#D7AE55] font-bold">حديث شريف:</span>
-                <span>«طلب العلم فريضة على كل مسلم» (رواه ابن ماجه)</span>
-              </span>
-            </div>
-          </div>
-
         </div>
       </div>
 
